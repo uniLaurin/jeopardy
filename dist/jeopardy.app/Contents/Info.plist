@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleDisplayName</key>
-	<string>jeopardy</string>
+	<string>Jeopardy</string>
 	<key>CFBundleExecutable</key>
-	<string>jeopardy</string>
+	<string>Jeopardy</string>
 	<key>CFBundleIconFile</key>
 	<string>icon-windowed.icns</string>
 	<key>CFBundleIdentifier</key>
-	<string>jeopardy</string>
+	<string>com.jeopardy.game</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>jeopardy</string>
+	<string>Jeopardy</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>

@@ -1,11 +1,11 @@
 # -*- mode: python ; coding: utf-8 -*-
-
+import sys
 
 a = Analysis(
-    ['/Users/laurinokon/PycharmProjects/Jepoardy/.venv/bin/main.py'],
+    ['main.py'],
     pathex=[],
     binaries=[],
-    datas=[],
+    datas=[('questionsets', 'questionsets')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
@@ -21,10 +21,10 @@ exe = EXE(
     a.scripts,
     [],
     exclude_binaries=True,
-    name='jeopardy',
+    name='Jeopardy',
     debug=False,
     bootloader_ignore_signals=False,
-    strip=True,
+    strip=False,
     upx=True,
     console=False,
     disable_windowed_traceback=False,
@@ -33,18 +33,22 @@ exe = EXE(
     codesign_identity=None,
     entitlements_file=None,
 )
+
 coll = COLLECT(
     exe,
     a.binaries,
     a.datas,
-    strip=True,
+    strip=False,
     upx=True,
     upx_exclude=[],
-    name='jeopardy',
+    name='Jeopardy',
 )
-app = BUNDLE(
-    coll,
-    name='jeopardy.app',
-    icon=None,
-    bundle_identifier=None,
-)
+
+# macOS .app bundle (ignored on Windows)
+if sys.platform == 'darwin':
+    app = BUNDLE(
+        coll,
+        name='Jeopardy.app',
+        icon=None,
+        bundle_identifier='com.jeopardy.game',
+    )
