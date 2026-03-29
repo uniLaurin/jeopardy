@@ -12,7 +12,7 @@ class BLabel(tk.Label):
 
         self.team_label = tk.Label(
             master, text=team_name,
-            font=("Arial Rounded MT Bold", 20, "bold")
+            font=(r.FONT, 20, "bold")
         )
         self.team_label.place(x=self.x + p_width // 2, y=self.y + p_height + 5, anchor="n")
 
@@ -52,7 +52,7 @@ def run():
             p_width=block_width, p_height=block_height,
             p_x=start_x + block_width * i, p_y=base_y - block_height,
             background=team["color"], borderwidth=2, relief="solid",
-            font=("Arial Rounded MT Bold", 20, "bold")
+            font=(r.FONT, 20, "bold")
         )
         labels.append(lbl)
 

@@ -3,7 +3,6 @@ import resources as r
 
 BLUE = "#060CE9"
 GOLD = "#DBAB51"
-FONT = "Arial Rounded MT Bold"
 
 
 class ColorPicker(tk.Toplevel):
@@ -68,7 +67,7 @@ class SettingsScreen:
     def _build_header(self):
         tk.Label(
             self.root, text="JEOPARDY! SETUP",
-            font=(FONT, 48, "bold"), fg=GOLD, bg=BLUE
+            font=(r.FONT, 48, "bold"), fg=GOLD, bg=BLUE
         ).place(x=self.sw // 2, y=30, anchor="n")
 
         canvas = tk.Canvas(self.root, bg=BLUE, highlightthickness=0, height=4)
@@ -85,31 +84,31 @@ class SettingsScreen:
         panel_w = int(self.sw * 0.28)
 
         tk.Label(
-            self.root, text="TEAMS", font=(FONT, 24, "bold"),
+            self.root, text="TEAMS", font=(r.FONT, 24, "bold"),
             fg=GOLD, bg=BLUE
         ).place(x=lx, y=ly)
 
         # Team count selector
         ly += 50
         tk.Label(
-            self.root, text="Anzahl:", font=(FONT, 16),
+            self.root, text="Anzahl:", font=(r.FONT, 16),
             fg=GOLD, bg=BLUE
         ).place(x=lx, y=ly)
 
         self.team_count_label = tk.Label(
-            self.root, text=str(len(r.teams)), font=(FONT, 20, "bold"),
+            self.root, text=str(len(r.teams)), font=(r.FONT, 20, "bold"),
             fg=GOLD, bg="#0A10A0", width=3
         )
         self.team_count_label.place(x=lx + 130, y=ly - 2)
 
         tk.Button(
-            self.root, text="-", font=(FONT, 14, "bold"),
+            self.root, text="-", font=(r.FONT, 14, "bold"),
             fg=BLUE, bg=GOLD, width=2, command=self._remove_team,
             cursor="hand2"
         ).place(x=lx + 100, y=ly)
 
         tk.Button(
-            self.root, text="+", font=(FONT, 14, "bold"),
+            self.root, text="+", font=(r.FONT, 14, "bold"),
             fg=BLUE, bg=GOLD, width=2, command=self._add_team,
             cursor="hand2"
         ).place(x=lx + 195, y=ly)
@@ -122,7 +121,7 @@ class SettingsScreen:
 
         # Key info (must exist before _rebuild_team_rows calls _update_key_info)
         self.key_info_label = tk.Label(
-            self.root, text="", font=(FONT, 13), fg=GOLD, bg=BLUE,
+            self.root, text="", font=(r.FONT, 13), fg=GOLD, bg=BLUE,
             justify="left", anchor="nw"
         )
         self.key_info_label.place(x=lx, y=self.team_frame_y + 360, width=panel_w, height=150)
@@ -139,7 +138,7 @@ class SettingsScreen:
 
             # Name entry
             entry = tk.Entry(
-                self.team_frame, font=(FONT, 14), width=15,
+                self.team_frame, font=(r.FONT, 14), width=15,
                 bg="#0A10A0", fg=GOLD, insertbackground=GOLD
             )
             entry.place(x=0, y=row_y, height=40)
@@ -211,14 +210,14 @@ class SettingsScreen:
         panel_w = int(self.sw * 0.65)
 
         tk.Label(
-            self.root, text="FRAGENSET", font=(FONT, 24, "bold"),
+            self.root, text="FRAGENSET", font=(r.FONT, 24, "bold"),
             fg=GOLD, bg=BLUE
         ).place(x=rx, y=ry)
 
         # Set selector listbox
         ry += 50
         self.set_listbox = tk.Listbox(
-            self.root, font=(FONT, 13), bg="#0A10A0", fg=GOLD,
+            self.root, font=(r.FONT, 13), bg="#0A10A0", fg=GOLD,
             selectbackground=GOLD, selectforeground=BLUE,
             height=4, width=30, exportselection=False
         )
@@ -227,34 +226,34 @@ class SettingsScreen:
 
         btn_x = rx + 340
         tk.Button(
-            self.root, text="Neu", font=(FONT, 12), fg=BLUE, bg=GOLD,
+            self.root, text="Neu", font=(r.FONT, 12), fg=BLUE, bg=GOLD,
             command=self._new_set, cursor="hand2"
         ).place(x=btn_x, y=ry, width=80, height=35)
 
         tk.Button(
-            self.root, text="Löschen", font=(FONT, 12), fg=BLUE, bg=GOLD,
+            self.root, text="Löschen", font=(r.FONT, 12), fg=BLUE, bg=GOLD,
             command=self._delete_set, cursor="hand2"
         ).place(x=btn_x, y=ry + 40, width=80, height=35)
 
         # Editor area
         ry += 110
         tk.Label(
-            self.root, text="Name:", font=(FONT, 14), fg=GOLD, bg=BLUE
+            self.root, text="Name:", font=(r.FONT, 14), fg=GOLD, bg=BLUE
         ).place(x=rx, y=ry)
 
         self.set_name_entry = tk.Entry(
-            self.root, font=(FONT, 14), width=30,
+            self.root, font=(r.FONT, 14), width=30,
             bg="#0A10A0", fg=GOLD, insertbackground=GOLD
         )
         self.set_name_entry.place(x=rx + 70, y=ry, height=32)
 
         ry += 42
         tk.Label(
-            self.root, text="Werte:", font=(FONT, 14), fg=GOLD, bg=BLUE
+            self.root, text="Werte:", font=(r.FONT, 14), fg=GOLD, bg=BLUE
         ).place(x=rx, y=ry)
 
         self.values_entry = tk.Entry(
-            self.root, font=(FONT, 14), width=30,
+            self.root, font=(r.FONT, 14), width=30,
             bg="#0A10A0", fg=GOLD, insertbackground=GOLD
         )
         self.values_entry.place(x=rx + 70, y=ry, height=32)
@@ -265,16 +264,16 @@ class SettingsScreen:
         q_x = rx + 280
 
         tk.Label(
-            self.root, text="Kategorien:", font=(FONT, 14), fg=GOLD, bg=BLUE
+            self.root, text="Kategorien:", font=(r.FONT, 14), fg=GOLD, bg=BLUE
         ).place(x=cat_x, y=ry)
 
         tk.Label(
-            self.root, text="Fragen:", font=(FONT, 14), fg=GOLD, bg=BLUE
+            self.root, text="Fragen:", font=(r.FONT, 14), fg=GOLD, bg=BLUE
         ).place(x=q_x, y=ry)
 
         ry += 30
         self.cat_listbox = tk.Listbox(
-            self.root, font=(FONT, 12), bg="#0A10A0", fg=GOLD,
+            self.root, font=(r.FONT, 12), bg="#0A10A0", fg=GOLD,
             selectbackground=GOLD, selectforeground=BLUE,
             height=10, width=22, exportselection=False
         )
@@ -283,23 +282,23 @@ class SettingsScreen:
 
         cat_btn_y = ry + 225
         tk.Button(
-            self.root, text="+ Kat.", font=(FONT, 11), fg=BLUE, bg=GOLD,
+            self.root, text="+ Kat.", font=(r.FONT, 11), fg=BLUE, bg=GOLD,
             command=self._add_category, cursor="hand2"
         ).place(x=cat_x, y=cat_btn_y, width=80, height=30)
 
         tk.Button(
-            self.root, text="- Kat.", font=(FONT, 11), fg=BLUE, bg=GOLD,
+            self.root, text="- Kat.", font=(r.FONT, 11), fg=BLUE, bg=GOLD,
             command=self._remove_category, cursor="hand2"
         ).place(x=cat_x + 90, y=cat_btn_y, width=80, height=30)
 
         # Category name entry
         cat_name_y = cat_btn_y + 40
         tk.Label(
-            self.root, text="Kat-Name:", font=(FONT, 13), fg=GOLD, bg=BLUE
+            self.root, text="Kat-Name:", font=(r.FONT, 13), fg=GOLD, bg=BLUE
         ).place(x=cat_x, y=cat_name_y)
 
         self.cat_name_entry = tk.Entry(
-            self.root, font=(FONT, 13), width=20,
+            self.root, font=(r.FONT, 13), width=20,
             bg="#0A10A0", fg=GOLD, insertbackground=GOLD
         )
         self.cat_name_entry.place(x=cat_x + 110, y=cat_name_y, height=30)
@@ -313,13 +312,13 @@ class SettingsScreen:
         # Save button
         save_y = cat_name_y + 45
         tk.Button(
-            self.root, text="Speichern", font=(FONT, 14, "bold"),
+            self.root, text="Speichern", font=(r.FONT, 14, "bold"),
             fg=BLUE, bg=GOLD, command=self._save_set, cursor="hand2"
         ).place(x=rx, y=save_y, width=150, height=40)
 
         # Status label for feedback
         self.status_label = tk.Label(
-            self.root, text="", font=(FONT, 12), fg="#FF6666", bg=BLUE
+            self.root, text="", font=(r.FONT, 12), fg="#FF6666", bg=BLUE
         )
         self.status_label.place(x=rx + 170, y=save_y + 8)
 
@@ -411,12 +410,12 @@ class SettingsScreen:
             # Value label
             val_text = str(vals[i]) if i < len(vals) else "?"
             tk.Label(
-                self.q_frame, text=f"{val_text}:", font=(FONT, 12),
+                self.q_frame, text=f"{val_text}:", font=(r.FONT, 12),
                 fg=GOLD, bg=BLUE, width=6, anchor="e"
             ).place(x=0, y=i * 42, height=34)
 
             entry = tk.Entry(
-                self.q_frame, font=(FONT, 11),
+                self.q_frame, font=(r.FONT, 11),
                 bg="#0A10A0", fg=GOLD, insertbackground=GOLD
             )
             entry.place(x=70, y=i * 42, width=self.q_frame.winfo_width() - 80 if self.q_frame.winfo_width() > 100 else 400, height=34)
@@ -580,13 +579,13 @@ class SettingsScreen:
     def _build_start_button(self):
         btn_y = self.sh - 90
         self.error_label = tk.Label(
-            self.root, text="", font=(FONT, 14), fg="#FF6666", bg=BLUE
+            self.root, text="", font=(r.FONT, 14), fg="#FF6666", bg=BLUE
         )
         self.error_label.place(x=self.sw // 2, y=btn_y - 35, anchor="n")
 
         tk.Button(
             self.root, text=">>> SPIEL STARTEN <<<",
-            font=(FONT, 22, "bold"), fg=BLUE, bg=GOLD,
+            font=(r.FONT, 22, "bold"), fg=BLUE, bg=GOLD,
             activebackground="#C89840", activeforeground=BLUE,
             command=self._start_game, cursor="hand2"
         ).place(x=self.sw // 2, y=btn_y, anchor="n", width=450, height=60)

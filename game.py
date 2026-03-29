@@ -121,7 +121,7 @@ def create_grid(root):
             if j == 0:
                 tmp = tk.Label(
                     root, text=r.categories[i],
-                    font=("Arial Rounded MT Bold", 32, "bold"),
+                    font=(r.FONT, 32, "bold"),
                     background="blue", foreground="#dbab51"
                 )
                 tmp.place(
@@ -135,7 +135,7 @@ def create_grid(root):
                 col_width = root.winfo_screenwidth() // len(r.categories)
                 tmp_b = LButton(
                     root,
-                    font=("Arial Rounded MT Bold", 64, "bold"),
+                    font=(r.FONT, 64, "bold"),
                     background="blue", foreground="#dbab51",
                     p_width=col_width, p_height=150,
                     cursor="hand2"

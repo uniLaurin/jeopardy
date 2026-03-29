@@ -1,4 +1,5 @@
 import tkinter as tk
+import resources as r
 
 
 JEOPARDY_BLUE = "#060CE9"
@@ -23,7 +24,7 @@ class StartScreen:
         # Title text (typewriter animation)
         self.title_text = self.canvas.create_text(
             self.w // 2, self.h // 2 - 60,
-            text="", font=("Arial Rounded MT Bold", 100, "bold"),
+            text="", font=(r.FONT, 100, "bold"),
             fill=JEOPARDY_GOLD
         )
 
@@ -37,7 +38,7 @@ class StartScreen:
         # "Press ENTER" text (pulsing)
         self.enter_text = self.canvas.create_text(
             self.w // 2, self.h // 2 + 120,
-            text="", font=("Arial Rounded MT Bold", 28),
+            text="", font=(r.FONT, 28),
             fill=JEOPARDY_GOLD
         )
 
@@ -81,6 +82,7 @@ class StartScreen:
 
 def run():
     root = tk.Tk()
+    r.detect_font()  # detect best font now that Tk exists
     root.title("Jeopardy!")
     StartScreen(root)
     root.mainloop()

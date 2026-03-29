@@ -22,6 +22,29 @@ def data_path(relative_path=""):
 
 
 # ---------------------------------------------------------------------------
+# Font configuration (with fallback for systems missing Arial Rounded MT Bold)
+# ---------------------------------------------------------------------------
+
+FONT = "Arial Rounded MT Bold"
+
+
+def detect_font():
+    """Detect best available font. Call once after first tk.Tk() is created."""
+    global FONT
+    try:
+        import tkinter as tk
+        import tkinter.font
+        available = set(tk.font.families())
+        for candidate in ["Arial Rounded MT Bold", "Arial", "Helvetica"]:
+            if candidate in available:
+                FONT = candidate
+                return
+    except Exception:
+        pass
+    FONT = "Arial"
+
+
+# ---------------------------------------------------------------------------
 # Team configuration
 # ---------------------------------------------------------------------------
 
