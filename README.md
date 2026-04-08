@@ -19,6 +19,16 @@
 
 Dieses Projekt ist ein vollständig ausgearbeitetes **Jeopardy-Quizspiel**. Es führt Spieler durch einen kinoreifen Flow — von einer animierten Title-Sequence über ein flexibles Settings-Menü bis hin zum klassischen Jeopardy-Board mit Flip-Animationen und einem animierten Scoreboard.
 
+<div align="center">
+
+## Download
+
+### [![Download](https://img.shields.io/badge/%E2%AC%87%20Download%20hier-Jeopardy%20laden-gold?style=for-the-badge&labelColor=001f5b&color=d4af37)](#)
+
+*macOS `.app` & Windows `.exe` — keine Installation, einfach starten.*
+
+</div>
+
 
 
 ## Steuerung im Spiel
