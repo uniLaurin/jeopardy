@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeopardy Settings - Dashboard Grid</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #1a1a1a;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .concept-header {
+            background-color: #222;
+            border-bottom: 3px solid #DBAB51;
+            padding: 15px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            color: #DBAB51;
+        }
+
+        .concept-description {
+            background-color: #222;
+            padding: 10px 15px;
+            text-align: center;
+            font-size: 13px;
+            color: #C0C0D5;
+            border-bottom: 1px solid #444;
+        }
+
+        .screen {
+            width: 1400px;
+            margin: 30px auto;
+            background-color: #060CE9;
+            min-height: 900px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(219, 171, 81, 0.2);
+        }
+
+        /* HEADER */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 3px solid #DBAB51;
+            padding-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 42px;
+            color: #DBAB51;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        /* DASHBOARD GRID */
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto auto auto;
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        /* CARD STYLES */
+        .card {
+            background-color: #0A15B8;
+            border: 2px solid #000A80;
+            border-left: 4px solid #DBAB51;
+            padding: 25px;
+            border-radius: 4px;
+            box-shadow: inset 0 2px 4px rgba(219, 171, 81, 0.1);
+        }
+
+        .card.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .card h2 {
+            color: #DBAB51;
+            font-size: 20px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .divider-line {
+            height: 2px;
+            background: linear-gradient(to right, #DBAB51, transparent);
+            margin-bottom: 20px;
+        }
+
+        /* TEAMS CARD */
+        .teams-compact {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .team-item {
+            background-color: #0A10A0;
+            border: 2px solid #000A80;
+            padding: 12px;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            justify-content: space-between;
+        }
+
+        .team-info {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .color-swatch {
+            width: 32px;
+            height: 32px;
+            border: 2px solid #DBAB51;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .color-swatch:hover {
+            box-shadow: 0 0 12px rgba(219, 171, 81, 0.5);
+        }
+
+        .team-name {
+            color: #DBAB51;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .team-count-control {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .control-label {
+            color: #9999CC;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-small {
+            width: 35px;
+            height: 35px;
+            background-color: #DBAB51;
+            color: #060CE9;
+            border: none;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-radius: 3px;
+        }
+
+        .btn-small:hover {
+            background-color: #E8C76B;
+            box-shadow: 0 0 12px rgba(219, 171, 81, 0.4);
+        }
+
+        .count-value {
+            background-color: #0A10A0;
+            color: #DBAB51;
+            width: 45px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 16px;
+            border: 2px solid #DBAB51;
+            border-radius: 3px;
+        }
+
+        /* SETS CARD */
+        .set-listbox-wrapper {
+            border: 2px solid #000A80;
+            background-color: #0A10A0;
+            height: 150px;
+            overflow-y: auto;
+            margin-bottom: 12px;
+            border-radius: 3px;
+        }
+
+        .set-item {
+            padding: 8px 12px;
+            color: #DBAB51;
+            border-bottom: 1px solid #000A80;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .set-item:hover {
+            background-color: #0B18FF;
+        }
+
+        .set-item.selected {
+            background-color: #DBAB51;
+            color: #060CE9;
+            font-weight: bold;
+        }
+
+        .btn-row {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-secondary {
+            flex: 1;
+            background-color: #555;
+            color: white;
+            border: none;
+            padding: 8px;
+            font-size: 11px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-radius: 3px;
+        }
+
+        .btn-secondary:hover {
+            background-color: #DBAB51;
+            color: #060CE9;
+        }
+
+        /* EDITOR CARD (full width) */
+        .editor-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .form-label {
+            color: #C0C0D5;
+            font-size: 11px;
+            min-width: 80px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: bold;
+        }
+
+        .form-input {
+            flex: 1;
+            background-color: #0A10A0;
+            border: 2px solid #000A80;
+            color: #DBAB51;
+            padding: 8px;
+            font-size: 12px;
+            border-radius: 3px;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #DBAB51;
+            box-shadow: 0 0 8px rgba(219, 171, 81, 0.3);
+        }
+
+        .form-input::placeholder {
+            color: #9999CC;
+        }
+
+        /* CATEGORIES SECTION */
+        .cat-section {
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            gap: 20px;
+        }
+
+        .cat-listbox-wrapper {
+            border: 2px solid #000A80;
+            background-color: #0A10A0;
+            height: 200px;
+            overflow-y: auto;
+            border-radius: 3px;
+        }
+
+        .cat-item {
+            padding: 8px 12px;
+            color: #DBAB51;
+            border-bottom: 1px solid #000A80;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .cat-item:hover {
+            background-color: #0B18FF;
+        }
+
+        .cat-item.selected {
+            background-color: #DBAB51;
+            color: #060CE9;
+            font-weight: bold;
+        }
+
+        .cat-buttons {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .btn-cat {
+            flex: 1;
+            background-color: #555;
+            color: white;
+            border: none;
+            padding: 8px;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-radius: 3px;
+        }
+
+        .btn-cat:hover {
+            background-color: #DBAB51;
+            color: #060CE9;
+        }
+
+        .questions-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .cat-name-input {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .cat-name-input input {
+            flex: 1;
+        }
+
+        .questions-header {
+            color: #DBAB51;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .questions-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            max-height: 280px;
+            overflow-y: auto;
+        }
+
+        .question-row {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .question-value {
+            color: #DBAB51;
+            font-weight: bold;
+            font-size: 11px;
+            min-width: 35px;
+            text-align: right;
+        }
+
+        .question-input {
+            flex: 1;
+            background-color: #0A10A0;
+            border: 2px solid #000A80;
+            color: #DBAB51;
+            padding: 6px;
+            font-size: 10px;
+            border-radius: 3px;
+        }
+
+        .question-input:focus {
+            outline: none;
+            border-color: #DBAB51;
+            box-shadow: 0 0 6px rgba(219, 171, 81, 0.3);
+        }
+
+        .question-input::placeholder {
+            color: #9999CC;
+        }
+
+        .btn-save {
+            background-color: #DBAB51;
+            color: #060CE9;
+            border: none;
+            padding: 10px 20px;
+            font-size: 11px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-radius: 3px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            align-self: flex-start;
+            margin-top: 8px;
+        }
+
+        .btn-save:hover {
+            background-color: #E8C76B;
+            box-shadow: 0 0 15px rgba(219, 171, 81, 0.4);
+        }
+
+        /* KEY INFO */
+        .key-info-box {
+            background-color: #0A10A0;
+            border-left: 3px solid #DBAB51;
+            padding: 12px;
+            margin-top: 12px;
+            font-size: 11px;
+            color: #C0C0D5;
+            line-height: 1.6;
+            border-radius: 3px;
+        }
+
+        /* FOOTER */
+        .footer {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 2px solid #000A80;
+        }
+
+        .btn-start {
+            background-color: #DBAB51;
+            color: #060CE9;
+            border: none;
+            padding: 16px 50px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-radius: 3px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            box-shadow: 0 4px 12px rgba(219, 171, 81, 0.3);
+        }
+
+        .btn-start:hover {
+            background-color: #E8C76B;
+            box-shadow: 0 6px 20px rgba(219, 171, 81, 0.6);
+            transform: scale(1.05);
+        }
+
+        /* ADMIN STATS */
+        .stat-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            background-color: #0A10A0;
+            border: 2px solid #000A80;
+            border-radius: 3px;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            color: #9999CC;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-value {
+            color: #DBAB51;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="concept-header">Konzept 5: Dashboard Grid</div>
+    <div class="concept-description">
+        Grid-Layout mit verschiedenen Karten-Größen. Teams oben links, Sets oben rechts, großer Editor unten.
+        Admin-Dashboard-Gefühl mit Übersicht und modernem Eindruck.
+    </div>
+
+    <div class="screen">
+        <!-- HEADER -->
+        <div class="header">
+            <h1>JEOPARDY! SETUP</h1>
+        </div>
+
+        <!-- DASHBOARD GRID -->
+        <div class="dashboard">
+            <!-- TEAMS CARD (left, top) -->
+            <div class="card">
+                <h2>TEAMS</h2>
+                <div class="divider-line"></div>
+
+                <div class="teams-compact">
+                    <div class="team-item">
+                        <div class="team-info">
+                            <div class="color-swatch" style="background-color: #00AA00;"></div>
+                            <input type="text" class="form-input" style="flex: 1; margin: 0;" value="Team Grün" />
+                        </div>
+                    </div>
+                    <div class="team-item">
+                        <div class="team-info">
+                            <div class="color-swatch" style="background-color: #FF0000;"></div>
+                            <input type="text" class="form-input" style="flex: 1; margin: 0;" value="Team Rot" />
+                        </div>
+                    </div>
+                    <div class="team-item">
+                        <div class="team-info">
+                            <div class="color-swatch" style="background-color: #AA00FF;"></div>
+                            <input type="text" class="form-input" style="flex: 1; margin: 0;" value="Team Lila" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="team-count-control">
+                    <span class="control-label">Anzahl:</span>
+                    <button class="btn-small">-</button>
+                    <div class="count-value">3</div>
+                    <button class="btn-small">+</button>
+                </div>
+
+                <div class="key-info-box">
+                    <strong style="color: #DBAB51;">Tasten:</strong><br/>
+                    1=Grün | 2=Rot | 3=Lila | 4=Niemand
+                </div>
+            </div>
+
+            <!-- FRAGENSETS CARD (right, top) -->
+            <div class="card">
+                <h2>FRAGENSETS</h2>
+                <div class="divider-line"></div>
+
+                <span style="color: #C0C0D5; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 8px; font-weight: bold;">Verfügbare Sets</span>
+                <div class="set-listbox-wrapper">
+                    <div class="set-item selected">ERGO Team Event 2025</div>
+                    <div class="set-item">Allgemeinwissen Quiz</div>
+                    <div class="set-item">Fußball Spezial</div>
+                </div>
+                <div class="btn-row">
+                    <button class="btn-secondary">Neu</button>
+                    <button class="btn-secondary">Löschen</button>
+                </div>
+            </div>
+
+            <!-- EDITOR CARD (full width, bottom) -->
+            <div class="card full-width">
+                <h2>FRAGENSET BEARBEITEN</h2>
+                <div class="divider-line"></div>
+
+                <!-- Set Info -->
+                <div class="editor-section">
+                    <div class="form-group">
+                        <span class="form-label">Name:</span>
+                        <input type="text" class="form-input" value="ERGO Team Event 2025" />
+                    </div>
+                    <div class="form-group">
+                        <span class="form-label">Werte:</span>
+                        <input type="text" class="form-input" value="100, 200, 400, 600, 1000" />
+                    </div>
+                </div>
+
+                <!-- Categories & Questions -->
+                <div class="cat-section">
+                    <div>
+                        <span style="color: #DBAB51; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 10px;">Kategorien</span>
+                        <div class="cat-listbox-wrapper">
+                            <div class="cat-item selected">World of Ergo</div>
+                            <div class="cat-item">Indian</div>
+                            <div class="cat-item">German</div>
+                            <div class="cat-item">Products</div>
+                        </div>
+                        <div class="cat-buttons">
+                            <button class="btn-cat">+ Kat.</button>
+                            <button class="btn-cat">- Kat.</button>
+                        </div>
+                    </div>
+
+                    <div class="questions-panel">
+                        <div class="cat-name-input">
+                            <span class="form-label" style="min-width: auto;">Kat-Name:</span>
+                            <input type="text" class="form-input" value="World of Ergo" />
+                        </div>
+                        <span class="questions-header">Fragen</span>
+                        <div class="questions-list">
+                            <div class="question-row">
+                                <span class="question-value">100:</span>
+                                <input type="text" class="question-input" value="Wieviele Zeichen..." />
+                            </div>
+                            <div class="question-row">
+                                <span class="question-value">200:</span>
+                                <input type="text" class="question-input" value="Wofür steht ET&S?" />
+                            </div>
+                            <div class="question-row">
+                                <span class="question-value">400:</span>
+                                <input type="text" class="question-input" value="Was konnte man..." />
+                            </div>
+                            <div class="question-row">
+                                <span class="question-value">600:</span>
+                                <input type="text" class="question-input" value="Wieviele Meter..." />
+                            </div>
+                            <div class="question-row">
+                                <span class="question-value">1000:</span>
+                                <input type="text" class="question-input" value="Gründungsjahr?" />
+                            </div>
+                        </div>
+                        <button class="btn-save">Speichern</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+            <button class="btn-start">>>> SPIEL STARTEN <<<</button>
+        </div>
+    </div>
+</body>
+</html>

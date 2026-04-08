@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeopardy - Vibrant & Playful</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #2D1B69 0%, #3D2B89 50%, #2D1B69 100%);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .concept-header {
+            background: linear-gradient(90deg, #2D1B69 0%, #3D2B89 100%);
+            border-bottom: 3px solid #FFD700;
+            border-top: 3px solid #FFD700;
+            padding: 15px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: 700;
+            color: #FFD700;
+            letter-spacing: 1px;
+        }
+
+        .screen {
+            width: 1200px;
+            margin: 30px auto;
+            border: 3px solid #FFD700;
+            background: linear-gradient(135deg, rgba(45, 27, 105, 0.95) 0%, rgba(61, 43, 137, 0.95) 100%);
+            min-height: 600px;
+            padding: 40px;
+            box-shadow: 0 15px 45px rgba(255, 215, 0, 0.25), 0 0 30px rgba(255, 215, 0, 0.1);
+            border-radius: 16px;
+        }
+
+        .screen-title {
+            text-align: center;
+            color: #FFD700;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            font-weight: 700;
+        }
+
+        /* STARTSCREEN */
+        .startscreen {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            min-height: 650px;
+            background: linear-gradient(180deg, rgba(45, 27, 105, 0.85) 0%, rgba(61, 43, 137, 0.95) 100%);
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+        }
+
+        .startscreen::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .startscreen::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.06) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .startscreen-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .startscreen h1 {
+            font-size: 120px;
+            font-weight: 900;
+            color: #FFD700;
+            letter-spacing: 6px;
+            margin-bottom: 25px;
+            text-shadow: 0 8px 20px rgba(255, 215, 0, 0.3);
+            animation: bounce-in 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes bounce-in {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .gold-gradient-line {
+            width: 380px;
+            height: 5px;
+            background: linear-gradient(90deg, #FFD700, #FFEC8B, #FFD700);
+            margin: 30px auto;
+            border-radius: 3px;
+            box-shadow: 0 4px 20px rgba(255, 215, 0, 0.5);
+        }
+
+        .startscreen-subtitle {
+            font-size: 24px;
+            color: #FFD700;
+            margin-top: 40px;
+            animation: float-pulse 1.8s infinite;
+            font-weight: 600;
+            letter-spacing: 2px;
+        }
+
+        @keyframes float-pulse {
+            0%, 100% { transform: translateY(0); opacity: 1; }
+            50% { transform: translateY(-8px); opacity: 0.6; }
+        }
+
+        /* GAME BOARD */
+        .gameboard {
+            background: transparent;
+        }
+
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 14px;
+            margin-bottom: 25px;
+        }
+
+        .category {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.12) 0%, rgba(255, 215, 0, 0.04) 100%);
+            border: 2px solid #FFD700;
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            font-weight: 700;
+            color: #FFD700;
+            font-size: 18px;
+            min-height: 95px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+        }
+
+        .category:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(255, 215, 0, 0.18);
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 14px;
+        }
+
+        .value-row {
+            display: contents;
+        }
+
+        .value-button {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 215, 0, 0.02) 100%);
+            border: 2px solid #FFD700;
+            border-radius: 12px;
+            color: #FFD700;
+            font-size: 36px;
+            font-weight: 800;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.12);
+        }
+
+        .value-button:hover {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.18) 0%, rgba(255, 215, 0, 0.08) 100%);
+            border-color: #FFEC8B;
+            box-shadow: 0 12px 35px rgba(255, 215, 0, 0.3);
+            transform: translateY(-4px);
+        }
+
+        .value-button:active {
+            transform: translateY(-2px);
+        }
+
+        .value-button.answered {
+            background: linear-gradient(135deg, rgba(120, 90, 180, 0.5) 0%, rgba(100, 70, 160, 0.5) 100%);
+            border-color: #8070A0;
+            color: #8070A0;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .value-button.answered:hover {
+            background: linear-gradient(135deg, rgba(120, 90, 180, 0.5) 0%, rgba(100, 70, 160, 0.5) 100%);
+            transform: none;
+            box-shadow: none;
+        }
+
+        .team-info {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 40px;
+            padding-top: 25px;
+            border-top: 2px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .team-score {
+            text-align: center;
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            background: rgba(255, 215, 0, 0.05);
+        }
+
+        .team-score-name {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #FFD700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .team-score-points {
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        /* SCORES */
+        .scores {
+            background: transparent;
+            padding: 40px;
+        }
+
+        .scores-title {
+            text-align: center;
+            font-size: 52px;
+            font-weight: 900;
+            color: #FFD700;
+            margin-bottom: 30px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-shadow: 0 4px 15px rgba(255, 215, 0, 0.2);
+        }
+
+        .scores-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 60px;
+            min-height: 320px;
+            margin-bottom: 40px;
+        }
+
+        .score-bar-wrapper {
+            text-align: center;
+            position: relative;
+            flex: 1;
+            max-width: 200px;
+        }
+
+        .score-bar {
+            background: linear-gradient(180deg, #FFD700 0%, #FFC000 50%, #FF9500 100%);
+            border: 3px solid #FFEC8B;
+            border-radius: 10px;
+            margin: 0 auto 20px;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 12px 35px rgba(255, 215, 0, 0.25), inset 0 2px 0 rgba(255, 255, 255, 0.3);
+            width: 100px;
+        }
+
+        .score-bar.height-3 { height: 180px; }
+        .score-bar.height-2 { height: 120px; }
+        .score-bar.height-1 { height: 60px; }
+
+        .score-bar.winner {
+            border: 4px solid #FFEC8B;
+            box-shadow: 0 0 50px rgba(255, 215, 0, 0.6), 0 12px 40px rgba(255, 215, 0, 0.3), inset 0 2px 0 rgba(255, 255, 255, 0.4);
+            animation: glow 1.5s infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 50px rgba(255, 215, 0, 0.6), 0 12px 40px rgba(255, 215, 0, 0.3), inset 0 2px 0 rgba(255, 255, 255, 0.4); }
+            50% { box-shadow: 0 0 60px rgba(255, 215, 0, 0.8), 0 12px 50px rgba(255, 215, 0, 0.4), inset 0 2px 0 rgba(255, 255, 255, 0.5); }
+        }
+
+        .score-bar.winner::after {
+            content: 'GEWINNER!';
+            position: absolute;
+            top: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #FFD700;
+            font-weight: 900;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 8px rgba(255, 215, 0, 0.4);
+        }
+
+        .team-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: #FFD700;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .team-points {
+            font-size: 24px;
+            font-weight: 800;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="concept-header">
+        Mockup 4: Vibrant & Playful - Deep Purple mit Electric Gold, lebendige Farben, abgerundete Ecken, spielerische Energie
+    </div>
+
+    <!-- STARTSCREEN -->
+    <div class="screen">
+        <div class="screen-title">Startscreen</div>
+        <div class="startscreen">
+            <div class="startscreen-content">
+                <h1>JEOPARDY!</h1>
+                <div class="gold-gradient-line"></div>
+                <div class="startscreen-subtitle">press enter to start</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- GAME BOARD -->
+    <div class="screen">
+        <div class="screen-title">Game Board</div>
+        <div class="gameboard">
+            <div class="categories">
+                <div class="category">Geschichte</div>
+                <div class="category">Wissenschaft</div>
+                <div class="category">Musik</div>
+                <div class="category">Sport</div>
+                <div class="category">Film</div>
+            </div>
+
+            <div class="values-grid">
+                <div class="value-row">
+                    <button class="value-button">100</button>
+                    <button class="value-button">100</button>
+                    <button class="value-button answered">100</button>
+                    <button class="value-button">100</button>
+                    <button class="value-button">100</button>
+                </div>
+                <div class="value-row">
+                    <button class="value-button">200</button>
+                    <button class="value-button answered">200</button>
+                    <button class="value-button">200</button>
+                    <button class="value-button">200</button>
+                    <button class="value-button">200</button>
+                </div>
+                <div class="value-row">
+                    <button class="value-button">300</button>
+                    <button class="value-button">300</button>
+                    <button class="value-button">300</button>
+                    <button class="value-button answered">300</button>
+                    <button class="value-button">300</button>
+                </div>
+                <div class="value-row">
+                    <button class="value-button answered">400</button>
+                    <button class="value-button">400</button>
+                    <button class="value-button">400</button>
+                    <button class="value-button">400</button>
+                    <button class="value-button">400</button>
+                </div>
+                <div class="value-row">
+                    <button class="value-button">500</button>
+                    <button class="value-button">500</button>
+                    <button class="value-button answered">500</button>
+                    <button class="value-button">500</button>
+                    <button class="value-button">500</button>
+                </div>
+            </div>
+
+            <div class="team-info">
+                <div class="team-score">
+                    <div class="team-score-name">Team 1</div>
+                    <div class="team-score-points">2.400</div>
+                </div>
+                <div class="team-score">
+                    <div class="team-score-name">Team 2</div>
+                    <div class="team-score-points">1.800</div>
+                </div>
+                <div class="team-score">
+                    <div class="team-score-name">Team 3</div>
+                    <div class="team-score-points">1.200</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCORES -->
+    <div class="screen">
+        <div class="screen-title">Scores / Results</div>
+        <div class="scores">
+            <div class="scores-title">ERGEBNISSE</div>
+
+            <div class="scores-container">
+                <div class="score-bar-wrapper">
+                    <div class="score-bar height-3 winner"></div>
+                    <div class="team-name">Team 1</div>
+                    <div class="team-points">3.200 Punkte</div>
+                </div>
+                <div class="score-bar-wrapper">
+                    <div class="score-bar height-2"></div>
+                    <div class="team-name">Team 2</div>
+                    <div class="team-points">2.100 Punkte</div>
+                </div>
+                <div class="score-bar-wrapper">
+                    <div class="score-bar height-1"></div>
+                    <div class="team-name">Team 3</div>
+                    <div class="team-points">1.500 Punkte</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

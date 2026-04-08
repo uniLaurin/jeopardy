@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeopardy - Classic Design</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #1a1a1a;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .concept-header {
+            background-color: #222;
+            border-bottom: 3px solid #DBAB51;
+            padding: 15px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #DBAB51;
+        }
+
+        .screen {
+            width: 1200px;
+            margin: 30px auto;
+            border: 2px solid #DBAB51;
+            background-color: #060CE9;
+            min-height: 600px;
+            padding: 40px;
+            box-shadow: 0 8px 32px rgba(219, 171, 81, 0.3);
+        }
+
+        .screen-title {
+            text-align: center;
+            color: #DBAB51;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 40px;
+            opacity: 0.8;
+        }
+
+        /* STARTSCREEN */
+        .startscreen {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            min-height: 650px;
+            background: linear-gradient(135deg, #060CE9 0%, #0A10A0 50%, #060CE9 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .startscreen::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.3) 100%);
+            z-index: 0;
+        }
+
+        .startscreen-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .startscreen h1 {
+            font-size: 120px;
+            font-weight: bold;
+            color: #DBAB51;
+            letter-spacing: 8px;
+            margin-bottom: 30px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+        }
+
+        .gold-line {
+            width: 400px;
+            height: 4px;
+            background-color: #DBAB51;
+            margin: 30px auto;
+            box-shadow: 0 0 20px rgba(219, 171, 81, 0.8);
+        }
+
+        .startscreen-subtitle {
+            font-size: 24px;
+            color: #DBAB51;
+            margin-top: 40px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        /* GAME BOARD */
+        .gameboard {
+            background-color: #060CE9;
+        }
+
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .category {
+            background-color: #0A10A0;
+            border: 2px solid #DBAB51;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            color: #DBAB51;
+            font-size: 18px;
+            min-height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 2px 4px rgba(219, 171, 81, 0.2), 0 4px 8px rgba(0,0,0,0.5);
+            border-radius: 3px;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+        }
+
+        .value-row {
+            display: contents;
+        }
+
+        .value-button {
+            background-color: #0A10A0;
+            border: 2px solid #DBAB51;
+            color: #DBAB51;
+            font-size: 36px;
+            font-weight: bold;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: inset 0 2px 4px rgba(219, 171, 81, 0.2), 0 4px 8px rgba(0,0,0,0.5);
+            border-radius: 3px;
+        }
+
+        .value-button:hover {
+            background-color: #0B18FF;
+            box-shadow: inset 0 2px 4px rgba(219, 171, 81, 0.3), 0 6px 12px rgba(219, 171, 81, 0.4);
+            transform: scale(1.02);
+        }
+
+        .value-button.answered {
+            background-color: #0A0A7A;
+            color: #404040;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .value-button.answered:hover {
+            background-color: #0A0A7A;
+            transform: none;
+        }
+
+        .team-info {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #DBAB51;
+        }
+
+        .team-score {
+            text-align: center;
+            color: white;
+        }
+
+        .team-score-name {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #DBAB51;
+        }
+
+        .team-score-points {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        /* SCORES */
+        .scores {
+            background-color: #060CE9;
+            padding: 40px;
+        }
+
+        .scores-title {
+            text-align: center;
+            font-size: 48px;
+            font-weight: bold;
+            color: #DBAB51;
+            margin-bottom: 40px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        .scores-gold-line {
+            width: 300px;
+            height: 4px;
+            background-color: #DBAB51;
+            margin: 0 auto 50px;
+            box-shadow: 0 0 15px rgba(219, 171, 81, 0.8);
+        }
+
+        .scores-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 50px;
+            min-height: 300px;
+            margin-bottom: 40px;
+        }
+
+        .score-bar-wrapper {
+            text-align: center;
+            position: relative;
+            flex: 1;
+            max-width: 200px;
+        }
+
+        .score-bar {
+            background: linear-gradient(to top, #DBAB51, #F0D76F);
+            border: 2px solid #DBAB51;
+            border-radius: 4px;
+            margin: 0 auto 15px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(219, 171, 81, 0.4);
+            width: 100px;
+        }
+
+        .score-bar.height-3 { height: 150px; }
+        .score-bar.height-2 { height: 100px; }
+        .score-bar.height-1 { height: 50px; }
+
+        .score-bar.winner {
+            border: 4px solid #DBAB51;
+            box-shadow: 0 0 30px rgba(219, 171, 81, 0.8), inset 0 0 20px rgba(219, 171, 81, 0.2);
+        }
+
+        .score-bar.winner::after {
+            content: 'GEWINNER!';
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #DBAB51;
+            font-weight: bold;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .team-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #DBAB51;
+            margin-bottom: 5px;
+        }
+
+        .team-points {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="concept-header">
+        Mockup 1: Classic Jeopardy - Traditionelles TV-Show-Design mit königsblau und kräftigem Gold
+    </div>
+
+    <!-- STARTSCREEN -->
+    <div class="screen">
+        <div class="screen-title">Startscreen</div>
+        <div class="startscreen">
+            <div class="startscreen-content">
+                <h1>JEOPARDY!</h1>
+                <div class="gold-line"></div>
+                <div class="startscreen-subtitle">Press ENTER to start</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- GAME BOARD -->
+    <div class="screen">
+        <div class="screen-title">Game Board</div>
+        <div class="gameboard">
+            <div class="categories">
+                <div class="category">Geschichte</div>
+                <div class="category">Wissenschaft</div>
+                <div class="category">Musik</div>
+                <div class="category">Sport</div>
+                <div class="category">Film</div>
+            </div>
+
+            <div class="values-grid">
+                <div class="value-row">
+                    <button class="value-button">100</button>
+                    <button class="value-button">100</button>
+                    <button class="value-button answered">100</button>
+                    <button class="value-button">100</button>
+                    <button class="value-button">100</button>
+                </div>
+                <div class="value-row">
+                    <button class="value-button">200</button>
+                    <button class="value-button answered">200</button>
+                    <button class="value-button">200</button>
+                    <button class="value-button">200</button>
+                    <button class="value-button">200</button>
+                </div>
+                <div class="value-row">
+                    <button class="value-button">300</button>
+                    <button class="value-button">300</button>
+                    <button class="value-button">300</button>
+                    <button class="value-button answered">300</button>
+                    <button class="value-button">300</button>
+                </div>
+                <div class="value-row">
+                    <button class="value-button answered">400</button>
+                    <button class="value-button">400</button>
+                    <button class="value-button">400</button>
+                    <button class="value-button">400</button>
+                    <button class="value-button">400</button>
+                </div>
+                <div class="value-row">
+                    <button class="value-button">500</button>
+                    <button class="value-button">500</button>
+                    <button class="value-button answered">500</button>
+                    <button class="value-button">500</button>
+                    <button class="value-button">500</button>
+                </div>
+            </div>
+
+            <div class="team-info">
+                <div class="team-score">
+                    <div class="team-score-name" style="color: #00AA00;">Team 1 (Grün)</div>
+                    <div class="team-score-points">2.400</div>
+                </div>
+                <div class="team-score">
+                    <div class="team-score-name" style="color: #FF0000;">Team 2 (Rot)</div>
+                    <div class="team-score-points">1.800</div>
+                </div>
+                <div class="team-score">
+                    <div class="team-score-name" style="color: #AA00FF;">Team 3 (Lila)</div>
+                    <div class="team-score-points">1.200</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCORES -->
+    <div class="screen">
+        <div class="screen-title">Scores / Results</div>
+        <div class="scores">
+            <div class="scores-title">ERGEBNISSE</div>
+            <div class="scores-gold-line"></div>
+
+            <div class="scores-container">
+                <div class="score-bar-wrapper">
+                    <div class="score-bar height-3 winner"></div>
+                    <div class="team-name" style="color: #00AA00;">Team 1</div>
+                    <div class="team-points">3.200 Punkte</div>
+                </div>
+                <div class="score-bar-wrapper">
+                    <div class="score-bar height-2"></div>
+                    <div class="team-name" style="color: #FF0000;">Team 2</div>
+                    <div class="team-points">2.100 Punkte</div>
+                </div>
+                <div class="score-bar-wrapper">
+                    <div class="score-bar height-1"></div>
+                    <div class="team-name" style="color: #AA00FF;">Team 3</div>
+                    <div class="team-points">1.500 Punkte</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

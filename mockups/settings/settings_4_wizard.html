@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeopardy Settings - Wizard Steps</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #1a1a1a;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .concept-header {
+            background-color: #222;
+            border-bottom: 3px solid #DBAB51;
+            padding: 15px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            color: #DBAB51;
+        }
+
+        .concept-description {
+            background-color: #222;
+            padding: 10px 15px;
+            text-align: center;
+            font-size: 13px;
+            color: #C0C0D5;
+            border-bottom: 1px solid #444;
+        }
+
+        .screen {
+            width: 1400px;
+            margin: 30px auto;
+            background-color: #060CE9;
+            min-height: 800px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(219, 171, 81, 0.2);
+        }
+
+        /* HEADER */
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            border-bottom: 3px solid #DBAB51;
+            padding-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 42px;
+            color: #DBAB51;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        /* WIZARD PROGRESS */
+        .wizard-progress {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .step-indicator {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .step-number {
+            width: 70px;
+            height: 70px;
+            background-color: #0A10A0;
+            border: 3px solid #000A80;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: bold;
+            color: #C0C0D5;
+            transition: all 0.3s;
+        }
+
+        .step-indicator.active .step-number {
+            background-color: #DBAB51;
+            border-color: #DBAB51;
+            color: #060CE9;
+            box-shadow: 0 0 25px rgba(219, 171, 81, 0.6);
+        }
+
+        .step-indicator.completed .step-number {
+            background-color: #0A10A0;
+            border-color: #DBAB51;
+            color: #DBAB51;
+            font-weight: bold;
+        }
+
+        .step-label {
+            color: #C0C0D5;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: center;
+            width: 90px;
+        }
+
+        .step-indicator.active .step-label {
+            color: #DBAB51;
+            font-weight: bold;
+        }
+
+        .step-connector {
+            flex: 0 1 40px;
+            height: 2px;
+            background-color: #000A80;
+            margin-top: -45px;
+        }
+
+        .step-connector.active {
+            background-color: #DBAB51;
+        }
+
+        /* STEP CONTENT */
+        .step-content {
+            background-color: #0A15B8;
+            border: 2px solid #000A80;
+            border-left: 4px solid #DBAB51;
+            padding: 40px;
+            margin-bottom: 40px;
+            border-radius: 4px;
+        }
+
+        .step-title {
+            color: #DBAB51;
+            font-size: 26px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .step-description {
+            color: #C0C0D5;
+            font-size: 13px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .divider-line {
+            height: 2px;
+            background: linear-gradient(to right, #DBAB51, transparent);
+            margin-bottom: 30px;
+        }
+
+        /* STEP 1 - TEAMS */
+        .teams-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .team-card {
+            background-color: #0A10A0;
+            border: 2px solid #000A80;
+            padding: 25px;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .team-card:hover {
+            border-color: #DBAB51;
+            box-shadow: 0 0 15px rgba(219, 171, 81, 0.2);
+        }
+
+        .team-label {
+            color: #9999CC;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .team-input {
+            width: 100%;
+            background-color: transparent;
+            border: none;
+            border-bottom: 2px solid #DBAB51;
+            color: #DBAB51;
+            font-size: 13px;
+            font-weight: bold;
+            padding: 8px 0;
+            margin-bottom: 18px;
+        }
+
+        .team-input:focus {
+            outline: none;
+        }
+
+        .team-color {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .color-swatch {
+            width: 45px;
+            height: 45px;
+            border: 2px solid #DBAB51;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .color-swatch:hover {
+            box-shadow: 0 0 15px rgba(219, 171, 81, 0.5);
+            transform: scale(1.1);
+        }
+
+        .color-label {
+            color: #C0C0D5;
+            font-size: 12px;
+        }
+
+        .team-controls {
+            background-color: #0A10A0;
+            border: 2px solid #000A80;
+            padding: 20px;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .control-label {
+            color: #C0C0D5;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: bold;
+        }
+
+        .count-value {
+            background-color: #000A80;
+            color: #DBAB51;
+            width: 55px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 20px;
+            border: 2px solid #DBAB51;
+            border-radius: 3px;
+        }
+
+        .btn-small {
+            width: 50px;
+            height: 50px;
+            background-color: #DBAB51;
+            color: #060CE9;
+            border: none;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-radius: 3px;
+        }
+
+        .btn-small:hover {
+            background-color: #E8C76B;
+            box-shadow: 0 0 15px rgba(219, 171, 81, 0.5);
+        }
+
+        .key-info {
+            background-color: #000A80;
+            border-left: 3px solid #DBAB51;
+            padding: 15px;
+            font-size: 12px;
+            color: #C0C0D5;
+            line-height: 1.8;
+            border-radius: 3px;
+        }
+
+        /* STEP 2 - FRAGENSET */
+        .set-selector {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .set-list {
+            background-color: #0A10A0;
+            border: 2px solid #000A80;
+            padding: 20px;
+            border-radius: 4px;
+        }
+
+        .set-title {
+            color: #DBAB51;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .set-listbox {
+            border: 2px solid #000A80;
+            background-color: #060CE9;
+            height: 180px;
+            overflow-y: auto;
+            margin-bottom: 12px;
+            border-radius: 3px;
+        }
+
+        .set-item {
+            padding: 10px 12px;
+            color: #DBAB51;
+            border-bottom: 1px solid #000A80;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .set-item:hover {
+            background-color: #0B18FF;
+        }
+
+        .set-item.selected {
+            background-color: #DBAB51;
+            color: #060CE9;
+            font-weight: bold;
+        }
+
+        .btn-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-secondary {
+            flex: 1;
+            background-color: #555;
+            color: white;
+            border: none;
+            padding: 10px;
+            font-size: 11px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-radius: 3px;
+        }
+
+        .btn-secondary:hover {
+            background-color: #DBAB51;
+            color: #060CE9;
+        }
+
+        .set-editor {
+            background-color: #0A10A0;
+            border: 2px solid #000A80;
+            padding: 20px;
+            border-radius: 4px;
+        }
+
+        .form-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .form-label {
+            color: #C0C0D5;
+            font-size: 11px;
+            min-width: 90px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: bold;
+        }
+
+        .form-input {
+            flex: 1;
+            background-color: #0A10A0;
+            border: 2px solid #000A80;
+            color: #DBAB51;
+            padding: 10px;
+            font-size: 12px;
+            border-radius: 3px;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #DBAB51;
+            box-shadow: 0 0 8px rgba(219, 171, 81, 0.3);
+        }
+
+        .form-input::placeholder {
+            color: #9999CC;
+        }
+
+        .categories-wrapper {
+            background-color: #0A10A0;
+            border: 2px solid #000A80;
+            padding: 20px;
+            border-radius: 4px;
+        }
+
+        .cat-grid {
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            gap: 20px;
+        }
+
+        .cat-column {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .cat-title {
+            color: #DBAB51;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cat-listbox {
+            border: 2px solid #000A80;
+            background-color: #060CE9;
+            height: 220px;
+            overflow-y: auto;
+            border-radius: 3px;
+        }
+
+        .cat-item {
+            padding: 8px 12px;
+            color: #DBAB51;
+            border-bottom: 1px solid #000A80;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .cat-item:hover {
+            background-color: #0B18FF;
+        }
+
+        .cat-item.selected {
+            background-color: #DBAB51;
+            color: #060CE9;
+            font-weight: bold;
+        }
+
+        .cat-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-cat {
+            flex: 1;
+            background-color: #555;
+            color: white;
+            border: none;
+            padding: 8px;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-radius: 3px;
+        }
+
+        .btn-cat:hover {
+            background-color: #DBAB51;
+            color: #060CE9;
+        }
+
+        .questions-column {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .cat-name-input {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .cat-name-input input {
+            flex: 1;
+        }
+
+        .questions-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .question-row {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .question-value {
+            color: #DBAB51;
+            font-weight: bold;
+            font-size: 11px;
+            min-width: 40px;
+            text-align: right;
+        }
+
+        .question-input {
+            flex: 1;
+            background-color: #0A10A0;
+            border: 2px solid #000A80;
+            color: #DBAB51;
+            padding: 6px;
+            font-size: 10px;
+            border-radius: 3px;
+        }
+
+        .question-input:focus {
+            outline: none;
+            border-color: #DBAB51;
+            box-shadow: 0 0 6px rgba(219, 171, 81, 0.3);
+        }
+
+        .btn-save {
+            background-color: #DBAB51;
+            color: #060CE9;
+            border: none;
+            padding: 10px 20px;
+            font-size: 11px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-radius: 3px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            align-self: flex-start;
+            margin-top: 10px;
+        }
+
+        .btn-save:hover {
+            background-color: #E8C76B;
+            box-shadow: 0 0 20px rgba(219, 171, 81, 0.5);
+        }
+
+        /* STEP 3 - READY */
+        .ready-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            min-height: 350px;
+        }
+
+        .ready-icon {
+            font-size: 80px;
+            color: #DBAB51;
+        }
+
+        .ready-message {
+            text-align: center;
+            max-width: 600px;
+        }
+
+        .ready-message h3 {
+            color: #DBAB51;
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .ready-message p {
+            color: #C0C0D5;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* NAVIGATION */
+        .wizard-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 30px;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #000A80;
+        }
+
+        .btn-nav {
+            padding: 12px 30px;
+            font-size: 13px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            border-radius: 3px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.2s;
+        }
+
+        .btn-prev {
+            background-color: #555;
+            color: white;
+        }
+
+        .btn-prev:hover {
+            background-color: #777;
+        }
+
+        .btn-next {
+            background-color: #DBAB51;
+            color: #060CE9;
+            margin-left: auto;
+        }
+
+        .btn-next:hover {
+            background-color: #E8C76B;
+            box-shadow: 0 0 15px rgba(219, 171, 81, 0.4);
+        }
+
+        .btn-start {
+            background-color: #DBAB51;
+            color: #060CE9;
+            margin-left: auto;
+        }
+
+        .btn-start:hover {
+            background-color: #E8C76B;
+            box-shadow: 0 0 20px rgba(219, 171, 81, 0.6);
+            transform: scale(1.05);
+        }
+
+        .btn-nav:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="concept-header">Konzept 4: Wizard Steps</div>
+    <div class="concept-description">
+        Schritt-für-Schritt: Step 1 (Teams) → Step 2 (Fragenset) → Step 3 (Start). Step-Indikatoren mit Gold-Hervorhebung. Onboarding-Gefühl.
+    </div>
+
+    <div class="screen">
+        <!-- HEADER -->
+        <div class="header">
+            <h1>JEOPARDY! SETUP</h1>
+        </div>
+
+        <!-- WIZARD PROGRESS -->
+        <div class="wizard-progress">
+            <div class="step-indicator active" id="step1-indicator">
+                <div class="step-number">1</div>
+                <div class="step-label">Teams</div>
+            </div>
+            <div class="step-connector" id="connector1"></div>
+            <div class="step-indicator" id="step2-indicator">
+                <div class="step-number">2</div>
+                <div class="step-label">Fragenset</div>
+            </div>
+            <div class="step-connector" id="connector2"></div>
+            <div class="step-indicator" id="step3-indicator">
+                <div class="step-number">3</div>
+                <div class="step-label">Starten</div>
+            </div>
+        </div>
+
+        <!-- STEP 1 - TEAMS -->
+        <div id="step1" class="step-content">
+            <div class="step-title">Schritt 1: Teams einrichten</div>
+            <div class="step-description">
+                Erstelle oder bearbeite deine Teams. Gib jedem Team einen Namen und wähle eine Farbe.
+                Mit den +/- Buttons kannst du die Anzahl der Teams zwischen 2 und 6 anpassen.
+            </div>
+            <div class="divider-line"></div>
+
+            <div class="teams-grid">
+                <div class="team-card">
+                    <span class="team-label">Team 1</span>
+                    <input type="text" class="team-input" value="Team Grün" />
+                    <div class="team-color">
+                        <div class="color-swatch" style="background-color: #00AA00;"></div>
+                        <span class="color-label">Grün</span>
+                    </div>
+                </div>
+                <div class="team-card">
+                    <span class="team-label">Team 2</span>
+                    <input type="text" class="team-input" value="Team Rot" />
+                    <div class="team-color">
+                        <div class="color-swatch" style="background-color: #FF0000;"></div>
+                        <span class="color-label">Rot</span>
+                    </div>
+                </div>
+                <div class="team-card">
+                    <span class="team-label">Team 3</span>
+                    <input type="text" class="team-input" value="Team Lila" />
+                    <div class="team-color">
+                        <div class="color-swatch" style="background-color: #AA00FF;"></div>
+                        <span class="color-label">Lila</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="team-controls">
+                <div class="control-group">
+                    <span class="control-label">Anzahl:</span>
+                    <button class="btn-small">-</button>
+                    <div class="count-value">3</div>
+                    <button class="btn-small">+</button>
+                </div>
+
+                <div class="key-info">
+                    <strong style="color: #DBAB51;">Tasten im Spiel:</strong> 1=Grün | 2=Rot | 3=Lila | 4=Niemand
+                </div>
+            </div>
+        </div>
+
+        <!-- STEP 2 - FRAGENSET (hidden by default) -->
+        <div id="step2" class="step-content" style="display: none;">
+            <div class="step-title">Schritt 2: Fragenset konfigurieren</div>
+            <div class="step-description">
+                Wähle ein vorhandenes Fragenset oder erstelle ein neues.
+                Bearbeite die Kategorien und Fragen nach Bedarf.
+            </div>
+            <div class="divider-line"></div>
+
+            <div class="set-selector">
+                <div class="set-list">
+                    <span class="set-title">Verfügbare Sets</span>
+                    <div class="set-listbox">
+                        <div class="set-item selected">ERGO Team Event 2025</div>
+                        <div class="set-item">Allgemeinwissen Quiz</div>
+                        <div class="set-item">Fußball Spezial</div>
+                    </div>
+                    <div class="btn-row">
+                        <button class="btn-secondary">Neu</button>
+                        <button class="btn-secondary">Löschen</button>
+                    </div>
+                </div>
+
+                <div class="set-editor">
+                    <div class="form-group">
+                        <span class="form-label">Name:</span>
+                        <input type="text" class="form-input" value="ERGO Team Event 2025" />
+                    </div>
+                    <div class="form-group">
+                        <span class="form-label">Werte:</span>
+                        <input type="text" class="form-input" value="100, 200, 400, 600, 1000" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="categories-wrapper">
+                <span class="set-title">Kategorien & Fragen</span>
+                <div class="cat-grid">
+                    <div class="cat-column">
+                        <div class="cat-listbox">
+                            <div class="cat-item selected">World of Ergo</div>
+                            <div class="cat-item">Indian</div>
+                            <div class="cat-item">German</div>
+                            <div class="cat-item">Products</div>
+                        </div>
+                        <div class="cat-buttons">
+                            <button class="btn-cat">+ Kat.</button>
+                            <button class="btn-cat">- Kat.</button>
+                        </div>
+                    </div>
+
+                    <div class="questions-column">
+                        <div class="cat-name-input">
+                            <span class="form-label" style="min-width: auto;">Kat-Name:</span>
+                            <input type="text" class="form-input" value="World of Ergo" />
+                        </div>
+                        <div class="questions-list">
+                            <div class="question-row">
+                                <span class="question-value">100:</span>
+                                <input type="text" class="question-input" value="Wieviele Zeichen..." />
+                            </div>
+                            <div class="question-row">
+                                <span class="question-value">200:</span>
+                                <input type="text" class="question-input" value="Wofür steht ET&S?" />
+                            </div>
+                            <div class="question-row">
+                                <span class="question-value">400:</span>
+                                <input type="text" class="question-input" value="Was konnte man..." />
+                            </div>
+                            <div class="question-row">
+                                <span class="question-value">600:</span>
+                                <input type="text" class="question-input" value="Wieviele Meter..." />
+                            </div>
+                            <div class="question-row">
+                                <span class="question-value">1000:</span>
+                                <input type="text" class="question-input" value="Gründungsjahr?" />
+                            </div>
+                        </div>
+                        <button class="btn-save">Speichern</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- STEP 3 - READY (hidden by default) -->
+        <div id="step3" class="step-content" style="display: none;">
+            <div class="step-title">Schritt 3: Bereit zum Start!</div>
+            <div class="step-description">
+                Alle Einstellungen sind konfiguriert. Klicke auf "SPIEL STARTEN" um das Jeopardy-Spiel zu starten.
+            </div>
+            <div class="divider-line"></div>
+
+            <div class="ready-content">
+                <div class="ready-icon">✓</div>
+                <div class="ready-message">
+                    <h3>Deine Konfiguration ist bereit!</h3>
+                    <p>
+                        3 Teams sind eingerichtet (Grün, Rot, Lila) und das Fragenset "ERGO Team Event 2025"
+                        mit 4 Kategorien ist ausgewählt. Das Spiel kann jetzt starten!
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- NAVIGATION -->
+        <div class="wizard-nav">
+            <button class="btn-nav btn-prev" onclick="previousStep()" id="btnPrev" disabled>← Zurück</button>
+            <button class="btn-nav btn-next" onclick="nextStep()" id="btnNext">Weiter →</button>
+            <button class="btn-nav btn-start" onclick="startGame()" id="btnStart" style="display: none;">>>> SPIEL STARTEN <<<</button>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 1;
+        const totalSteps = 3;
+
+        function updateWizard() {
+            // Hide all steps
+            for (let i = 1; i <= totalSteps; i++) {
+                document.getElementById(`step${i}`).style.display = 'none';
+                document.getElementById(`step${i}-indicator`).classList.remove('active');
+                if (i > 1) document.getElementById(`step${i}-indicator`).classList.remove('completed');
+            }
+
+            // Show current step
+            document.getElementById(`step${currentStep}`).style.display = 'block';
+            document.getElementById(`step${currentStep}-indicator`).classList.add('active');
+
+            // Mark previous steps as completed
+            for (let i = 1; i < currentStep; i++) {
+                document.getElementById(`step${i}-indicator`).classList.add('completed');
+                document.getElementById(`step${i}-indicator`).classList.remove('active');
+                if (i > 1) document.getElementById(`connector${i-1}`).classList.add('active');
+            }
+
+            // Update connector
+            if (currentStep > 1) {
+                document.getElementById(`connector${currentStep-1}`).classList.add('active');
+            }
+
+            // Update buttons
+            document.getElementById('btnPrev').disabled = currentStep === 1;
+            document.getElementById('btnPrev').style.display = currentStep === 1 ? 'none' : 'block';
+            document.getElementById('btnNext').style.display = currentStep === totalSteps ? 'none' : 'block';
+            document.getElementById('btnStart').style.display = currentStep === totalSteps ? 'block' : 'none';
+        }
+
+        function nextStep() {
+            if (currentStep < totalSteps) {
+                currentStep++;
+                updateWizard();
+            }
+        }
+
+        function previousStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                updateWizard();
+            }
+        }
+
+        function startGame() {
+            alert('Spiel wird gestartet...');
+        }
+
+        // Initialize
+        updateWizard();
+    </script>
+</body>
+</html>

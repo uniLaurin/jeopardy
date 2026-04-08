@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeopardy Settings - Sidebar Classic</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #1a1a1a;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .concept-header {
+            background-color: #222;
+            border-bottom: 3px solid #DBAB51;
+            padding: 15px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            color: #DBAB51;
+        }
+
+        .concept-description {
+            background-color: #222;
+            padding: 10px 15px;
+            text-align: center;
+            font-size: 13px;
+            color: #C0C0D5;
+            border-bottom: 1px solid #444;
+        }
+
+        .screen {
+            width: 1400px;
+            margin: 30px auto;
+            background-color: #060CE9;
+            min-height: 700px;
+            padding: 40px;
+            box-shadow: 0 8px 32px rgba(219, 171, 81, 0.2);
+            position: relative;
+        }
+
+        /* HEADER */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 3px solid #DBAB51;
+            padding-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 42px;
+            color: #DBAB51;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        /* MAIN LAYOUT - 2 COLUMN */
+        .main-layout {
+            display: flex;
+            gap: 30px;
+            min-height: 550px;
+        }
+
+        .sidebar {
+            flex: 0 0 25%;
+            background-color: #0A15B8;
+            border: 2px solid #000A80;
+            border-left: 3px solid #DBAB51;
+            padding: 25px;
+            box-shadow: inset 0 2px 4px rgba(219, 171, 81, 0.1);
+        }
+
+        .sidebar h2 {
+            color: #DBAB51;
+            font-size: 22px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .divider-line {
+            height: 2px;
+            background-color: #DBAB51;
+            margin-bottom: 20px;
+        }
+
+        .content-panel {
+            flex: 1;
+            background-color: #0A15B8;
+            border: 2px solid #000A80;
+            padding: 25px;
+            box-shadow: inset 0 2px 4px rgba(219, 171, 81, 0.1);
+        }
+
+        .content-panel h2 {
+            color: #DBAB51;
+            font-size: 22px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        /* TEAMS SIDEBAR */
+        .team-control {
+            margin-bottom: 25px;
+        }
+
+        .control-label {
+            color: #C0C0D5;
+            font-size: 13px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .team-count-display {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .count-value {
+            background-color: #0A10A0;
+            color: #DBAB51;
+            width: 50px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 20px;
+            border: 2px solid #DBAB51;
+            border-radius: 3px;
+        }
+
+        .btn-small {
+            width: 45px;
+            height: 45px;
+            background-color: #DBAB51;
+            color: #060CE9;
+            border: none;
+            font-weight: bold;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-radius: 3px;
+        }
+
+        .btn-small:hover {
+            background-color: #E8C76B;
+            box-shadow: 0 0 15px rgba(219, 171, 81, 0.5);
+        }
+
+        .team-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .team-item {
+            background-color: #0A10A0;
+            border: 2px solid #000A80;
+            padding: 12px;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .team-name-input {
+            flex: 1;
+            background-color: transparent;
+            border: none;
+            color: #DBAB51;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .team-name-input::placeholder {
+            color: #9999CC;
+        }
+
+        .team-color-swatch {
+            width: 30px;
+            height: 30px;
+            border: 2px solid #DBAB51;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .team-color-swatch:hover {
+            box-shadow: 0 0 10px rgba(219, 171, 81, 0.6);
+            transform: scale(1.1);
+        }
+
+        .key-info {
+            background-color: #0A10A0;
+            border-left: 3px solid #DBAB51;
+            padding: 12px;
+            margin-top: 20px;
+            font-size: 11px;
+            color: #C0C0D5;
+            line-height: 1.6;
+        }
+
+        /* FRAGENSET PANEL */
+        .section-group {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            color: #DBAB51;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .set-listbox-wrapper {
+            border: 2px solid #000A80;
+            background-color: #0A10A0;
+            height: 120px;
+            overflow-y: auto;
+            margin-bottom: 10px;
+            border-radius: 3px;
+        }
+
+        .set-item {
+            padding: 8px 12px;
+            color: #DBAB51;
+            border-bottom: 1px solid #000A80;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .set-item:hover {
+            background-color: #0B18FF;
+        }
+
+        .set-item.selected {
+            background-color: #DBAB51;
+            color: #060CE9;
+            font-weight: bold;
+        }
+
+        .btn-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .btn-secondary {
+            flex: 1;
+            background-color: #555;
+            color: white;
+            border: none;
+            padding: 10px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+
+        .btn-secondary:hover {
+            background-color: #DBAB51;
+            color: #060CE9;
+        }
+
+        .form-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .form-label {
+            color: #C0C0D5;
+            font-size: 12px;
+            min-width: 80px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-input {
+            flex: 1;
+            background-color: #0A10A0;
+            border: 2px solid #000A80;
+            color: #DBAB51;
+            padding: 8px;
+            font-size: 12px;
+            border-radius: 3px;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #DBAB51;
+            box-shadow: 0 0 8px rgba(219, 171, 81, 0.3);
+        }
+
+        .form-input::placeholder {
+            color: #9999CC;
+        }
+
+        .category-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .cat-listbox-wrapper {
+            border: 2px solid #000A80;
+            background-color: #0A10A0;
+            height: 180px;
+            overflow-y: auto;
+            border-radius: 3px;
+            width: 200px;
+        }
+
+        .cat-item {
+            padding: 8px 12px;
+            color: #DBAB51;
+            border-bottom: 1px solid #000A80;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .cat-item:hover {
+            background-color: #0B18FF;
+        }
+
+        .cat-item.selected {
+            background-color: #DBAB51;
+            color: #060CE9;
+            font-weight: bold;
+        }
+
+        .cat-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            justify-content: flex-start;
+        }
+
+        .btn-cat {
+            width: 100px;
+            padding: 8px;
+            background-color: #555;
+            color: white;
+            border: none;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+
+        .btn-cat:hover {
+            background-color: #DBAB51;
+            color: #060CE9;
+        }
+
+        .questions-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: 280px;
+            overflow-y: auto;
+        }
+
+        .question-input-wrapper {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .question-value {
+            color: #DBAB51;
+            font-weight: bold;
+            font-size: 13px;
+            min-width: 40px;
+            text-align: right;
+        }
+
+        .question-input {
+            flex: 1;
+            background-color: #0A10A0;
+            border: 2px solid #000A80;
+            color: #DBAB51;
+            padding: 6px;
+            font-size: 11px;
+            border-radius: 3px;
+        }
+
+        .question-input:focus {
+            outline: none;
+            border-color: #DBAB51;
+            box-shadow: 0 0 6px rgba(219, 171, 81, 0.3);
+        }
+
+        .question-input::placeholder {
+            color: #9999CC;
+        }
+
+        .btn-save {
+            background-color: #DBAB51;
+            color: #060CE9;
+            border: none;
+            padding: 12px 30px;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-radius: 3px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 10px;
+        }
+
+        .btn-save:hover {
+            background-color: #E8C76B;
+            box-shadow: 0 0 20px rgba(219, 171, 81, 0.5);
+        }
+
+        /* FOOTER */
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            padding-top: 20px;
+            border-top: 3px solid #DBAB51;
+        }
+
+        .btn-start {
+            background-color: #DBAB51;
+            color: #060CE9;
+            border: none;
+            padding: 15px 50px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-radius: 3px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 4px 12px rgba(219, 171, 81, 0.3);
+        }
+
+        .btn-start:hover {
+            background-color: #E8C76B;
+            box-shadow: 0 6px 20px rgba(219, 171, 81, 0.6);
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="concept-header">Konzept 1: Sidebar Classic</div>
+    <div class="concept-description">
+        Schmale Sidebar links (25%) für Teams, großes Fragenset-Panel rechts (75%). Klare 2-Spalten-Trennung mit Gold-Linie. Kompakte Teams, großer Editor-Bereich.
+    </div>
+
+    <div class="screen">
+        <!-- HEADER -->
+        <div class="header">
+            <h1>JEOPARDY! SETUP</h1>
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="main-layout">
+            <!-- SIDEBAR - TEAMS -->
+            <div class="sidebar">
+                <h2>TEAMS</h2>
+                <div class="divider-line"></div>
+
+                <div class="team-control">
+                    <span class="control-label">Anzahl:</span>
+                    <div class="team-count-display">
+                        <button class="btn-small">-</button>
+                        <div class="count-value">3</div>
+                        <button class="btn-small">+</button>
+                    </div>
+                </div>
+
+                <div class="team-list">
+                    <div class="team-item">
+                        <input type="text" class="team-name-input" value="Team Grün" />
+                        <div class="team-color-swatch" style="background-color: #00AA00;"></div>
+                    </div>
+                    <div class="team-item">
+                        <input type="text" class="team-name-input" value="Team Rot" />
+                        <div class="team-color-swatch" style="background-color: #FF0000;"></div>
+                    </div>
+                    <div class="team-item">
+                        <input type="text" class="team-name-input" value="Team Lila" />
+                        <div class="team-color-swatch" style="background-color: #AA00FF;"></div>
+                    </div>
+                </div>
+
+                <div class="key-info">
+                    <strong style="color: #DBAB51;">Tasten im Spiel:</strong><br/>
+                    1 = Team Grün<br/>
+                    2 = Team Rot<br/>
+                    3 = Team Lila<br/>
+                    4 = Niemand
+                </div>
+            </div>
+
+            <!-- CONTENT PANEL - FRAGENSET -->
+            <div class="content-panel">
+                <h2>FRAGENSET</h2>
+                <div class="divider-line"></div>
+
+                <!-- Set Selector -->
+                <div class="section-group">
+                    <span class="section-title">Verfügbare Sets</span>
+                    <div class="set-listbox-wrapper">
+                        <div class="set-item selected">ERGO Team Event 2025</div>
+                        <div class="set-item">Allgemeinwissen Quiz</div>
+                        <div class="set-item">Fußball Spezial</div>
+                    </div>
+                    <div class="btn-row">
+                        <button class="btn-secondary">Neu</button>
+                        <button class="btn-secondary">Löschen</button>
+                    </div>
+                </div>
+
+                <!-- Set Editor -->
+                <div class="section-group">
+                    <div class="form-group">
+                        <span class="form-label">Name:</span>
+                        <input type="text" class="form-input" value="ERGO Team Event 2025" />
+                    </div>
+                    <div class="form-group">
+                        <span class="form-label">Werte:</span>
+                        <input type="text" class="form-input" value="100, 200, 400, 600, 1000" />
+                    </div>
+                </div>
+
+                <!-- Categories & Questions -->
+                <div class="section-group">
+                    <span class="section-title">Kategorien & Fragen</span>
+                    <div class="category-row">
+                        <div class="cat-listbox-wrapper">
+                            <div class="cat-item selected">World of Ergo</div>
+                            <div class="cat-item">Indian</div>
+                            <div class="cat-item">German</div>
+                            <div class="cat-item">Products</div>
+                        </div>
+                        <div class="cat-buttons">
+                            <button class="btn-cat">+ Kat.</button>
+                            <button class="btn-cat">- Kat.</button>
+                        </div>
+                        <div class="questions-panel">
+                            <div class="form-group">
+                                <span class="form-label">Kat-Name:</span>
+                                <input type="text" class="form-input" value="World of Ergo" />
+                            </div>
+                            <div class="question-input-wrapper">
+                                <span class="question-value">100:</span>
+                                <input type="text" class="question-input" placeholder="Frage 100" value="Wieviele Zeichen muss..." />
+                            </div>
+                            <div class="question-input-wrapper">
+                                <span class="question-value">200:</span>
+                                <input type="text" class="question-input" placeholder="Frage 200" value="Wofür steht ET&S?" />
+                            </div>
+                            <div class="question-input-wrapper">
+                                <span class="question-value">400:</span>
+                                <input type="text" class="question-input" placeholder="Frage 400" value="Was konnte man heute..." />
+                            </div>
+                            <div class="question-input-wrapper">
+                                <span class="question-value">600:</span>
+                                <input type="text" class="question-input" placeholder="Frage 600" value="Wieviele Meter..." />
+                            </div>
+                            <div class="question-input-wrapper">
+                                <span class="question-value">1000:</span>
+                                <input type="text" class="question-input" placeholder="Frage 1000" value="Gründungsjahr ERGO?" />
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn-save">Speichern</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+            <button class="btn-start">>>> SPIEL STARTEN <<<</button>
+        </div>
+    </div>
+</body>
+</html>
