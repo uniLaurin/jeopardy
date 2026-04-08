@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeopardy - Modern Dark</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+            background: linear-gradient(135deg, #0A0A1A 0%, #0F0F2E 100%);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .concept-header {
+            background-color: rgba(15, 15, 46, 0.8);
+            border-bottom: 3px solid #00D4FF;
+            padding: 15px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #00D4FF;
+            backdrop-filter: blur(10px);
+        }
+
+        .screen {
+            width: 1200px;
+            margin: 30px auto;
+            border: 2px solid #00D4FF;
+            background: rgba(15, 15, 46, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            min-height: 600px;
+            padding: 40px;
+            box-shadow: 0 8px 32px rgba(0, 212, 255, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+        }
+
+        .screen-title {
+            text-align: center;
+            color: #00D4FF;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 40px;
+            opacity: 0.8;
+        }
+
+        /* STARTSCREEN */
+        .startscreen {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            min-height: 650px;
+            background: radial-gradient(ellipse at center, #1a1a3a 0%, #0A0A1A 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .startscreen::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.05) 0%, transparent 70%);
+            animation: float 20s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(50px, 50px); }
+        }
+
+        .startscreen-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .startscreen h1 {
+            font-size: 120px;
+            font-weight: 700;
+            color: #00D4FF;
+            letter-spacing: 8px;
+            margin-bottom: 30px;
+            text-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
+        }
+
+        .cyan-line {
+            width: 400px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #00D4FF, transparent);
+            margin: 30px auto;
+            box-shadow: 0 0 20px #00D4FF;
+        }
+
+        .startscreen-subtitle {
+            font-size: 22px;
+            color: #00D4FF;
+            margin-top: 40px;
+            animation: blink 1.5s infinite;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.2; }
+        }
+
+        /* GAME BOARD */
+        .gameboard {
+            background: transparent;
+        }
+
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .category {
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.4);
+            backdrop-filter: blur(10px);
+            padding: 15px;
+            text-align: center;
+            font-weight: 600;
+            color: #00D4FF;
+            font-size: 16px;
+            min-height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 212, 255, 0.1), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+        }
+
+        .value-row {
+            display: contents;
+        }
+
+        .value-button {
+            background: rgba(0, 212, 255, 0.08);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            color: #00D4FF;
+            font-size: 34px;
+            font-weight: 700;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0, 212, 255, 0.08);
+        }
+
+        .value-button:hover {
+            background: rgba(0, 212, 255, 0.15);
+            border-color: rgba(0, 212, 255, 0.6);
+            box-shadow: 0 8px 30px rgba(0, 212, 255, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .value-button.answered {
+            background: rgba(50, 50, 80, 0.6);
+            border-color: rgba(100, 100, 120, 0.3);
+            color: #505080;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .value-button.answered:hover {
+            background: rgba(50, 50, 80, 0.6);
+            transform: none;
+        }
+
+        .team-info {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(0, 212, 255, 0.2);
+        }
+
+        .team-score {
+            text-align: center;
+            color: white;
+        }
+
+        .team-score-name {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #00D4FF;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .team-score-points {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        /* SCORES */
+        .scores {
+            background: transparent;
+            padding: 40px;
+        }
+
+        .scores-title {
+            text-align: center;
+            font-size: 48px;
+            font-weight: 700;
+            color: #00D4FF;
+            margin-bottom: 40px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+        }
+
+        .scores-cyan-line {
+            width: 300px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00D4FF, transparent);
+            margin: 0 auto 50px;
+            box-shadow: 0 0 15px #00D4FF;
+        }
+
+        .scores-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 60px;
+            min-height: 300px;
+            margin-bottom: 40px;
+        }
+
+        .score-bar-wrapper {
+            text-align: center;
+            position: relative;
+            flex: 1;
+            max-width: 180px;
+        }
+
+        .score-bar {
+            background: linear-gradient(180deg, #00D4FF 0%, #0066AA 100%);
+            border: 1px solid rgba(0, 212, 255, 0.4);
+            border-radius: 8px;
+            margin: 0 auto 15px;
+            transition: all 0.4s;
+            box-shadow: 0 8px 25px rgba(0, 212, 255, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+            width: 90px;
+            backdrop-filter: blur(10px);
+        }
+
+        .score-bar.height-3 { height: 160px; }
+        .score-bar.height-2 { height: 110px; }
+        .score-bar.height-1 { height: 55px; }
+
+        .score-bar.winner {
+            border: 2px solid #00D4FF;
+            box-shadow: 0 0 40px rgba(0, 212, 255, 0.6), inset 0 0 20px rgba(0, 212, 255, 0.15);
+        }
+
+        .score-bar.winner::after {
+            content: 'GEWINNER!';
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #00D4FF;
+            font-weight: 700;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        }
+
+        .team-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #00D4FF;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .team-points {
+            font-size: 22px;
+            font-weight: 700;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="concept-header">
+        Mockup 2: Modern Dark - Dunkles Theme mit Electric Cyan, Glassmorphism und minimalistischem Tech-Design
+    </div>
+
+    <!-- STARTSCREEN -->
+    <div class="screen">
+        <div class="screen-title">Startscreen</div>
+        <div class="startscreen">
+            <div class="startscreen-content">
+                <h1>JEOPARDY!</h1>
+                <div class="cyan-line"></div>
+                <div class="startscreen-subtitle">press enter to start</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- GAME BOARD -->
+    <div class="screen">
+        <div class="screen-title">Game Board</div>
+        <div class="gameboard">
+            <div class="categories">
+                <div class="category">Geschichte</div>
+                <div class="category">Wissenschaft</div>
+                <div class="category">Musik</div>
+                <div class="category">Sport</div>
+                <div class="category">Film</div>
+            </div>
+
+            <div class="values-grid">
+                <div class="value-row">
+                    <button class="value-button">100</button>
+                    <button class="value-button">100</button>
+                    <button class="value-button answered">100</button>
+                    <button class="value-button">100</button>
+                    <button class="value-button">100</button>
+                </div>
+                <div class="value-row">
+                    <button class="value-button">200</button>
+                    <button class="value-button answered">200</button>
+                    <button class="value-button">200</button>
+                    <button class="value-button">200</button>
+                    <button class="value-button">200</button>
+                </div>
+                <div class="value-row">
+                    <button class="value-button">300</button>
+                    <button class="value-button">300</button>
+                    <button class="value-button">300</button>
+                    <button class="value-button answered">300</button>
+                    <button class="value-button">300</button>
+                </div>
+                <div class="value-row">
+                    <button class="value-button answered">400</button>
+                    <button class="value-button">400</button>
+                    <button class="value-button">400</button>
+                    <button class="value-button">400</button>
+                    <button class="value-button">400</button>
+                </div>
+                <div class="value-row">
+                    <button class="value-button">500</button>
+                    <button class="value-button">500</button>
+                    <button class="value-button answered">500</button>
+                    <button class="value-button">500</button>
+                    <button class="value-button">500</button>
+                </div>
+            </div>
+
+            <div class="team-info">
+                <div class="team-score">
+                    <div class="team-score-name">Team 1</div>
+                    <div class="team-score-points">2.400</div>
+                </div>
+                <div class="team-score">
+                    <div class="team-score-name">Team 2</div>
+                    <div class="team-score-points">1.800</div>
+                </div>
+                <div class="team-score">
+                    <div class="team-score-name">Team 3</div>
+                    <div class="team-score-points">1.200</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCORES -->
+    <div class="screen">
+        <div class="screen-title">Scores / Results</div>
+        <div class="scores">
+            <div class="scores-title">ERGEBNISSE</div>
+            <div class="scores-cyan-line"></div>
+
+            <div class="scores-container">
+                <div class="score-bar-wrapper">
+                    <div class="score-bar height-3 winner"></div>
+                    <div class="team-name">Team 1</div>
+                    <div class="team-points">3.200 Punkte</div>
+                </div>
+                <div class="score-bar-wrapper">
+                    <div class="score-bar height-2"></div>
+                    <div class="team-name">Team 2</div>
+                    <div class="team-points">2.100 Punkte</div>
+                </div>
+                <div class="score-bar-wrapper">
+                    <div class="score-bar height-1"></div>
+                    <div class="team-name">Team 3</div>
+                    <div class="team-points">1.500 Punkte</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
