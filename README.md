@@ -38,3 +38,4 @@ Dieses Projekt ist ein vollständig ausgearbeitetes **Jeopardy-Quizspiel**. Es f
 | `1` … `N` | Team, das die Frage korrekt beantwortet hat |
 | `N+1` | Niemand — Punkte werden abgezogen |
 | `Esc` | Schließt den aktuellen Screen |
+|!| Absatz beim beschreiben der Fragen in den settings|
