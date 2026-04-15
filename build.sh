@@ -108,15 +108,56 @@ if [ "$(uname)" = "Darwin" ] && [ -d "dist/Jeopardy.app" ]; then
     echo -e "${GREEN}✓ Signiert${NC}" || \
     echo -e "${YELLOW}⚠ codesign übersprungen${NC}"
 
+  # Release-Ordner mit App + Fix-Script + Liesmich
+  echo "→ Erstelle Release-Paket..."
+  RELEASE_DIR="dist/Jeopardy-macOS-$(uname -m)"
+  rm -rf "$RELEASE_DIR"
+  mkdir -p "$RELEASE_DIR"
+  cp -R dist/Jeopardy.app "$RELEASE_DIR/"
+
+  # Fix-Script (entfernt Gatekeeper-Quarantäne)
+  cat > "$RELEASE_DIR/Fix-Jeopardy.command" <<'EOF'
+#!/bin/bash
+cd "$(dirname "$0")"
+echo ""
+echo "Entferne Quarantäne-Flag von Jeopardy.app..."
+xattr -cr Jeopardy.app
+echo ""
+echo "✓ Fertig! Jeopardy.app kann jetzt per Doppelklick gestartet werden."
+echo ""
+read -p "Drücke Enter zum Schließen..."
+EOF
+  chmod +x "$RELEASE_DIR/Fix-Jeopardy.command"
+
+  # Liesmich
+  cat > "$RELEASE_DIR/LIESMICH.txt" <<'EOF'
+Jeopardy – Installationsanleitung (macOS)
+==========================================
+
+macOS blockiert nicht signierte Apps aus dem Internet.
+Darum einmalig diese Schritte ausführen:
+
+1. Rechtsklick auf "Fix-Jeopardy.command"
+   → "Öffnen" wählen
+   → im Dialog nochmal "Öffnen" klicken
+   → Terminal-Fenster erscheint, Enter drücken zum Schließen
+
+2. Jetzt Jeopardy.app per Doppelklick starten – fertig!
+
+Alternative (ohne Fix-Script):
+  Terminal öffnen und eingeben:
+  xattr -cr /Pfad/zu/Jeopardy.app
+
+Viel Spaß beim Spielen!
+EOF
+
   # ZIP mit ditto (behält .app-Struktur + macOS-Metadaten)
   echo "→ Erstelle ZIP mit ditto..."
   ZIP_NAME="Jeopardy-macOS-$(uname -m).zip"
   rm -f "dist/$ZIP_NAME"
-  (cd dist && ditto -c -k --sequesterRsrc --keepParent Jeopardy.app "$ZIP_NAME")
+  (cd dist && ditto -c -k --sequesterRsrc --keepParent "Jeopardy-macOS-$(uname -m)" "$ZIP_NAME")
   echo -e "${GREEN}✓ ZIP: dist/$ZIP_NAME${NC}"
-  echo ""
-  echo "  Nutzer-Anleitung bei Gatekeeper-Warnung:"
-  echo "  xattr -cr /Pfad/zu/Jeopardy.app"
+  echo "  Enthält: Jeopardy.app + Fix-Jeopardy.command + LIESMICH.txt"
 elif [ -d "dist/Jeopardy" ]; then
   echo -e "${GREEN}  ✓ Build erfolgreich! ($(uname -m))${NC}"
   echo "  Ordner: dist/Jeopardy/"

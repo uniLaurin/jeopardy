@@ -1,0 +1,18 @@
+Jeopardy – Installationsanleitung (macOS)
+==========================================
+
+macOS blockiert nicht signierte Apps aus dem Internet.
+Darum einmalig diese Schritte ausführen:
+
+1. Rechtsklick auf "Fix-Jeopardy.command"
+   → "Öffnen" wählen
+   → im Dialog nochmal "Öffnen" klicken
+   → Terminal-Fenster erscheint, Enter drücken zum Schließen
+
+2. Jetzt Jeopardy.app per Doppelklick starten – fertig!
+
+Alternative (ohne Fix-Script):
+  Terminal öffnen und eingeben:
+  xattr -cr /Pfad/zu/Jeopardy.app
+
+Viel Spaß beim Spielen!
