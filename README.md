@@ -29,6 +29,16 @@ Dieses Projekt ist ein vollständig ausgearbeitetes **Jeopardy-Quizspiel**. Es f
 
 </div>
 
+### macOS: Gatekeeper-Hinweis
+
+Da die App nicht mit einer Apple Developer ID signiert ist, blockiert macOS sie nach dem Download. Einmalig im Terminal ausführen, um die Quarantäne zu entfernen:
+
+```bash
+xattr -cr ~/Downloads/Jeopardy.app
+```
+
+Danach per Doppelklick starten.
+
 
 
 ## Steuerung im Spiel
