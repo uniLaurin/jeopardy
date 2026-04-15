@@ -100,9 +100,23 @@ echo "========================================="
 if [ "$(uname)" = "Darwin" ] && [ -d "dist/Jeopardy.app" ]; then
   echo -e "${GREEN}  ✓ Build erfolgreich! ($(uname -m))${NC}"
   echo "  App: dist/Jeopardy.app"
+
+  # Ad-hoc signieren (entfernt "beschädigt"-Fehler auf Ziel-Macs)
   echo ""
-  echo "  Auf dem Ziel-Mac Quarantine-Flag entfernen:"
-  echo "  xattr -d com.apple.quarantine dist/Jeopardy.app"
+  echo "→ Ad-hoc Signatur..."
+  codesign --force --deep -s - dist/Jeopardy.app 2>/dev/null && \
+    echo -e "${GREEN}✓ Signiert${NC}" || \
+    echo -e "${YELLOW}⚠ codesign übersprungen${NC}"
+
+  # ZIP mit ditto (behält .app-Struktur + macOS-Metadaten)
+  echo "→ Erstelle ZIP mit ditto..."
+  ZIP_NAME="Jeopardy-macOS-$(uname -m).zip"
+  rm -f "dist/$ZIP_NAME"
+  (cd dist && ditto -c -k --sequesterRsrc --keepParent Jeopardy.app "$ZIP_NAME")
+  echo -e "${GREEN}✓ ZIP: dist/$ZIP_NAME${NC}"
+  echo ""
+  echo "  Nutzer-Anleitung bei Gatekeeper-Warnung:"
+  echo "  xattr -cr /Pfad/zu/Jeopardy.app"
 elif [ -d "dist/Jeopardy" ]; then
   echo -e "${GREEN}  ✓ Build erfolgreich! ($(uname -m))${NC}"
   echo "  Ordner: dist/Jeopardy/"
