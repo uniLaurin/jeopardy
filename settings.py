@@ -15,6 +15,7 @@ import tkinter as tk
 import resources as r
 
 # Farbkonstanten aus dem zentralen Ressourcen-Modul laden
+# Werden in run() per _rebind_colors() aus r.* aktualisiert (Theme-Support)
 BLUE = r.BLUE
 GOLD = r.GOLD
 DARK_BLUE = r.DARK_BLUE
@@ -24,9 +25,25 @@ HOVER_GOLD = r.HOVER_GOLD
 ACTIVE_GOLD = r.ACTIVE_GOLD
 LABEL_GRAY = r.LABEL_GRAY
 
-# Inaktive Tab-Farbe (leicht dunkler als CARD_BG für deutlichen Kontrast)
-TAB_INACTIVE_BG = "#0A10A0"
-TAB_HOVER_BG = "#0B18FF"
+# Inaktive Tab-Farbe (wird in _rebind_colors aus dem Theme abgeleitet)
+TAB_INACTIVE_BG = r.DARK_BLUE
+TAB_HOVER_BG = r.CARD_BG
+
+
+def _rebind_colors():
+    """Aktualisiert alle lokalen Farb-Aliase aus r.* (nach Theme-Wechsel)."""
+    global BLUE, GOLD, DARK_BLUE, CARD_BG, BORDER_BLUE
+    global HOVER_GOLD, ACTIVE_GOLD, LABEL_GRAY, TAB_INACTIVE_BG, TAB_HOVER_BG
+    BLUE = r.BLUE
+    GOLD = r.GOLD
+    DARK_BLUE = r.DARK_BLUE
+    CARD_BG = r.CARD_BG
+    BORDER_BLUE = r.BORDER_BLUE
+    HOVER_GOLD = r.HOVER_GOLD
+    ACTIVE_GOLD = r.ACTIVE_GOLD
+    LABEL_GRAY = r.LABEL_GRAY
+    TAB_INACTIVE_BG = r.DARK_BLUE
+    TAB_HOVER_BG = r.CARD_BG
 
 
 # ---------------------------------------------------------------------------
@@ -97,6 +114,7 @@ class SettingsScreen:
     """Tabbed Settings-Screen mit drei Tabs: TEAMS, FRAGENSET, START."""
 
     def __init__(self, root):
+        _rebind_colors()
         self.root = root
         self.root.configure(bg=BLUE)
         self.root.attributes("-fullscreen", True)
@@ -111,6 +129,7 @@ class SettingsScreen:
         self.team_rows = []
         self.question_entries = []
         self.game_started = False
+        self.theme_changed = False
 
         # Tab-State
         self.current_tab = "teams"
@@ -130,6 +149,7 @@ class SettingsScreen:
         # Tabs aufbauen
         self._build_teams_tab()
         self._build_fragenset_tab()
+        self._build_design_tab()
         self._build_start_tab()
 
         # Initiale Daten laden
@@ -163,7 +183,7 @@ class SettingsScreen:
         nav_y = 130
         nav_h = 60
         total_w = self.sw - 80
-        tab_w = total_w // 3
+        tab_w = total_w // 4
 
         # Tab-Geometrie merken, damit wir die Unterstreichung ohne winfo_x()
         # positionieren können (winfo_x liefert 0 bevor das Fenster gemapped ist).
@@ -171,7 +191,8 @@ class SettingsScreen:
         self._tab_nav_y = nav_y
         self._tab_nav_h = nav_h
 
-        tabs = [("teams", "TEAMS"), ("fragenset", "FRAGENSET"), ("start", "START")]
+        tabs = [("teams", "TEAMS"), ("fragenset", "FRAGENSET"),
+                ("design", "DESIGN"), ("start", "START")]
         for i, (key, label) in enumerate(tabs):
             btn = r.FlatButton(
                 self.root, text=label,
@@ -787,6 +808,121 @@ class SettingsScreen:
             self.root.after(3000, lambda: self.status_label.config(text=""))
 
     # ------------------------------------------------------------------
+    # DESIGN Tab (Theme-Auswahl)
+    # ------------------------------------------------------------------
+
+    def _build_design_tab(self):
+        """Baut den DESIGN-Tab: 4 Theme-Karten mit Farbvorschau + Auswahl."""
+        tab = tk.Frame(self.root, bg=CARD_BG)
+        accent = tk.Frame(tab, bg=GOLD)
+        accent.place(x=0, y=0, width=4, relheight=1)
+        self.tab_frames["design"] = tab
+
+        tk.Label(
+            tab, text="FARB-DESIGN", font=(r.FONT, r.FONT_SECTION, "bold"),
+            fg=GOLD, bg=CARD_BG
+        ).place(x=30, y=20)
+
+        tk.Label(
+            tab,
+            text="Wähle ein Farbschema. Die Änderung wird sofort übernommen.",
+            font=(r.FONT, r.FONT_SMALL), fg=LABEL_GRAY, bg=CARD_BG
+        ).place(x=30, y=60)
+
+        # Karten-Grid (2x2)
+        grid = tk.Frame(tab, bg=CARD_BG)
+        grid_y = 100
+        grid_h = self.content_h - grid_y - 30
+        grid.place(x=30, y=grid_y, width=self.content_w - 60, height=grid_h)
+
+        self._theme_cards = {}
+        theme_keys = list(r.THEMES.keys())
+        card_w = (self.content_w - 60 - 30) // 2
+        card_h = (grid_h - 30) // 2
+
+        for i, key in enumerate(theme_keys):
+            col = i % 2
+            row = i // 2
+            cx = col * (card_w + 30)
+            cy = row * (card_h + 30)
+            self._build_theme_card(grid, key, cx, cy, card_w, card_h)
+
+    def _build_theme_card(self, parent, key, x, y, w, h):
+        """Baut eine einzelne Theme-Karte mit Farbvorschau und Klick-Handler."""
+        theme = r.THEMES[key]
+        is_active = (key == r.current_theme_name)
+
+        border_color = GOLD if is_active else BORDER_BLUE
+        border_thick = 3 if is_active else 2
+
+        card = tk.Frame(
+            parent, bg=theme["CARD_BG"],
+            highlightbackground=border_color, highlightthickness=border_thick,
+            cursor="hand2"
+        )
+        card.place(x=x, y=y, width=w, height=h)
+
+        # Theme-Name
+        tk.Label(
+            card, text=theme["label"], font=(r.FONT, 20, "bold"),
+            fg=theme["GOLD"], bg=theme["CARD_BG"]
+        ).place(x=20, y=20)
+
+        # Beschreibung
+        tk.Label(
+            card, text=theme["description"], font=(r.FONT, r.FONT_SMALL),
+            fg=theme["LABEL_GRAY"], bg=theme["CARD_BG"]
+        ).place(x=20, y=55)
+
+        # Farb-Swatches: Primär / Akzent / Hintergrund
+        swatch_y = 100
+        swatch_w = 60
+        swatch_h = 60
+        swatches = [
+            (theme["BLUE"], "Primär"),
+            (theme["GOLD"], "Akzent"),
+            (theme["DARK_BLUE"], "Eingabe"),
+            (theme["LABEL_GRAY"], "Label"),
+        ]
+        for j, (color, label) in enumerate(swatches):
+            sx = 20 + j * (swatch_w + 12)
+            sw = tk.Frame(card, bg=color,
+                          highlightbackground=theme["GOLD"], highlightthickness=1)
+            sw.place(x=sx, y=swatch_y, width=swatch_w, height=swatch_h)
+            tk.Label(
+                card, text=label, font=(r.FONT, 10),
+                fg=theme["LABEL_GRAY"], bg=theme["CARD_BG"]
+            ).place(x=sx, y=swatch_y + swatch_h + 4, width=swatch_w, anchor="nw")
+
+        # Aktiv-Marker
+        if is_active:
+            tk.Label(
+                card, text="AKTIV", font=(r.FONT, 12, "bold"),
+                fg=theme["CARD_BG"], bg=theme["GOLD"], padx=10, pady=3
+            ).place(relx=1.0, y=20, x=-20, anchor="ne")
+
+        # Klick-Handler (auf Card + allen Kindern, damit man überall klicken kann)
+        def on_click(_e, k=key):
+            self._select_theme(k)
+        card.bind("<Button-1>", on_click)
+        for child in card.winfo_children():
+            child.bind("<Button-1>", on_click)
+
+        self._theme_cards[key] = card
+
+    def _select_theme(self, name):
+        """Wendet ein Theme an, speichert es und baut den Settings-Screen neu auf."""
+        if name == r.current_theme_name:
+            return
+        r.apply_theme(name)
+        r.save_current_theme(name)
+        self.theme_changed = True
+        # Settings-State in r persistieren, damit Restart die Teams/Set behält
+        self._read_teams_from_ui()
+        self._save_current_questions()
+        self.root.destroy()
+
+    # ------------------------------------------------------------------
     # START Tab
     # ------------------------------------------------------------------
 
@@ -952,10 +1088,20 @@ class SettingsScreen:
 
 
 def run():
-    root = tk.Tk()
-    root.title("Jeopardy! Setup")
-    SettingsScreen(root)
-    root.mainloop()
+    # Restart-Schleife: bei Theme-Wechsel wird destroy() aufgerufen und wir
+    # bauen den Screen mit den neuen Farben frisch auf.
+    while True:
+        root = tk.Tk()
+        root.title("Jeopardy! Setup")
+        screen = SettingsScreen(root)
+        root.mainloop()
+        if not screen.theme_changed:
+            break
+        # Flag zurücksetzen + nächste Iteration
+        screen.theme_changed = False
+
+    # game_started-Flag nach außen propagieren wird nicht benötigt — main.py
+    # ruft game.run() ohnehin im Anschluss auf.
 
 
 if __name__ == "__main__":

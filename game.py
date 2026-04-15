@@ -23,12 +23,20 @@ import tkinter.font
 import resources as r
 import math
 
-# Lokale Aliase — kürzer und lesbarer
+# Lokale Aliase — werden in run() aus r.* neu gebunden, damit Theme-Wechsel greift
 BLUE = r.BLUE
 GOLD = r.GOLD
 DARK_BLUE = r.DARK_BLUE
 ANSWERED_BG = "#0A0A7A"  # Hintergrund für bereits beantwortete Buttons
 ANSWERED_FG = "#404040"  # Vordergrund (Border) für beantwortete Buttons
+
+
+def _rebind_colors():
+    """Aktualisiert BLUE/GOLD/DARK_BLUE aus r.* (nach Theme-Wechsel)."""
+    global BLUE, GOLD, DARK_BLUE
+    BLUE = r.BLUE
+    GOLD = r.GOLD
+    DARK_BLUE = r.DARK_BLUE
 
 # Modul-Level State
 grid = []                   # 2D-Liste aller Buttons: grid[kategorie][zeile]
@@ -397,6 +405,7 @@ def run():
     _flip_in_progress = False
     grid.clear()
     _team_score_labels.clear()
+    _rebind_colors()
 
     root = tk.Tk()
     root.title("Jeopardy!")

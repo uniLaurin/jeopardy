@@ -15,11 +15,15 @@ erstellt, `mainloop()` aufruft und nach `destroy()` zurückkehrt.
 
 import sys
 
+import resources as r
+# Theme laden BEVOR die GUI-Module importieren, damit deren lokale
+# Farb-Aliase bereits mit der gewählten Palette gebunden werden.
+r.apply_theme(r.load_current_theme())
+
 import startscreen
 import settings
 import game
 import scores
-import resources as r
 
 
 def main():

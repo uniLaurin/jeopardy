@@ -54,19 +54,135 @@ FONT = "Arial Rounded MT Bold"  # Default — wird bei Bedarf von detect_font() 
 # Design System — einheitliche Farben, Spacing, Typografie
 # ---------------------------------------------------------------------------
 
-# Farben — Classic Jeopardy Look
-BLUE = "#060CE9"            # Hauptfarbe: klassisches Jeopardy-Blau
-GOLD = "#DBAB51"            # Akzentfarbe: kräftiges Gold für Text, Borders, Highlights
-DARK_BLUE = "#0A10A0"       # Dunkleres Blau: Input-Felder, Listboxes, Buttons
-CARD_BG = "#0A15B8"         # Card-Hintergrund (leicht heller als DARK_BLUE)
-BORDER_BLUE = "#000A80"     # Borders und Trennlinien
-SHADOW = "#1A1A2E"          # Shadow-Overlays für Tiefeneffekte
-HOVER_GOLD = "#E8C76B"      # Helles Gold für Button-Hover
-ACTIVE_GOLD = "#C89840"     # Dunkleres Gold für Button-Active (gedrückt)
-LABEL_GRAY = "#C0C0D5"      # Sekundäre Labels (weniger prominent)
-HINT_GRAY = "#9999CC"       # Placeholder-Text in Inputs
-ERROR_RED = "#FF6666"       # Fehlermeldungen
-SUCCESS_GREEN = "#66FF66"   # Erfolgs-Bestätigungen
+# ---------------------------------------------------------------------------
+# Theme-Paletten — jedes Theme liefert die gleichen Slots (Primär/Akzent/...)
+# ---------------------------------------------------------------------------
+#
+# Die Namen BLUE/GOLD sind historisch (Classic Jeopardy) und werden als
+# "Primär" / "Akzent" interpretiert — andere Themes dürfen dort auch
+# Grün, Cyan, etc. einsetzen.
+
+THEMES = {
+    "classic": {
+        "label": "Classic Jeopardy",
+        "description": "Das klassische Blau & Gold",
+        "BLUE":         "#060CE9",
+        "GOLD":         "#DBAB51",
+        "DARK_BLUE":    "#0A10A0",
+        "CARD_BG":      "#0A15B8",
+        "BORDER_BLUE":  "#000A80",
+        "SHADOW":       "#1A1A2E",
+        "HOVER_GOLD":   "#E8C76B",
+        "ACTIVE_GOLD":  "#C89840",
+        "LABEL_GRAY":   "#C0C0D5",
+        "HINT_GRAY":    "#9999CC",
+    },
+    "modern_dark": {
+        "label": "Modern Dark",
+        "description": "Tiefes Navy mit Neon-Cyan",
+        "BLUE":         "#0A0A1A",
+        "GOLD":         "#00D4FF",
+        "DARK_BLUE":    "#0F0F2E",
+        "CARD_BG":      "#121238",
+        "BORDER_BLUE":  "#1A1A4A",
+        "SHADOW":       "#050510",
+        "HOVER_GOLD":   "#55E6FF",
+        "ACTIVE_GOLD":  "#00A3C4",
+        "LABEL_GRAY":   "#8888AA",
+        "HINT_GRAY":    "#505080",
+    },
+    "minimal_clean": {
+        "label": "Minimal Clean",
+        "description": "Dunkelblau mit warmem Amber",
+        "BLUE":         "#1A1A2E",
+        "GOLD":         "#FFAA00",
+        "DARK_BLUE":    "#22223A",
+        "CARD_BG":      "#1E1E32",
+        "BORDER_BLUE":  "#404050",
+        "SHADOW":       "#10101A",
+        "HOVER_GOLD":   "#FFC44D",
+        "ACTIVE_GOLD":  "#CC8800",
+        "LABEL_GRAY":   "#9090A0",
+        "HINT_GRAY":    "#606070",
+    },
+    "emerald": {
+        "label": "Emerald Luxury",
+        "description": "Anthrazit mit Smaragd-Akzent",
+        "BLUE":         "#0D1B14",
+        "GOLD":         "#10B981",
+        "DARK_BLUE":    "#142820",
+        "CARD_BG":      "#18322A",
+        "BORDER_BLUE":  "#0A140F",
+        "SHADOW":       "#050A07",
+        "HOVER_GOLD":   "#34D399",
+        "ACTIVE_GOLD":  "#059669",
+        "LABEL_GRAY":   "#9CA3A8",
+        "HINT_GRAY":    "#6B7280",
+    },
+}
+
+# Farb-Slots — werden bei Import mit Classic befüllt und bei apply_theme()
+# überschrieben. Alle GUI-Module lesen diese über `r.BLUE` etc.
+BLUE = THEMES["classic"]["BLUE"]
+GOLD = THEMES["classic"]["GOLD"]
+DARK_BLUE = THEMES["classic"]["DARK_BLUE"]
+CARD_BG = THEMES["classic"]["CARD_BG"]
+BORDER_BLUE = THEMES["classic"]["BORDER_BLUE"]
+SHADOW = THEMES["classic"]["SHADOW"]
+HOVER_GOLD = THEMES["classic"]["HOVER_GOLD"]
+ACTIVE_GOLD = THEMES["classic"]["ACTIVE_GOLD"]
+LABEL_GRAY = THEMES["classic"]["LABEL_GRAY"]
+HINT_GRAY = THEMES["classic"]["HINT_GRAY"]
+ERROR_RED = "#FF6666"       # themeübergreifend konstant
+SUCCESS_GREEN = "#66FF66"   # themeübergreifend konstant
+
+current_theme_name = "classic"
+
+
+def apply_theme(name):
+    """Setzt die aktuelle Farbpalette. Updatet Modul-Konstanten BLUE, GOLD, …"""
+    global BLUE, GOLD, DARK_BLUE, CARD_BG, BORDER_BLUE, SHADOW
+    global HOVER_GOLD, ACTIVE_GOLD, LABEL_GRAY, HINT_GRAY, current_theme_name
+    if name not in THEMES:
+        name = "classic"
+    t = THEMES[name]
+    BLUE = t["BLUE"]
+    GOLD = t["GOLD"]
+    DARK_BLUE = t["DARK_BLUE"]
+    CARD_BG = t["CARD_BG"]
+    BORDER_BLUE = t["BORDER_BLUE"]
+    SHADOW = t["SHADOW"]
+    HOVER_GOLD = t["HOVER_GOLD"]
+    ACTIVE_GOLD = t["ACTIVE_GOLD"]
+    LABEL_GRAY = t["LABEL_GRAY"]
+    HINT_GRAY = t["HINT_GRAY"]
+    current_theme_name = name
+
+
+def _theme_config_path():
+    return os.path.join(data_path(), "theme.json")
+
+
+def load_current_theme():
+    """Liest den gespeicherten Theme-Namen. Default: 'classic'."""
+    try:
+        with open(_theme_config_path(), "r", encoding="utf-8") as f:
+            data = json.load(f)
+        name = data.get("theme", "classic")
+        return name if name in THEMES else "classic"
+    except (OSError, ValueError):
+        return "classic"
+
+
+def save_current_theme(name):
+    """Persistiert den Theme-Namen in theme.json."""
+    if name not in THEMES:
+        return
+    try:
+        with open(_theme_config_path(), "w", encoding="utf-8") as f:
+            json.dump({"theme": name}, f)
+    except OSError:
+        pass
 
 # Typografie-Größen (in Punkten)
 FONT_TITLE = 48             # Hauptüberschriften (z.B. "JEOPARDY! SETUP")

@@ -19,9 +19,15 @@ import tkinter as tk
 import resources as r
 
 
-# Lokale Aliase für bessere Lesbarkeit
+# Lokale Aliase für bessere Lesbarkeit — werden in run() neu gebunden (Theme)
 JEOPARDY_BLUE = r.BLUE
 JEOPARDY_GOLD = r.GOLD
+
+
+def _rebind_colors():
+    global JEOPARDY_BLUE, JEOPARDY_GOLD
+    JEOPARDY_BLUE = r.BLUE
+    JEOPARDY_GOLD = r.GOLD
 
 # Modul-globales Flag, das nach run() ausgewertet wird.
 # True  → User hat 'S' gedrückt → Settings anzeigen
@@ -228,6 +234,7 @@ def run():
     global show_settings, quit_app
     show_settings = False
     quit_app = False
+    _rebind_colors()
 
     root = tk.Tk()
     r.detect_font()  # Font-Fallback erst hier aufrufen (braucht aktiven Tcl-Interpreter)

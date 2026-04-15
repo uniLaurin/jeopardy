@@ -15,9 +15,15 @@ import tkinter as tk
 import resources as r
 import math
 
-# Lokale Aliase
+# Lokale Aliase — werden in run() aus r.* neu gebunden (Theme-Support)
 BLUE = r.BLUE
 GOLD = r.GOLD
+
+
+def _rebind_colors():
+    global BLUE, GOLD
+    BLUE = r.BLUE
+    GOLD = r.GOLD
 
 
 class BLabel(tk.Label):
@@ -99,6 +105,7 @@ class BLabel(tk.Label):
 
 def run():
     """Entry-Point für das Scores-Modul. Wird von main.py aufgerufen."""
+    _rebind_colors()
     root = tk.Tk()
     root.title("Jeopardy! - Scores")
     root.attributes("-fullscreen", True)

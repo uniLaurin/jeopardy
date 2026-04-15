@@ -42,6 +42,8 @@ bash build.sh             # Danach: nur bauen (venv wird wiederverwendet)
 
 Das Script erstellt eine eigene `.venv_build/`, prüft alle Quelldateien + `questionsets/`, und nutzt die `jeopardy.spec`.
 
+**macOS Release:** Nach dem Build wird die `.app` ad-hoc signiert (`codesign -s -`) und per `ditto -c -k --sequesterRsrc --keepParent` zu `dist/Jeopardy-macOS-<arch>.zip` gepackt. Dieses ZIP ist das GitHub-Release-Asset. Da die App unsigniert ist (keine Apple Developer ID), muss der Nutzer einmalig `xattr -cr ~/Downloads/Jeopardy.app` im Terminal ausführen — Anleitung steht im README.
+
 PyInstaller kann NICHT cross-compilen. Mac-Build auf Mac, Windows-Build auf Windows.
 
 ### GitHub Actions
@@ -56,7 +58,7 @@ PyInstaller kann NICHT cross-compilen. Mac-Build auf Mac, Windows-Build auf Wind
 
 ## Bekannte Probleme / TODOs
 
-1. **GitHub Actions noch nicht getestet** -- Tag `v1.0.0` muss gepusht werden um den Build auszulösen
+1. **GitHub Actions noch nicht getestet** -- Tag `v1.0.0` muss gepusht werden um den Build auszulösen. Actions löst das Gatekeeper-Problem nicht (Runner hat keine Developer ID) — echtes Signing bräuchte Apple Developer Account (99€/Jahr) + Notarization.
 2. **Settings Screen Layout** -- Bei sehr kleinen/großen Bildschirmen könnte das .place()-Layout nicht optimal aussehen
 3. **Font "Arial Rounded MT Bold"** -- Fallback auf "Arial" → "Helvetica" eingebaut, aber nicht auf einem System ohne den Font getestet
 4. **Startscreen nach Settings** -- Wenn man im Settings Escape drückt, beendet sich die App komplett (kein Zurück zum Startscreen)
