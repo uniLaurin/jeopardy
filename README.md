@@ -23,7 +23,7 @@ Dieses Projekt ist ein vollständig ausgearbeitetes **Jeopardy-Quizspiel**. Es f
 
 ## Download
 
-[![Download](https://img.shields.io/badge/%E2%AC%87%20Download%20hier-Jeopardy%20laden-gold?style=for-the-badge&labelColor=001f5b&color=d4af37)](https://github.com/uniLaurin/jeopardy/releases/latest/download/Jeopardy.zip)
+[![Download](https://img.shields.io/badge/%E2%AC%87%20Download%20hier-Jeopardy%20laden-gold?style=for-the-badge&labelColor=001f5b&color=d4af37)](https://github.com/uniLaurin/jeopardy/releases/latest/download/Jeopardy-macOS-arm64.zip)
 
 *macOS `.app` & Windows `.exe` — keine Installation, einfach starten.*
 
