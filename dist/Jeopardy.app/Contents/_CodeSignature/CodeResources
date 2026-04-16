@@ -1248,17 +1248,65 @@
 		<data>
 		GBqdjL2eeFxpGUmsJTamHaS0USo=
 		</data>
+		<key>Resources/audio/30 Seconds To Answer Jeopardy Timer #challenge #timer #jeopardy.mp3</key>
+		<data>
+		4n33+oouEFfH6AnaVDUND6TbAes=
+		</data>
+		<key>Resources/audio/Jeopardy intro with host introduction.mp3</key>
+		<data>
+		1vALMSisr38pGAehiOvbW8Up/wA=
+		</data>
 		<key>Resources/base_library.zip</key>
 		<data>
-		eSBx/g53915sMmjuG8KBgYQrxIQ=
+		8Ul32/YoOrTYZweAsNS2yaROI0A=
 		</data>
 		<key>Resources/icon-windowed.icns</key>
 		<data>
 		eEHOuYpZLB0vKGVIWGZOh5rH8+o=
 		</data>
+		<key>Resources/pygame/freesansbold.ttf</key>
+		<data>
+		V7fSrfe2t63dAOPa7M8LG5VR5ss=
+		</data>
+		<key>Resources/pygame/pygame_icon_mac.bmp</key>
+		<data>
+		mB6onxFXamyON0aNRp0gVPiH2k8=
+		</data>
 		<key>Resources/questionsets/ergo_default.json</key>
 		<data>
 		oyNfcovaEyl7LsMm9CLcVSI1nXI=
+		</data>
+		<key>Resources/setuptools/_vendor/importlib_metadata-8.7.1.dist-info/INSTALLER</key>
+		<data>
+		rV3TPfqBqRUXGC9FOHnMBWqfEjA=
+		</data>
+		<key>Resources/setuptools/_vendor/importlib_metadata-8.7.1.dist-info/METADATA</key>
+		<data>
+		HflQlohwzrimwMDwAiNnJ8R5DJA=
+		</data>
+		<key>Resources/setuptools/_vendor/importlib_metadata-8.7.1.dist-info/RECORD</key>
+		<data>
+		9Ra2PfdbOFK7xysPj9YpJIyjE9c=
+		</data>
+		<key>Resources/setuptools/_vendor/importlib_metadata-8.7.1.dist-info/REQUESTED</key>
+		<data>
+		2jmj7l5rSw0yVb/vlWAYkK/YBwk=
+		</data>
+		<key>Resources/setuptools/_vendor/importlib_metadata-8.7.1.dist-info/WHEEL</key>
+		<data>
+		5yJNqX7e37nQI5z3yt526+OZd0M=
+		</data>
+		<key>Resources/setuptools/_vendor/importlib_metadata-8.7.1.dist-info/licenses/LICENSE</key>
+		<data>
+		B9IxkQjSshu9R4ot7app4fZv9JQ=
+		</data>
+		<key>Resources/setuptools/_vendor/importlib_metadata-8.7.1.dist-info/top_level.txt</key>
+		<data>
+		TmH5Jk3nR4O1kkJJvP4bBvF4ua0=
+		</data>
+		<key>Resources/setuptools/_vendor/jaraco/text/Lorem ipsum.txt</key>
+		<data>
+		eDY2ciZNnNP3LVwdNmXhZXsaUHE=
 		</data>
 		<key>Resources/tcl8/8.4/platform-1.0.19.tm</key>
 		<data>
@@ -1297,10 +1345,50 @@
 			<key>symlink</key>
 			<string>../Resources/_tk_data</string>
 		</dict>
+		<key>Frameworks/audio</key>
+		<dict>
+			<key>symlink</key>
+			<string>../Resources/audio</string>
+		</dict>
 		<key>Frameworks/base_library.zip</key>
 		<dict>
 			<key>symlink</key>
 			<string>../Resources/base_library.zip</string>
+		</dict>
+		<key>Frameworks/libFLAC.8.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libFLAC.8.dylib</string>
+		</dict>
+		<key>Frameworks/libSDL2-2.0.0.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libSDL2-2.0.0.dylib</string>
+		</dict>
+		<key>Frameworks/libSDL2_image-2.0.0.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libSDL2_image-2.0.0.dylib</string>
+		</dict>
+		<key>Frameworks/libSDL2_mixer-2.0.0.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libSDL2_mixer-2.0.0.dylib</string>
+		</dict>
+		<key>Frameworks/libSDL2_ttf-2.0.0.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libSDL2_ttf-2.0.0.dylib</string>
+		</dict>
+		<key>Frameworks/libbrotlicommon.1.0.9.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libbrotlicommon.1.0.9.dylib</string>
+		</dict>
+		<key>Frameworks/libbrotlidec.1.0.9.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libbrotlidec.1.0.9.dylib</string>
 		</dict>
 		<key>Frameworks/libbz2.dylib</key>
 		<dict>
@@ -1320,6 +1408,54 @@
 			<key>requirement</key>
 			<string>cdhash H"47881629cef5e3470635c71e8c7a521fa85f2f7d"</string>
 		</dict>
+		<key>Frameworks/libexpat.1.dylib</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			B9MLyTUzqmLh42CyRoNhS5ESuUg=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"07d30bc93533aa62e1e360b24683614b9112b948"</string>
+		</dict>
+		<key>Frameworks/libffi.8.dylib</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			mwBUYprzNpt2MEqGVFFpZ1L3MOc=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"9b0054629af3369b76304a865451696752f730e7"</string>
+		</dict>
+		<key>Frameworks/libfluidsynth.3.1.1.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libfluidsynth.3.1.1.dylib</string>
+		</dict>
+		<key>Frameworks/libfreetype.6.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libfreetype.6.dylib</string>
+		</dict>
+		<key>Frameworks/libglib-2.0.0.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libglib-2.0.0.dylib</string>
+		</dict>
+		<key>Frameworks/libgthread-2.0.0.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libgthread-2.0.0.dylib</string>
+		</dict>
+		<key>Frameworks/libintl.8.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libintl.8.dylib</string>
+		</dict>
+		<key>Frameworks/libjpeg.62.3.0.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libjpeg.62.3.0.dylib</string>
+		</dict>
 		<key>Frameworks/liblzma.5.dylib</key>
 		<dict>
 			<key>cdhash</key>
@@ -1328,6 +1464,50 @@
 			</data>
 			<key>requirement</key>
 			<string>cdhash H"1a783c73840be32668a52cf78ac1b248718f9b79"</string>
+		</dict>
+		<key>Frameworks/libmodplug.1.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libmodplug.1.dylib</string>
+		</dict>
+		<key>Frameworks/libmpg123.0.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libmpg123.0.dylib</string>
+		</dict>
+		<key>Frameworks/libncurses.6.dylib</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			HwcoOSIuk7Prn91NpyXHenoH52o=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"1f072839222e93b3eb9fdd4da725c77a7a07e76a"</string>
+		</dict>
+		<key>Frameworks/libogg.0.8.5.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libogg.0.8.5.dylib</string>
+		</dict>
+		<key>Frameworks/libopus.0.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libopus.0.dylib</string>
+		</dict>
+		<key>Frameworks/libopusfile.0.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libopusfile.0.dylib</string>
+		</dict>
+		<key>Frameworks/libpng16.16.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libpng16.16.dylib</string>
+		</dict>
+		<key>Frameworks/libportmidi.2.0.3.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libportmidi.2.0.3.dylib</string>
 		</dict>
 		<key>Frameworks/libpython3.12.dylib</key>
 		<dict>
@@ -1338,6 +1518,34 @@
 			<key>requirement</key>
 			<string>cdhash H"1f361607feb5ceaac0711e57508543499604ef85"</string>
 		</dict>
+		<key>Frameworks/libreadline.8.dylib</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			lYL3guMx4Ui2vfTQOIsGg9T3xhA=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"9582f782e331e148b6bdf4d0388b0683d4f7c610"</string>
+		</dict>
+		<key>Frameworks/libsharpyuv.0.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libsharpyuv.0.dylib</string>
+		</dict>
+		<key>Frameworks/libsndfile.1.0.34.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libsndfile.1.0.34.dylib</string>
+		</dict>
+		<key>Frameworks/libssl.3.dylib</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			ae6Iw3DjCnXhq2qPnYYL0ryyW/s=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"69ee88c370e30a75e1ab6a8f9d860bd2bcb25bfb"</string>
+		</dict>
 		<key>Frameworks/libtcl8.6.dylib</key>
 		<dict>
 			<key>cdhash</key>
@@ -1346,6 +1554,20 @@
 			</data>
 			<key>requirement</key>
 			<string>cdhash H"368b75518f91b4ecf0207272abc3b4d36a03f6c3"</string>
+		</dict>
+		<key>Frameworks/libtiff.5.8.0.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libtiff.5.8.0.dylib</string>
+		</dict>
+		<key>Frameworks/libtinfo.6.dylib</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			UogJZW9qgEJpe8JPFp3GOPk4qYw=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"528809656f6a8042697bc24f169dc638f938a98c"</string>
 		</dict>
 		<key>Frameworks/libtk8.6.dylib</key>
 		<dict>
@@ -1356,6 +1578,31 @@
 			<key>requirement</key>
 			<string>cdhash H"648bde311fa4220b7428398042665b771e2b6eae"</string>
 		</dict>
+		<key>Frameworks/libvorbis.0.4.9.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libvorbis.0.4.9.dylib</string>
+		</dict>
+		<key>Frameworks/libvorbisenc.2.0.12.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libvorbisenc.2.0.12.dylib</string>
+		</dict>
+		<key>Frameworks/libvorbisfile.3.3.8.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libvorbisfile.3.3.8.dylib</string>
+		</dict>
+		<key>Frameworks/libwebp.7.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libwebp.7.dylib</string>
+		</dict>
+		<key>Frameworks/libz.1.2.11.zlib-ng.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libz.1.2.11.zlib-ng.dylib</string>
+		</dict>
 		<key>Frameworks/libz.1.dylib</key>
 		<dict>
 			<key>cdhash</key>
@@ -1365,10 +1612,637 @@
 			<key>requirement</key>
 			<string>cdhash H"db56b3aa14835214078796391a5a6fb9ba5e28fd"</string>
 		</dict>
+		<key>Frameworks/pygame/.dylibs</key>
+		<dict>
+			<key>symlink</key>
+			<string>__dot__dylibs</string>
+		</dict>
+		<key>Frameworks/pygame/__dot__dylibs/libFLAC.8.dylib</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			elcp7XgDONW7zfa7DNBrMKwNFxY=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"7a5729ed780338d5bbcdf6bb0cd06b30ac0d1716"</string>
+		</dict>
+		<key>Frameworks/pygame/__dot__dylibs/libSDL2-2.0.0.dylib</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			CyPTJSESfDqAQIjmsaSdO+V9eYM=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"0b23d32521127c3a804088e6b1a49d3be57d7983"</string>
+		</dict>
+		<key>Frameworks/pygame/__dot__dylibs/libSDL2_image-2.0.0.dylib</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			x/lDe+QZ00Rzu7/jVVR38J1Vx1s=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"c7f9437be419d34473bbbfe3555477f09d55c75b"</string>
+		</dict>
+		<key>Frameworks/pygame/__dot__dylibs/libSDL2_mixer-2.0.0.dylib</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			RaASydA0TEH+fEktQXzmAz4lPNQ=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"45a012c9d0344c41fe7c492d417ce6033e253cd4"</string>
+		</dict>
+		<key>Frameworks/pygame/__dot__dylibs/libSDL2_ttf-2.0.0.dylib</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			Nyw7oBVLHMHqBzR7UCJbAy95VN0=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"372c3ba0154b1cc1ea07347b50225b032f7954dd"</string>
+		</dict>
+		<key>Frameworks/pygame/__dot__dylibs/libbrotlicommon.1.0.9.dylib</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			kAxGL4JZZfET/57HoSPjO7BY0n4=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"900c462f825965f113ff9ec7a123e33bb058d27e"</string>
+		</dict>
+		<key>Frameworks/pygame/__dot__dylibs/libbrotlidec.1.0.9.dylib</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			axTd7ULRMkEj6e8BTAQhsHobmI0=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"6b14dded42d1324123e9ef014c0421b07a1b988d"</string>
+		</dict>
+		<key>Frameworks/pygame/__dot__dylibs/libfluidsynth.3.1.1.dylib</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			ZoScf34SNmVNT1xmMi2XxmjhOUI=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"66849c7f7e1236654d4f5c66322d97c668e13942"</string>
+		</dict>
+		<key>Frameworks/pygame/__dot__dylibs/libfreetype.6.dylib</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			8r0G23wKZDqWHnhWdVIwMS5dWE8=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"f2bd06db7c0a643a961e7856755230312e5d584f"</string>
+		</dict>
+		<key>Frameworks/pygame/__dot__dylibs/libglib-2.0.0.dylib</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			OpH7CF0D1iXU2Z1NeDC3/6Il9+M=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"3a91fb085d03d625d4d99d4d7830b7ffa225f7e3"</string>
+		</dict>
+		<key>Frameworks/pygame/__dot__dylibs/libgthread-2.0.0.dylib</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			9R2nVOEuEfmdW7AJv0sjy3sEo2A=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"f51da754e12e11f99d5bb009bf4b23cb7b04a360"</string>
+		</dict>
+		<key>Frameworks/pygame/__dot__dylibs/libintl.8.dylib</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			EKZdQesbJUw4HuBN4bp/6jabEz8=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"10a65d41eb1b254c381ee04de1ba7fea369b133f"</string>
+		</dict>
+		<key>Frameworks/pygame/__dot__dylibs/libjpeg.62.3.0.dylib</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			qt82R2uOxPaI4ASiO3n2UDhQ4bI=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"aadf36476b8ec4f688e004a23b79f6503850e1b2"</string>
+		</dict>
+		<key>Frameworks/pygame/__dot__dylibs/libmodplug.1.dylib</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			IH6mQDpp4tcvBQuigDy5TjeZBr8=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"207ea6403a69e2d72f050ba2803cb94e379906bf"</string>
+		</dict>
+		<key>Frameworks/pygame/__dot__dylibs/libmpg123.0.dylib</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			rfv4JBtE46NBSS2Z3L5v+U+QzjE=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"adfbf8241b44e3a341492d99dcbe6ff94f90ce31"</string>
+		</dict>
+		<key>Frameworks/pygame/__dot__dylibs/libogg.0.8.5.dylib</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			wEZ3POurr2gKGXErXjuiqLxleTY=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"c046773cebabaf680a19712b5e3ba2a8bc657936"</string>
+		</dict>
+		<key>Frameworks/pygame/__dot__dylibs/libopus.0.dylib</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			UTURPojZzqzXHlNmz093lUXvsHM=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"5135113e88d9ceacd71e5366cf4f779545efb073"</string>
+		</dict>
+		<key>Frameworks/pygame/__dot__dylibs/libopusfile.0.dylib</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			i2lUJaDO5/04rU8pfK9Baoy3/Qg=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"8b695425a0cee7fd38ad4f297caf416a8cb7fd08"</string>
+		</dict>
+		<key>Frameworks/pygame/__dot__dylibs/libpng16.16.dylib</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			m4hVt7E7EjMtgn3nSbh4+NvbB0k=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"9b8855b7b13b12332d827de749b878f8dbdb0749"</string>
+		</dict>
+		<key>Frameworks/pygame/__dot__dylibs/libportmidi.2.0.3.dylib</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			RiZMvXZFLpavj26dE3d/mj5kJDs=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"46264cbd76452e96af8f6e9d13777f9a3e64243b"</string>
+		</dict>
+		<key>Frameworks/pygame/__dot__dylibs/libsharpyuv.0.dylib</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			d1MDSABtT1T4yWz3mKjV8ec+ye4=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"77530348006d4f54f8c96cf798a8d5f1e73ec9ee"</string>
+		</dict>
+		<key>Frameworks/pygame/__dot__dylibs/libsndfile.1.0.34.dylib</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			zrM/qg6jdG/Q+Lc1xSi1m2k8LsE=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"ceb33faa0ea3746fd0f8b735c528b59b693c2ec1"</string>
+		</dict>
+		<key>Frameworks/pygame/__dot__dylibs/libtiff.5.8.0.dylib</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			tXjPwl6A9SuPGkcgcRQUB+fy/jU=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"b578cfc25e80f52b8f1a472071141407e7f2fe35"</string>
+		</dict>
+		<key>Frameworks/pygame/__dot__dylibs/libvorbis.0.4.9.dylib</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			7bhNgYiBeYc7tAOny3s0IM8WL4A=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"edb84d81888179873bb403a7cb7b3420cf162f80"</string>
+		</dict>
+		<key>Frameworks/pygame/__dot__dylibs/libvorbisenc.2.0.12.dylib</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			lVr/UmCzThKZvcBeYzSa++xzgas=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"955aff5260b34e1299bdc05e63349afbec7381ab"</string>
+		</dict>
+		<key>Frameworks/pygame/__dot__dylibs/libvorbisfile.3.3.8.dylib</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			xYvvO6Dqx6AIGv1NLo/3yQBSx8s=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"c58bef3ba0eac7a0081afd4d2e8ff7c90052c7cb"</string>
+		</dict>
+		<key>Frameworks/pygame/__dot__dylibs/libwebp.7.dylib</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			jDP1PxF8PAqG30sIQeS64+dKp0k=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"8c33f53f117c3c0a86df4b0841e4bae3e74aa749"</string>
+		</dict>
+		<key>Frameworks/pygame/__dot__dylibs/libz.1.2.11.zlib-ng.dylib</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			K0XaTTmzR5Z+gp6IujCps/0TfHI=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"2b45da4d39b347967e829e88ba30a9b3fd137c72"</string>
+		</dict>
+		<key>Frameworks/pygame/_camera.cpython-312-darwin.so</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			HWtJwo7Jld37vLSsWBcSNg7otF0=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"1d6b49c28ec995ddfbbcb4ac581712360ee8b45d"</string>
+		</dict>
+		<key>Frameworks/pygame/_freetype.cpython-312-darwin.so</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			3IrRrZ58AJoQASeYp2VV6aC6ffM=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"dc8ad1ad9e7c009a10012798a76555e9a0ba7df3"</string>
+		</dict>
+		<key>Frameworks/pygame/_sdl2/audio.cpython-312-darwin.so</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			NWXlH02WJgRbcIbHvfvjuPcFquo=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"3565e51f4d9626045b7086c7bdfbe3b8f705aaea"</string>
+		</dict>
+		<key>Frameworks/pygame/_sdl2/controller.cpython-312-darwin.so</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			PwQlDz8nkWGpBkgqvgpDfnEBtoM=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"3f04250f3f279161a906482abe0a437e7101b683"</string>
+		</dict>
+		<key>Frameworks/pygame/_sdl2/mixer.cpython-312-darwin.so</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			xIUyDWXvqAg5bPA7buRKZCYHb5k=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"c485320d65efa808396cf03b6ee44a6426076f99"</string>
+		</dict>
+		<key>Frameworks/pygame/_sdl2/sdl2.cpython-312-darwin.so</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			T7lbravFqHQcYYeNNJjGIdWAypM=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"4fb95badabc5a8741c61878d3498c621d580ca93"</string>
+		</dict>
+		<key>Frameworks/pygame/_sdl2/touch.cpython-312-darwin.so</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			40AiH4ujnZTSwN7bQTJs5yIzCiE=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"e340221f8ba39d94d2c0dedb41326ce722330a21"</string>
+		</dict>
+		<key>Frameworks/pygame/_sdl2/video.cpython-312-darwin.so</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			N62iNZ6CQjtrT8k+7PxCIhwg3dQ=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"37ada2359e82423b6b4fc93eecfc42221c20ddd4"</string>
+		</dict>
+		<key>Frameworks/pygame/_sprite.cpython-312-darwin.so</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			Lwa8d/KSRhzkNTDbEfH8pm6WmF8=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"2f06bc77f292461ce43530db11f1fca66e96985f"</string>
+		</dict>
+		<key>Frameworks/pygame/base.cpython-312-darwin.so</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			bKCRyf6nV2BJsBRM24FHJ17w/+o=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"6ca091c9fea7576049b0144cdb8147275ef0ffea"</string>
+		</dict>
+		<key>Frameworks/pygame/bufferproxy.cpython-312-darwin.so</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			YrQOvYCef3oUi6LGSFt2WE7lqYc=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"62b40ebd809e7f7a148ba2c6485b76584ee5a987"</string>
+		</dict>
+		<key>Frameworks/pygame/color.cpython-312-darwin.so</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			qbVdfeGsFdJBtC03W/HknlECXzw=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"a9b55d7de1ac15d241b42d375bf1e49e51025f3c"</string>
+		</dict>
+		<key>Frameworks/pygame/constants.cpython-312-darwin.so</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			D6XzBWL0uOJ3I1W0dnEZHNFs0A8=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"0fa5f30562f4b8e2772355b47671191cd16cd00f"</string>
+		</dict>
+		<key>Frameworks/pygame/display.cpython-312-darwin.so</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			mwV3xFKVRL4X6bJvn2AINFYLlZA=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"9b0577c4529544be17e9b26f9f600834560b9590"</string>
+		</dict>
+		<key>Frameworks/pygame/draw.cpython-312-darwin.so</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			IFo4IvizT+KXknsm3KxJYBpNfZo=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"205a3822f8b34fe297927b26dcac49601a4d7d9a"</string>
+		</dict>
+		<key>Frameworks/pygame/event.cpython-312-darwin.so</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			87lLdNpPzlJBpfzxTLeKsCwd8Ok=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"f3b94b74da4fce5241a5fcf14cb78ab02c1df0e9"</string>
+		</dict>
+		<key>Frameworks/pygame/font.cpython-312-darwin.so</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			DZdfzrxCaMHvrhe9PqSTHmqs/Vw=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"0d975fcebc4268c1efae17bd3ea4931e6aacfd5c"</string>
+		</dict>
+		<key>Frameworks/pygame/freesansbold.ttf</key>
+		<dict>
+			<key>symlink</key>
+			<string>../../Resources/pygame/freesansbold.ttf</string>
+		</dict>
+		<key>Frameworks/pygame/gfxdraw.cpython-312-darwin.so</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			kLh3WlUNzDq7TweossNDOvTXcG4=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"90b8775a550dcc3abb4f07a8b2c3433af4d7706e"</string>
+		</dict>
+		<key>Frameworks/pygame/image.cpython-312-darwin.so</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			1o2l/4FEH2ZlAX2Jwj/Qb9yKdjk=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"d68da5ff81441f6665017d89c23fd06fdc8a7639"</string>
+		</dict>
+		<key>Frameworks/pygame/imageext.cpython-312-darwin.so</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			wJsd0XdUTj1zqvcPjkMLHMxuRXE=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"c09b1dd177544e3d73aaf70f8e430b1ccc6e4571"</string>
+		</dict>
+		<key>Frameworks/pygame/joystick.cpython-312-darwin.so</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			9NjZZzIp717VogwbaBS/Gx4r60E=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"f4d8d9673229ef5ed5a20c1b6814bf1b1e2beb41"</string>
+		</dict>
+		<key>Frameworks/pygame/key.cpython-312-darwin.so</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			TMgURx1gycfKpfV3CgvSY0jO3hQ=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"4cc814471d60c9c7caa5f5770a0bd26348cede14"</string>
+		</dict>
+		<key>Frameworks/pygame/mask.cpython-312-darwin.so</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			BIWoVh1+8QPocDWOxWY0/fdMriQ=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"0485a8561d7ef103e870358ec56634fdf74cae24"</string>
+		</dict>
+		<key>Frameworks/pygame/math.cpython-312-darwin.so</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			JeErcZMUmKIm0D0gJTwv7uycbhI=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"25e12b71931498a226d03d20253c2feeec9c6e12"</string>
+		</dict>
+		<key>Frameworks/pygame/mixer.cpython-312-darwin.so</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			T9WpGE/cRAiZyWlWACAnrSyrx94=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"4fd5a9184fdc440899c96956002027ad2cabc7de"</string>
+		</dict>
+		<key>Frameworks/pygame/mixer_music.cpython-312-darwin.so</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			kZ196s96PUBcFzFflZBWvGTcQTc=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"919d7deacf7a3d405c17315f959056bc64dc4137"</string>
+		</dict>
+		<key>Frameworks/pygame/mouse.cpython-312-darwin.so</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			r3Kyc3ip8G+GW1XpdRy9Za886+Q=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"af72b27378a9f06f865b55e9751cbd65af3cebe4"</string>
+		</dict>
+		<key>Frameworks/pygame/newbuffer.cpython-312-darwin.so</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			UPgFQ3U8BZoQ7eFyc+NgYw2B4ts=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"50f80543753c059a10ede17273e360630d81e2db"</string>
+		</dict>
+		<key>Frameworks/pygame/pixelarray.cpython-312-darwin.so</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			WWhc38tffvjBdwJ38kyCIe7QpZ4=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"59685cdfcb5f7ef8c1770277f24c8221eed0a59e"</string>
+		</dict>
+		<key>Frameworks/pygame/pixelcopy.cpython-312-darwin.so</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			WMoAisyz6vpRLMYLJ1rWn0lNV+o=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"58ca008accb3eafa512cc60b275ad69f494d57ea"</string>
+		</dict>
+		<key>Frameworks/pygame/pygame_icon_mac.bmp</key>
+		<dict>
+			<key>symlink</key>
+			<string>../../Resources/pygame/pygame_icon_mac.bmp</string>
+		</dict>
+		<key>Frameworks/pygame/pypm.cpython-312-darwin.so</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			QAsFV1dXbFWw4KePxcEKVnUP4FI=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"400b055757576c55b0e0a78fc5c10a56750fe052"</string>
+		</dict>
+		<key>Frameworks/pygame/rect.cpython-312-darwin.so</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			eBzrHXi3YvCoTZpNfliYAXpa8/o=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"781ceb1d78b762f0a84d9a4d7e5898017a5af3fa"</string>
+		</dict>
+		<key>Frameworks/pygame/rwobject.cpython-312-darwin.so</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			lKXNhqLXATnI8Wnz1xdiiySz/YI=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"94a5cd86a2d70139c8f169f3d717628b24b3fd82"</string>
+		</dict>
+		<key>Frameworks/pygame/scrap.cpython-312-darwin.so</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			QKv+sZITi1d62aOjTXeCgYE+c7w=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"40abfeb192138b577ad9a3a34d778281813e73bc"</string>
+		</dict>
+		<key>Frameworks/pygame/sdlmain_osx.cpython-312-darwin.so</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			yw3N57zLSTIPR9/jAJJIjAQBl+4=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"cb0dcde7bccb49320f47dfe30092488c040197ee"</string>
+		</dict>
+		<key>Frameworks/pygame/surface.cpython-312-darwin.so</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			rdBt1aOOQhR22rQMhF0ieD/51B4=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"add06dd5a38e421476dab40c845d22783ff9d41e"</string>
+		</dict>
+		<key>Frameworks/pygame/surflock.cpython-312-darwin.so</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			XbQCEMLjB7PFeBndQRtT7+8f/io=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"5db40210c2e307b3c57819dd411b53efef1ffe2a"</string>
+		</dict>
+		<key>Frameworks/pygame/time.cpython-312-darwin.so</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			WgCqTOGwvRrnrKD7rEuqwA0DAjs=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"5a00aa4ce1b0bd1ae7aca0fbac4baac00d03023b"</string>
+		</dict>
+		<key>Frameworks/pygame/transform.cpython-312-darwin.so</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			pP20qFLnCr+fecxD241NJt3JZ+c=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"a4fdb4a852e70abf9f79cc43db8d4d26ddc967e7"</string>
+		</dict>
 		<key>Frameworks/python3.12</key>
 		<dict>
 			<key>symlink</key>
 			<string>python3__dot__12</string>
+		</dict>
+		<key>Frameworks/python3__dot__12/lib-dynload/_asyncio.cpython-312-darwin.so</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			5O5fxwSfYNCt/+Fu44pv912O8cA=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"e4ee5fc7049f60d0adffe16ee38a6ff75d8ef1c0"</string>
 		</dict>
 		<key>Frameworks/python3__dot__12/lib-dynload/_bisect.cpython-312-darwin.so</key>
 		<dict>
@@ -1469,6 +2343,15 @@
 			<key>requirement</key>
 			<string>cdhash H"5ee01c93827a5f518a524d66fef126a95e45787c"</string>
 		</dict>
+		<key>Frameworks/python3__dot__12/lib-dynload/_ctypes.cpython-312-darwin.so</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			/2N5Vo4KAbH/9ZRYUjwjMcqC16Q=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"ff6379568e0a01b1fff59458523c2331ca82d7a4"</string>
+		</dict>
 		<key>Frameworks/python3__dot__12/lib-dynload/_datetime.cpython-312-darwin.so</key>
 		<dict>
 			<key>cdhash</key>
@@ -1486,6 +2369,15 @@
 			</data>
 			<key>requirement</key>
 			<string>cdhash H"bd731470e28d9445aab8232e75865c81c933166d"</string>
+		</dict>
+		<key>Frameworks/python3__dot__12/lib-dynload/_elementtree.cpython-312-darwin.so</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			HM0c575vrGUrxINpfl+Vz1WIvq4=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"1ccd1ce7be6fac652bc483697e5f95cf5588beae"</string>
 		</dict>
 		<key>Frameworks/python3__dot__12/lib-dynload/_hashlib.cpython-312-darwin.so</key>
 		<dict>
@@ -1541,6 +2433,15 @@
 			<key>requirement</key>
 			<string>cdhash H"619e2bb813d7e3713fedea922d2ffd08b44480b2"</string>
 		</dict>
+		<key>Frameworks/python3__dot__12/lib-dynload/_multiprocessing.cpython-312-darwin.so</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			+SBnzvKvT1PwiQd7ORnPyJ3bcH4=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"f92067cef2af4f53f089077b3919cfc89ddb707e"</string>
+		</dict>
 		<key>Frameworks/python3__dot__12/lib-dynload/_opcode.cpython-312-darwin.so</key>
 		<dict>
 			<key>cdhash</key>
@@ -1559,6 +2460,15 @@
 			<key>requirement</key>
 			<string>cdhash H"cfd02f8a3359d6d49eac5cb686c3d40c3f47b1a2"</string>
 		</dict>
+		<key>Frameworks/python3__dot__12/lib-dynload/_posixshmem.cpython-312-darwin.so</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			ry0uabjWhGMbfB4AeLHV16uIIXk=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"af2d2e69b8d684631b7c1e0078b1d5d7ab882179"</string>
+		</dict>
 		<key>Frameworks/python3__dot__12/lib-dynload/_posixsubprocess.cpython-312-darwin.so</key>
 		<dict>
 			<key>cdhash</key>
@@ -1568,6 +2478,15 @@
 			<key>requirement</key>
 			<string>cdhash H"4982697a0c20e63f70ff14a8d9a246d291d8b39d"</string>
 		</dict>
+		<key>Frameworks/python3__dot__12/lib-dynload/_queue.cpython-312-darwin.so</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			of1c8Gi7LkGBtobx7tqSy9mk/OE=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"a1fd5cf068bb2e4181b686f1eeda92cbd9a4fce1"</string>
+		</dict>
 		<key>Frameworks/python3__dot__12/lib-dynload/_random.cpython-312-darwin.so</key>
 		<dict>
 			<key>cdhash</key>
@@ -1576,6 +2495,15 @@
 			</data>
 			<key>requirement</key>
 			<string>cdhash H"4608b38617e039df2940d7cf440ef44a3f1af1a0"</string>
+		</dict>
+		<key>Frameworks/python3__dot__12/lib-dynload/_scproxy.cpython-312-darwin.so</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			aGBYfhf7cBtQ7a5A8UsDLLP6jG4=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"6860587e17fb701b50edae40f14b032cb3fa8c6e"</string>
 		</dict>
 		<key>Frameworks/python3__dot__12/lib-dynload/_sha1.cpython-312-darwin.so</key>
 		<dict>
@@ -1612,6 +2540,15 @@
 			</data>
 			<key>requirement</key>
 			<string>cdhash H"59b4d14ace339250b4b1198e53cdbeb32e351da6"</string>
+		</dict>
+		<key>Frameworks/python3__dot__12/lib-dynload/_ssl.cpython-312-darwin.so</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			SFMp+tMLZnEA04OQNGCyXo+VOKA=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"485329fad30b667100d383903460b25e8f9538a0"</string>
 		</dict>
 		<key>Frameworks/python3__dot__12/lib-dynload/_statistics.cpython-312-darwin.so</key>
 		<dict>
@@ -1685,6 +2622,33 @@
 			<key>requirement</key>
 			<string>cdhash H"d7ea6fb2d7f195f32f13ce20421013664609fec4"</string>
 		</dict>
+		<key>Frameworks/python3__dot__12/lib-dynload/mmap.cpython-312-darwin.so</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			gEOAoNJXMivCOxuUzDvncaxPA68=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"804380a0d257322bc23b1b94cc3be771ac4f03af"</string>
+		</dict>
+		<key>Frameworks/python3__dot__12/lib-dynload/pyexpat.cpython-312-darwin.so</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			Y6PU9asdskr6wY8do1CJN5nRrOU=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"63a3d4f5ab1db24afac18f1da350893799d1ace5"</string>
+		</dict>
+		<key>Frameworks/python3__dot__12/lib-dynload/readline.cpython-312-darwin.so</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			K96v3qm9Us2k7fx4zouUHKzZtgg=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"2bdeafdea9bd52cda4edfc78ce8b941cacd9b608"</string>
+		</dict>
 		<key>Frameworks/python3__dot__12/lib-dynload/resource.cpython-312-darwin.so</key>
 		<dict>
 			<key>cdhash</key>
@@ -1702,6 +2666,24 @@
 			</data>
 			<key>requirement</key>
 			<string>cdhash H"d727c460d708d129c66f7008d8f6be4dd8327f00"</string>
+		</dict>
+		<key>Frameworks/python3__dot__12/lib-dynload/syslog.cpython-312-darwin.so</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			+YxAeoBh/tmKxdhzE0VIXLdc3GM=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"f98c407a8061fed98ac5d8731345485cb75cdc63"</string>
+		</dict>
+		<key>Frameworks/python3__dot__12/lib-dynload/termios.cpython-312-darwin.so</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			WfDwyAzg2agGeGFWPhBR0cSKEfM=
+			</data>
+			<key>requirement</key>
+			<string>cdhash H"59f0f0c80ce0d9a8067861563e1051d1c48a11f3"</string>
 		</dict>
 		<key>Frameworks/python3__dot__12/lib-dynload/unicodedata.cpython-312-darwin.so</key>
 		<dict>
@@ -1725,6 +2707,11 @@
 		<dict>
 			<key>symlink</key>
 			<string>../Resources/questionsets</string>
+		</dict>
+		<key>Frameworks/setuptools</key>
+		<dict>
+			<key>symlink</key>
+			<string>../Resources/setuptools</string>
 		</dict>
 		<key>Frameworks/tcl8</key>
 		<dict>
@@ -3908,11 +4895,25 @@
 			IdJZTIMZ8UxHoPC/PSrKvMgsmrjYSmT6PLYIx+dfWcM=
 			</data>
 		</dict>
+		<key>Resources/audio/30 Seconds To Answer Jeopardy Timer #challenge #timer #jeopardy.mp3</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			QZNYjSk2c5oNzQRabV++3E1a7lAU0Z8wXHJv52rBtZM=
+			</data>
+		</dict>
+		<key>Resources/audio/Jeopardy intro with host introduction.mp3</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			Uu9+5dhJ3waycfJVwP6lswnQiCK+uc9duhkf+IsM4CI=
+			</data>
+		</dict>
 		<key>Resources/base_library.zip</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			o+UAJcy3DSX/CQyYV+YZ4xvel2tlYR26CTmKqyR6Osk=
+			HqAjXoALO8WIPfIMNTxbL27I9aA0bINwb2goQxpG04c=
 			</data>
 		</dict>
 		<key>Resources/icon-windowed.icns</key>
@@ -3921,6 +4922,41 @@
 			<data>
 			uQo7VuWRab4Phv4EEGmfQsyqFqDIXZgO8OtgaAMvCzY=
 			</data>
+		</dict>
+		<key>Resources/libFLAC.8.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libFLAC.8.dylib</string>
+		</dict>
+		<key>Resources/libSDL2-2.0.0.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libSDL2-2.0.0.dylib</string>
+		</dict>
+		<key>Resources/libSDL2_image-2.0.0.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libSDL2_image-2.0.0.dylib</string>
+		</dict>
+		<key>Resources/libSDL2_mixer-2.0.0.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libSDL2_mixer-2.0.0.dylib</string>
+		</dict>
+		<key>Resources/libSDL2_ttf-2.0.0.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libSDL2_ttf-2.0.0.dylib</string>
+		</dict>
+		<key>Resources/libbrotlicommon.1.0.9.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libbrotlicommon.1.0.9.dylib</string>
+		</dict>
+		<key>Resources/libbrotlidec.1.0.9.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libbrotlidec.1.0.9.dylib</string>
 		</dict>
 		<key>Resources/libbz2.dylib</key>
 		<dict>
@@ -3932,30 +4968,354 @@
 			<key>symlink</key>
 			<string>../Frameworks/libcrypto.3.dylib</string>
 		</dict>
+		<key>Resources/libexpat.1.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>../Frameworks/libexpat.1.dylib</string>
+		</dict>
+		<key>Resources/libffi.8.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>../Frameworks/libffi.8.dylib</string>
+		</dict>
+		<key>Resources/libfluidsynth.3.1.1.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libfluidsynth.3.1.1.dylib</string>
+		</dict>
+		<key>Resources/libfreetype.6.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libfreetype.6.dylib</string>
+		</dict>
+		<key>Resources/libglib-2.0.0.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libglib-2.0.0.dylib</string>
+		</dict>
+		<key>Resources/libgthread-2.0.0.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libgthread-2.0.0.dylib</string>
+		</dict>
+		<key>Resources/libintl.8.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libintl.8.dylib</string>
+		</dict>
+		<key>Resources/libjpeg.62.3.0.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libjpeg.62.3.0.dylib</string>
+		</dict>
 		<key>Resources/liblzma.5.dylib</key>
 		<dict>
 			<key>symlink</key>
 			<string>../Frameworks/liblzma.5.dylib</string>
+		</dict>
+		<key>Resources/libmodplug.1.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libmodplug.1.dylib</string>
+		</dict>
+		<key>Resources/libmpg123.0.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libmpg123.0.dylib</string>
+		</dict>
+		<key>Resources/libncurses.6.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>../Frameworks/libncurses.6.dylib</string>
+		</dict>
+		<key>Resources/libogg.0.8.5.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libogg.0.8.5.dylib</string>
+		</dict>
+		<key>Resources/libopus.0.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libopus.0.dylib</string>
+		</dict>
+		<key>Resources/libopusfile.0.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libopusfile.0.dylib</string>
+		</dict>
+		<key>Resources/libpng16.16.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libpng16.16.dylib</string>
+		</dict>
+		<key>Resources/libportmidi.2.0.3.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libportmidi.2.0.3.dylib</string>
 		</dict>
 		<key>Resources/libpython3.12.dylib</key>
 		<dict>
 			<key>symlink</key>
 			<string>../Frameworks/libpython3.12.dylib</string>
 		</dict>
+		<key>Resources/libreadline.8.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>../Frameworks/libreadline.8.dylib</string>
+		</dict>
+		<key>Resources/libsharpyuv.0.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libsharpyuv.0.dylib</string>
+		</dict>
+		<key>Resources/libsndfile.1.0.34.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libsndfile.1.0.34.dylib</string>
+		</dict>
+		<key>Resources/libssl.3.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>../Frameworks/libssl.3.dylib</string>
+		</dict>
 		<key>Resources/libtcl8.6.dylib</key>
 		<dict>
 			<key>symlink</key>
 			<string>../Frameworks/libtcl8.6.dylib</string>
+		</dict>
+		<key>Resources/libtiff.5.8.0.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libtiff.5.8.0.dylib</string>
+		</dict>
+		<key>Resources/libtinfo.6.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>../Frameworks/libtinfo.6.dylib</string>
 		</dict>
 		<key>Resources/libtk8.6.dylib</key>
 		<dict>
 			<key>symlink</key>
 			<string>../Frameworks/libtk8.6.dylib</string>
 		</dict>
+		<key>Resources/libvorbis.0.4.9.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libvorbis.0.4.9.dylib</string>
+		</dict>
+		<key>Resources/libvorbisenc.2.0.12.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libvorbisenc.2.0.12.dylib</string>
+		</dict>
+		<key>Resources/libvorbisfile.3.3.8.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libvorbisfile.3.3.8.dylib</string>
+		</dict>
+		<key>Resources/libwebp.7.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libwebp.7.dylib</string>
+		</dict>
+		<key>Resources/libz.1.2.11.zlib-ng.dylib</key>
+		<dict>
+			<key>symlink</key>
+			<string>pygame/.dylibs/libz.1.2.11.zlib-ng.dylib</string>
+		</dict>
 		<key>Resources/libz.1.dylib</key>
 		<dict>
 			<key>symlink</key>
 			<string>../Frameworks/libz.1.dylib</string>
+		</dict>
+		<key>Resources/pygame/.dylibs</key>
+		<dict>
+			<key>symlink</key>
+			<string>../../Frameworks/pygame/.dylibs</string>
+		</dict>
+		<key>Resources/pygame/_camera.cpython-312-darwin.so</key>
+		<dict>
+			<key>symlink</key>
+			<string>../../Frameworks/pygame/_camera.cpython-312-darwin.so</string>
+		</dict>
+		<key>Resources/pygame/_freetype.cpython-312-darwin.so</key>
+		<dict>
+			<key>symlink</key>
+			<string>../../Frameworks/pygame/_freetype.cpython-312-darwin.so</string>
+		</dict>
+		<key>Resources/pygame/_sdl2</key>
+		<dict>
+			<key>symlink</key>
+			<string>../../Frameworks/pygame/_sdl2</string>
+		</dict>
+		<key>Resources/pygame/_sprite.cpython-312-darwin.so</key>
+		<dict>
+			<key>symlink</key>
+			<string>../../Frameworks/pygame/_sprite.cpython-312-darwin.so</string>
+		</dict>
+		<key>Resources/pygame/base.cpython-312-darwin.so</key>
+		<dict>
+			<key>symlink</key>
+			<string>../../Frameworks/pygame/base.cpython-312-darwin.so</string>
+		</dict>
+		<key>Resources/pygame/bufferproxy.cpython-312-darwin.so</key>
+		<dict>
+			<key>symlink</key>
+			<string>../../Frameworks/pygame/bufferproxy.cpython-312-darwin.so</string>
+		</dict>
+		<key>Resources/pygame/color.cpython-312-darwin.so</key>
+		<dict>
+			<key>symlink</key>
+			<string>../../Frameworks/pygame/color.cpython-312-darwin.so</string>
+		</dict>
+		<key>Resources/pygame/constants.cpython-312-darwin.so</key>
+		<dict>
+			<key>symlink</key>
+			<string>../../Frameworks/pygame/constants.cpython-312-darwin.so</string>
+		</dict>
+		<key>Resources/pygame/display.cpython-312-darwin.so</key>
+		<dict>
+			<key>symlink</key>
+			<string>../../Frameworks/pygame/display.cpython-312-darwin.so</string>
+		</dict>
+		<key>Resources/pygame/draw.cpython-312-darwin.so</key>
+		<dict>
+			<key>symlink</key>
+			<string>../../Frameworks/pygame/draw.cpython-312-darwin.so</string>
+		</dict>
+		<key>Resources/pygame/event.cpython-312-darwin.so</key>
+		<dict>
+			<key>symlink</key>
+			<string>../../Frameworks/pygame/event.cpython-312-darwin.so</string>
+		</dict>
+		<key>Resources/pygame/font.cpython-312-darwin.so</key>
+		<dict>
+			<key>symlink</key>
+			<string>../../Frameworks/pygame/font.cpython-312-darwin.so</string>
+		</dict>
+		<key>Resources/pygame/freesansbold.ttf</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			v5JRJp8R5LNVgqmTdglt7uPQxJc6RZy9l7C+vAH0QK0=
+			</data>
+		</dict>
+		<key>Resources/pygame/gfxdraw.cpython-312-darwin.so</key>
+		<dict>
+			<key>symlink</key>
+			<string>../../Frameworks/pygame/gfxdraw.cpython-312-darwin.so</string>
+		</dict>
+		<key>Resources/pygame/image.cpython-312-darwin.so</key>
+		<dict>
+			<key>symlink</key>
+			<string>../../Frameworks/pygame/image.cpython-312-darwin.so</string>
+		</dict>
+		<key>Resources/pygame/imageext.cpython-312-darwin.so</key>
+		<dict>
+			<key>symlink</key>
+			<string>../../Frameworks/pygame/imageext.cpython-312-darwin.so</string>
+		</dict>
+		<key>Resources/pygame/joystick.cpython-312-darwin.so</key>
+		<dict>
+			<key>symlink</key>
+			<string>../../Frameworks/pygame/joystick.cpython-312-darwin.so</string>
+		</dict>
+		<key>Resources/pygame/key.cpython-312-darwin.so</key>
+		<dict>
+			<key>symlink</key>
+			<string>../../Frameworks/pygame/key.cpython-312-darwin.so</string>
+		</dict>
+		<key>Resources/pygame/mask.cpython-312-darwin.so</key>
+		<dict>
+			<key>symlink</key>
+			<string>../../Frameworks/pygame/mask.cpython-312-darwin.so</string>
+		</dict>
+		<key>Resources/pygame/math.cpython-312-darwin.so</key>
+		<dict>
+			<key>symlink</key>
+			<string>../../Frameworks/pygame/math.cpython-312-darwin.so</string>
+		</dict>
+		<key>Resources/pygame/mixer.cpython-312-darwin.so</key>
+		<dict>
+			<key>symlink</key>
+			<string>../../Frameworks/pygame/mixer.cpython-312-darwin.so</string>
+		</dict>
+		<key>Resources/pygame/mixer_music.cpython-312-darwin.so</key>
+		<dict>
+			<key>symlink</key>
+			<string>../../Frameworks/pygame/mixer_music.cpython-312-darwin.so</string>
+		</dict>
+		<key>Resources/pygame/mouse.cpython-312-darwin.so</key>
+		<dict>
+			<key>symlink</key>
+			<string>../../Frameworks/pygame/mouse.cpython-312-darwin.so</string>
+		</dict>
+		<key>Resources/pygame/newbuffer.cpython-312-darwin.so</key>
+		<dict>
+			<key>symlink</key>
+			<string>../../Frameworks/pygame/newbuffer.cpython-312-darwin.so</string>
+		</dict>
+		<key>Resources/pygame/pixelarray.cpython-312-darwin.so</key>
+		<dict>
+			<key>symlink</key>
+			<string>../../Frameworks/pygame/pixelarray.cpython-312-darwin.so</string>
+		</dict>
+		<key>Resources/pygame/pixelcopy.cpython-312-darwin.so</key>
+		<dict>
+			<key>symlink</key>
+			<string>../../Frameworks/pygame/pixelcopy.cpython-312-darwin.so</string>
+		</dict>
+		<key>Resources/pygame/pygame_icon_mac.bmp</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			QrAs3kEF6v7wVMlIJgktI90aUdTg9RdTmp16d2HZhNg=
+			</data>
+		</dict>
+		<key>Resources/pygame/pypm.cpython-312-darwin.so</key>
+		<dict>
+			<key>symlink</key>
+			<string>../../Frameworks/pygame/pypm.cpython-312-darwin.so</string>
+		</dict>
+		<key>Resources/pygame/rect.cpython-312-darwin.so</key>
+		<dict>
+			<key>symlink</key>
+			<string>../../Frameworks/pygame/rect.cpython-312-darwin.so</string>
+		</dict>
+		<key>Resources/pygame/rwobject.cpython-312-darwin.so</key>
+		<dict>
+			<key>symlink</key>
+			<string>../../Frameworks/pygame/rwobject.cpython-312-darwin.so</string>
+		</dict>
+		<key>Resources/pygame/scrap.cpython-312-darwin.so</key>
+		<dict>
+			<key>symlink</key>
+			<string>../../Frameworks/pygame/scrap.cpython-312-darwin.so</string>
+		</dict>
+		<key>Resources/pygame/sdlmain_osx.cpython-312-darwin.so</key>
+		<dict>
+			<key>symlink</key>
+			<string>../../Frameworks/pygame/sdlmain_osx.cpython-312-darwin.so</string>
+		</dict>
+		<key>Resources/pygame/surface.cpython-312-darwin.so</key>
+		<dict>
+			<key>symlink</key>
+			<string>../../Frameworks/pygame/surface.cpython-312-darwin.so</string>
+		</dict>
+		<key>Resources/pygame/surflock.cpython-312-darwin.so</key>
+		<dict>
+			<key>symlink</key>
+			<string>../../Frameworks/pygame/surflock.cpython-312-darwin.so</string>
+		</dict>
+		<key>Resources/pygame/time.cpython-312-darwin.so</key>
+		<dict>
+			<key>symlink</key>
+			<string>../../Frameworks/pygame/time.cpython-312-darwin.so</string>
+		</dict>
+		<key>Resources/pygame/transform.cpython-312-darwin.so</key>
+		<dict>
+			<key>symlink</key>
+			<string>../../Frameworks/pygame/transform.cpython-312-darwin.so</string>
 		</dict>
 		<key>Resources/python3.12</key>
 		<dict>
@@ -3967,6 +5327,62 @@
 			<key>hash2</key>
 			<data>
 			ZI/Knmc9tkuvMeLVgTPguWfkRvQEf2n5sbq4OV2Zb9E=
+			</data>
+		</dict>
+		<key>Resources/setuptools/_vendor/importlib_metadata-8.7.1.dist-info/INSTALLER</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			5hhM4Q4mYTT9z6QB6PGpUAW81PGNFrYrdXMj4oM/6ak=
+			</data>
+		</dict>
+		<key>Resources/setuptools/_vendor/importlib_metadata-8.7.1.dist-info/METADATA</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			o+OLnuQyYonUhkcE8w4pnudp4jCc6fSnXw3hpQrQo1Y=
+			</data>
+		</dict>
+		<key>Resources/setuptools/_vendor/importlib_metadata-8.7.1.dist-info/RECORD</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			Uqa47g3hXPf9mWJfQ7l80uOUKshvFgVOqQ3kjmbyk1U=
+			</data>
+		</dict>
+		<key>Resources/setuptools/_vendor/importlib_metadata-8.7.1.dist-info/REQUESTED</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=
+			</data>
+		</dict>
+		<key>Resources/setuptools/_vendor/importlib_metadata-8.7.1.dist-info/WHEEL</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			/zCd3N1l69ArxyTb8rzEoP9TpbYXkqRFSNOD5OuxnTs=
+			</data>
+		</dict>
+		<key>Resources/setuptools/_vendor/importlib_metadata-8.7.1.dist-info/licenses/LICENSE</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			RYUC4S2Xu/ZEOGBqIARKqF6wX7CoqAe7NdvsJT/R/AQ=
+			</data>
+		</dict>
+		<key>Resources/setuptools/_vendor/importlib_metadata-8.7.1.dist-info/top_level.txt</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			CO3fD9yylANiXkrMo4qHLV/mqXL2sC5JFKgt1yWAT+A=
+			</data>
+		</dict>
+		<key>Resources/setuptools/_vendor/jaraco/text/Lorem ipsum.txt</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			N/7c/79zxOufBY9HZ3yzMgOkNv+TkOTTio4BydrSjgs=
 			</data>
 		</dict>
 		<key>Resources/tcl8/8.4/platform-1.0.19.tm</key>

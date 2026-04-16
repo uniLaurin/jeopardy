@@ -21,22 +21,40 @@ Bug-Fixes:
 import tkinter as tk
 import tkinter.font
 import resources as r
+import audio_player as audio
 import math
+
+# Timer-Audio: wird beim Aufruf einer Frage gestartet und bei Antwort/Leertaste gestoppt
+TIMER_AUDIO = "30 Seconds To Answer Jeopardy Timer #challenge #timer #jeopardy.mp3"
 
 # Lokale Aliase — werden in run() aus r.* neu gebunden, damit Theme-Wechsel greift
 BLUE = r.BLUE
 GOLD = r.GOLD
 DARK_BLUE = r.DARK_BLUE
-ANSWERED_BG = "#0A0A7A"  # Hintergrund für bereits beantwortete Buttons
-ANSWERED_FG = "#404040"  # Vordergrund (Border) für beantwortete Buttons
+HOVER_BG = r.CARD_BG      # Hintergrund beim Hovern (themed)
+ANSWERED_BG = r.SHADOW    # Hintergrund beantworteter Buttons (themed, dunkel)
+ANSWERED_FG = "#404040"   # Border-Farbe beantworteter Buttons (theme-neutrales Grau)
+
+
+def _darken_hex(h, factor=0.5):
+    """Macht einen Hex-Farbwert dunkler (Multiplikation pro Kanal)."""
+    h = h.lstrip('#')
+    return "#{:02X}{:02X}{:02X}".format(
+        int(int(h[0:2], 16) * factor),
+        int(int(h[2:4], 16) * factor),
+        int(int(h[4:6], 16) * factor),
+    )
 
 
 def _rebind_colors():
-    """Aktualisiert BLUE/GOLD/DARK_BLUE aus r.* (nach Theme-Wechsel)."""
-    global BLUE, GOLD, DARK_BLUE
+    """Aktualisiert alle Farb-Aliase aus r.* (nach Theme-Wechsel)."""
+    global BLUE, GOLD, DARK_BLUE, HOVER_BG, ANSWERED_BG
     BLUE = r.BLUE
     GOLD = r.GOLD
     DARK_BLUE = r.DARK_BLUE
+    HOVER_BG = r.CARD_BG
+    # ANSWERED_BG: deutlich dunkler als DARK_BLUE — "vergessen"-Look
+    ANSWERED_BG = _darken_hex(r.DARK_BLUE, 0.5)
 
 # Modul-Level State
 grid = []                   # 2D-Liste aller Buttons: grid[kategorie][zeile]
@@ -66,7 +84,7 @@ class LButton(tk.Label):
     def _on_enter(self, event):
         """Maus betritt den Button → Hover-Style anwenden (nur wenn nicht gedreht)."""
         if not self.gedreht:
-            self.config(background="#0B18FF",
+            self.config(background=HOVER_BG,
                         highlightbackground=r.HOVER_GOLD, highlightthickness=3)
 
     def _on_leave(self, event):
@@ -108,8 +126,9 @@ class LButton(tk.Label):
         """Verarbeitet den Tastendruck nach dem Aufklappen einer Frage.
 
         Tasten:
-            '1' bis str(num_teams):   Punkte an entsprechendes Team
-            str(num_teams + 1):       "Niemand" — keine Punkte
+            LEERTASTE:                Timer-Audio stoppen (Frage bleibt offen)
+            '1' bis str(num_teams):   Punkte an entsprechendes Team + Audio stoppen
+            str(num_teams + 1):       "Niemand" — keine Punkte + Audio stoppen
 
         Bug-Fix: `_answered` Flag wird SOFORT gesetzt und unbind SOFORT
         ausgeführt. Früher passierte unbind via `after(10, ...)`, sodass
@@ -118,12 +137,19 @@ class LButton(tk.Label):
         global _flip_in_progress
         if self._answered:
             return  # Bereits verarbeitet — Mehrfach-Key-Events ignorieren
+
+        # Leertaste: Nur den Timer stoppen — Frage bleibt offen, wartet auf Antwort
+        if event.keysym == "space":
+            audio.stop_music()
+            return
+
         num_teams = len(r.teams)
 
         # Team-Tasten: 1 bis num_teams
         for i in range(num_teams):
             if event.char == str(i + 1):
                 self._answered = True
+                audio.stop_music()  # Timer stoppen — Antwort gegeben
                 self.master.unbind("<KeyPress>")
                 # Button in der Team-Farbe einfärben (visuelles Feedback für den Moderator)
                 self.config(foreground=r.teams[i]["color"])
@@ -137,6 +163,7 @@ class LButton(tk.Label):
         # Niemand-Taste: num_teams + 1 (z.B. '4' bei 3 Teams)
         if event.char == str(num_teams + 1):
             self._answered = True
+            audio.stop_music()  # Timer stoppen — Antwort (Niemand)
             self.master.unbind("<KeyPress>")
             self.config(foreground="black")
             self.update()
@@ -210,6 +237,9 @@ class LButton(tk.Label):
                 self.master.after(10, lambda: self.flip(org, True, schnelligkeit))
             else:
                 # Vollständig geschrumpft → Text anzeigen und in die Mitte springen
+                # Background explizit auf Theme-Farbe setzen, damit Hover-Reste
+                # (HOVER_BG) nicht in die Fragenansicht überleben.
+                self.config(background=DARK_BLUE)
                 self.visible_text()
                 self.lift()  # In den Vordergrund bringen
                 self.place(
@@ -229,12 +259,18 @@ class LButton(tk.Label):
                     self.place(height=self.winfo_height() + (schnelligkeit * 20),
                                y=self.winfo_y() - schnelligkeit * 10)
                 self.master.after(10, lambda: self.flip(org, False, schnelligkeit))
+            else:
+                # Fullscreen erreicht — jetzt erst das 30-Sekunden-Timer-Audio starten.
+                # (No-Op wenn pygame nicht verfügbar ist.)
+                audio.play_music(TIMER_AUDIO, loop=False)
 
     def start_flip(self):
         """Startet die Flip-Animation beim Klick auf den Button.
 
         Setzt das globale `_flip_in_progress` Flag (damit andere Buttons nicht
         klickbar sind) und bindet die Tastenerkennung an das Root-Fenster.
+        Das Timer-Audio startet erst, wenn die Frage Fullscreen erreicht hat
+        (siehe flip() Phase 2).
         """
         global _flip_in_progress
         if not self.gedreht:
@@ -413,6 +449,8 @@ def run():
     root.configure(bg=BLUE)
     create_grid(root)
     root.mainloop()
+    # Safety: Timer stoppen falls das Fenster geschlossen wird während eine Frage offen ist
+    audio.stop_music()
 
 
 if __name__ == "__main__":

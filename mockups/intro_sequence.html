@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Jeopardy - Intro Sequence Mockup</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 100%; height: 100%; overflow: hidden;
+    background: #000; font-family: 'Arial Rounded MT Bold', Arial, sans-serif; color: #fff; }
+
+  /* ----- Phase-Container ----- */
+  .stage {
+    position: fixed; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    background: radial-gradient(ellipse at center, #0A1480 0%, #060CE9 45%, #020266 100%);
+    opacity: 0; animation: fadeInBg 2s ease-in forwards;
+  }
+  @keyframes fadeInBg { to { opacity: 1; } }
+
+  /* Star/Particle backdrop */
+  .stars { position: absolute; inset: 0; pointer-events: none; }
+  .star {
+    position: absolute; width: 2px; height: 2px; background: #DBAB51;
+    border-radius: 50%; opacity: 0;
+    animation: twinkle 3s ease-in-out infinite;
+  }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0; transform: scale(0.5); }
+    50% { opacity: 0.8; transform: scale(1.2); }
+  }
+
+  /* ----- Title "JEOPARDY" ----- */
+  .title {
+    display: flex; gap: 8px; justify-content: center;
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    animation: titleShrink 2s ease-in-out 8s forwards;
+  }
+  .title span {
+    font-size: 120px; font-weight: 900; color: #DBAB51;
+    text-shadow: 0 0 30px rgba(219, 171, 81, 0.6),
+                 4px 4px 0 #000;
+    letter-spacing: 4px;
+    opacity: 0; transform: translateY(-80px) scale(0.5);
+    animation: letterDrop 0.4s cubic-bezier(.17,.89,.32,1.27) forwards;
+  }
+  .title span:nth-child(1) { animation-delay: 2.0s; }
+  .title span:nth-child(2) { animation-delay: 2.3s; }
+  .title span:nth-child(3) { animation-delay: 2.6s; }
+  .title span:nth-child(4) { animation-delay: 2.9s; }
+  .title span:nth-child(5) { animation-delay: 3.2s; }
+  .title span:nth-child(6) { animation-delay: 3.5s; }
+  .title span:nth-child(7) { animation-delay: 3.8s; }
+  .title span:nth-child(8) { animation-delay: 4.1s; }
+
+  @keyframes letterDrop {
+    0%   { opacity: 0; transform: translateY(-80px) scale(0.5) rotate(-15deg); }
+    60%  { opacity: 1; transform: translateY(10px) scale(1.1) rotate(2deg); }
+    100% { opacity: 1; transform: translateY(0) scale(1) rotate(0); }
+  }
+
+  @keyframes titleShrink {
+    from { top: 50%; transform: translate(-50%, -50%) scale(1); }
+    to   { top: 12%; transform: translate(-50%, 0) scale(0.5); }
+  }
+
+  /* Gold underline under title */
+  .title-line {
+    position: absolute; top: 50%; left: 50%;
+    width: 0; height: 4px; background: #DBAB51;
+    transform: translate(-50%, 60px);
+    box-shadow: 0 0 15px rgba(219, 171, 81, 0.8);
+    animation: lineDraw 1s ease-out 4.5s forwards,
+               lineShrink 2s ease-in-out 8s forwards;
+  }
+  @keyframes lineDraw  { to { width: 700px; } }
+  @keyframes lineShrink { to { top: 18%; width: 350px; transform: translate(-50%, 0); } }
+
+  /* ----- Tagline ----- */
+  .tagline {
+    position: absolute; top: 68%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 22px; letter-spacing: 8px; color: #fff;
+    opacity: 0;
+    animation: fadeInUp 1.2s ease-out 5.5s forwards,
+               fadeOut 1s ease-in 8s forwards;
+  }
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translate(-50%, 0); }
+    to   { opacity: 0.85; transform: translate(-50%, -50%); }
+  }
+  @keyframes fadeOut { to { opacity: 0; } }
+
+  /* ----- Teams ----- */
+  .teams-container {
+    position: absolute; top: 38%; left: 50%;
+    transform: translateX(-50%);
+    display: flex; gap: 20px;
+    opacity: 0;
+    animation: fadeInBg 0.5s ease-in 10s forwards;
+  }
+  .team-card {
+    width: 160px; padding: 20px 16px;
+    background: rgba(6, 12, 233, 0.6);
+    border: 2px solid #DBAB51;
+    border-radius: 4px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(219, 171, 81, 0.3);
+    opacity: 0; transform: translateY(30px) scale(0.9);
+    animation: teamReveal 0.6s cubic-bezier(.17,.89,.32,1.27) forwards;
+  }
+  .team-card:nth-child(1) { animation-delay: 10.2s; }
+  .team-card:nth-child(2) { animation-delay: 10.6s; }
+  .team-card:nth-child(3) { animation-delay: 11.0s; }
+  .team-card:nth-child(4) { animation-delay: 11.4s; }
+  @keyframes teamReveal {
+    0% { opacity: 0; transform: translateY(30px) scale(0.9); }
+    60% { opacity: 1; transform: translateY(-5px) scale(1.05); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .team-label { font-size: 11px; letter-spacing: 3px; color: #DBAB51; margin-bottom: 8px; }
+  .team-name  { font-size: 18px; font-weight: bold; color: #fff; }
+
+  /* ----- Stats strip ----- */
+  .stats {
+    position: absolute; top: 58%; left: 50%;
+    transform: translateX(-50%);
+    display: flex; gap: 80px;
+    opacity: 0;
+    animation: fadeInBg 1s ease-in 13s forwards;
+  }
+  .stat { text-align: center; }
+  .stat-num { font-size: 46px; font-weight: 900; color: #DBAB51;
+    text-shadow: 0 0 15px rgba(219, 171, 81, 0.6); }
+  .stat-lbl { font-size: 11px; letter-spacing: 3px; color: #fff; opacity: 0.8; }
+
+  /* ----- Ready prompt ----- */
+  .prompt {
+    position: absolute; bottom: 12%; left: 50%;
+    transform: translateX(-50%);
+    font-size: 20px; letter-spacing: 6px; color: #DBAB51;
+    opacity: 0;
+    animation: fadeInBg 0.8s ease-in 16s forwards,
+               pulse 1.4s ease-in-out 17s infinite;
+    border: 2px solid #DBAB51;
+    padding: 14px 32px;
+    background: rgba(0,0,0,0.3);
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.5; box-shadow: 0 0 0 rgba(219, 171, 81, 0); }
+    50% { opacity: 1; box-shadow: 0 0 25px rgba(219, 171, 81, 0.7); }
+  }
+
+  /* ----- Dev-only: Phase timeline overlay ----- */
+  .timeline {
+    position: fixed; bottom: 10px; left: 10px; right: 10px;
+    height: 30px; background: rgba(0,0,0,0.7); border: 1px solid #DBAB51;
+    border-radius: 4px; display: flex; align-items: center;
+    padding: 0 10px; font-size: 11px; color: #DBAB51;
+    letter-spacing: 1px; z-index: 999;
+  }
+  .timeline-bar {
+    flex: 1; height: 6px; background: #222; margin: 0 10px;
+    border-radius: 3px; position: relative; overflow: hidden;
+  }
+  .timeline-fill {
+    position: absolute; left: 0; top: 0; bottom: 0; width: 0;
+    background: linear-gradient(90deg, #DBAB51, #fff);
+    animation: fill 18s linear forwards;
+  }
+  @keyframes fill { to { width: 100%; } }
+
+  .controls { position: fixed; top: 10px; right: 10px; z-index: 999; display: flex; gap: 8px; }
+  .controls button {
+    background: #DBAB51; color: #000; border: 0; padding: 6px 14px;
+    font-weight: bold; cursor: pointer; border-radius: 3px;
+  }
+</style>
+</head>
+<body>
+
+<div class="stage">
+  <div class="stars" id="stars"></div>
+
+  <div class="title">
+    <span>J</span><span>E</span><span>O</span><span>P</span>
+    <span>A</span><span>R</span><span>D</span><span>Y</span>
+  </div>
+
+  <div class="title-line"></div>
+
+  <div class="tagline">DAS QUIZ-SPIEL FÜR TEAMS</div>
+
+  <div class="teams-container">
+    <div class="team-card"><div class="team-label">TEAM 1</div><div class="team-name">Die Schlauen</div></div>
+    <div class="team-card"><div class="team-label">TEAM 2</div><div class="team-name">Blitzdenker</div></div>
+    <div class="team-card"><div class="team-label">TEAM 3</div><div class="team-name">Wissenshelden</div></div>
+    <div class="team-card"><div class="team-label">TEAM 4</div><div class="team-name">Fragezeichen</div></div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="stat-num">5</div><div class="stat-lbl">KATEGORIEN</div></div>
+    <div class="stat"><div class="stat-num">25</div><div class="stat-lbl">FRAGEN</div></div>
+    <div class="stat"><div class="stat-num">500</div><div class="stat-lbl">MAX. PUNKTE</div></div>
+  </div>
+
+  <div class="prompt">DRÜCKE ENTER ZUM START</div>
+</div>
+
+<div class="timeline">
+  0s
+  <div class="timeline-bar"><div class="timeline-fill"></div></div>
+  <span id="phase">Phase 1: Fade-In</span>
+</div>
+
+<div class="controls">
+  <button onclick="location.reload()">↻ Replay</button>
+</div>
+
+<script>
+  // generate random stars
+  const starsEl = document.getElementById('stars');
+  for (let i = 0; i < 60; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    s.style.left = Math.random() * 100 + '%';
+    s.style.top  = Math.random() * 100 + '%';
+    s.style.animationDelay = Math.random() * 3 + 's';
+    starsEl.appendChild(s);
+  }
+
+  // phase labels update
+  const phaseEl = document.getElementById('phase');
+  const phases = [
+    [0,   'Phase 1: Fade-In + Starfield'],
+    [2,   'Phase 2: Title-Assembly "JEOPARDY"'],
+    [4.5, 'Phase 3: Gold Underline'],
+    [5.5, 'Phase 4: Tagline'],
+    [8,   'Phase 5: Title Shrinks to Top'],
+    [10,  'Phase 6: Team-Cards Reveal'],
+    [13,  'Phase 7: Stats Strip'],
+    [16,  'Phase 8: "DRÜCKE ENTER" Prompt'],
+    [18,  'Phase 9: Hold-State (wartet auf Enter)']
+  ];
+  const start = Date.now();
+  setInterval(() => {
+    const t = (Date.now() - start) / 1000;
+    for (let i = phases.length - 1; i >= 0; i--) {
+      if (t >= phases[i][0]) { phaseEl.textContent = phases[i][1]; break; }
+    }
+  }, 100);
+
+  // "Enter" pretend action
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      document.querySelector('.stage').style.transition = 'opacity 0.6s';
+      document.querySelector('.stage').style.opacity = '0';
+      setTimeout(() => { alert('→ Game Board würde jetzt starten'); location.reload(); }, 700);
+    }
+  });
+</script>
+
+</body>
+</html>

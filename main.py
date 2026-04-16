@@ -22,6 +22,7 @@ r.apply_theme(r.load_current_theme())
 
 import startscreen
 import settings
+import intro
 import game
 import scores
 
@@ -47,10 +48,13 @@ def main():
     # 4. Team-Punkte und to_be_switched_int zurücksetzen (frisches Spiel)
     r.reset_game_state()
 
-    # 5. Das eigentliche Jeopardy-Board anzeigen
+    # 5. Cinematic Intro-Sequenz (Audio + Animation) vor dem Gameboard
+    intro.run()
+
+    # 6. Das eigentliche Jeopardy-Board anzeigen
     game.run()
 
-    # 6. Ergebnisse anzeigen: animiertes Balkendiagramm mit Gewinner-Highlight
+    # 7. Ergebnisse anzeigen: animiertes Balkendiagramm mit Gewinner-Highlight
     scores.run()
 
 

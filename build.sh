@@ -52,17 +52,27 @@ if [ "$1" = "--install" ]; then
   echo "→ pip aktualisieren..."
   pip install --upgrade pip --quiet
 
-  echo "→ Installiere PyInstaller..."
-  pip install pyinstaller --quiet
+  echo "→ Installiere Dependencies aus requirements.txt..."
+  if [ -f "requirements.txt" ]; then
+    pip install -r requirements.txt --quiet
+  else
+    pip install pyinstaller pygame --quiet
+  fi
 
   echo -e "${GREEN}✓ Alle Pakete installiert${NC}"
 else
   echo -e "${YELLOW}→ Überspringe Installation (kein --install Flag)${NC}"
+  # pygame zur Sicherheit prüfen — ohne Intro-Audio läuft die App nicht richtig
+  if ! python -c "import pygame" 2>/dev/null; then
+    echo -e "${YELLOW}⚠ pygame fehlt in venv — installiere nachträglich...${NC}"
+    pip install pygame --quiet
+  fi
 fi
 
 # ── Quelldateien prüfen ──────────────────────
 MISSING=0
-for f in "main.py" "startscreen.py" "settings.py" "game.py" "scores.py" "resources.py"; do
+for f in "main.py" "startscreen.py" "settings.py" "game.py" "scores.py" \
+         "resources.py" "intro.py" "audio_player.py"; do
   if [ ! -f "$f" ]; then
     echo -e "${RED}FEHLER: Datei nicht gefunden → \"$f\"${NC}"
     MISSING=1
@@ -71,6 +81,14 @@ done
 if [ ! -d "questionsets" ]; then
   echo -e "${RED}FEHLER: Ordner 'questionsets/' nicht gefunden${NC}"
   MISSING=1
+fi
+if [ ! -d "audio" ]; then
+  echo -e "${RED}FEHLER: Ordner 'audio/' nicht gefunden${NC}"
+  MISSING=1
+fi
+if [ ! -f "audio/Jeopardy intro with host introduction.mp3" ]; then
+  echo -e "${YELLOW}⚠ Intro-Audio fehlt: audio/Jeopardy intro with host introduction.mp3${NC}"
+  echo -e "${YELLOW}  Build läuft trotzdem, aber das Intro wird ohne Ton abgespielt.${NC}"
 fi
 if [ $MISSING -eq 1 ]; then
   echo ""

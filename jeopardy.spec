@@ -1,12 +1,24 @@
 # -*- mode: python ; coding: utf-8 -*-
 import sys
 
+# pygame braucht seine SDL-Libs im Bundle — collect_* holt Binaries + Daten
+try:
+    from PyInstaller.utils.hooks import collect_submodules, collect_dynamic_libs
+    pygame_submodules = collect_submodules('pygame')
+    pygame_binaries = collect_dynamic_libs('pygame')
+except Exception:
+    pygame_submodules = []
+    pygame_binaries = []
+
 a = Analysis(
     ['main.py'],
     pathex=[],
-    binaries=[],
-    datas=[('questionsets', 'questionsets')],
-    hiddenimports=[],
+    binaries=pygame_binaries,
+    datas=[
+        ('questionsets', 'questionsets'),
+        ('audio', 'audio'),
+    ],
+    hiddenimports=pygame_submodules,
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
