@@ -39,11 +39,55 @@ Danach per Doppelklick starten.
 
 
 
-## Steuerung im Spiel
+## Steuerung
+
+Das Spiel läuft durch mehrere Screens — hier die Tastenbelegung pro Bildschirm.
+
+### Startscreen
 
 | Taste | Funktion |
 |---|---|
-| `1` … `N` | Team, das die Frage korrekt beantwortet hat |
-| `N+1` | Niemand — Punkte werden abgezogen |
-| `Esc` | Schließt den aktuellen Screen |
-|!| Absatz beim beschreiben der Fragen in den settings|
+| `Enter` | Spiel starten (direkt ins Intro) |
+| `S` | Einstellungen öffnen (Teams, Fragenset, Design) |
+| `Esc` | App beenden |
+
+### Einstellungen
+
+| Taste / Eingabe | Funktion |
+|---|---|
+| `Esc` | Einstellungen schließen und App beenden |
+| `!` *(im Fragentext)* | Absatz-Trennzeichen — trennt z. B. deutsche und englische Version einer Frage mit einem doppelten Zeilenumbruch |
+
+Die Einstellungen haben vier Tabs: **TEAMS** (2–6 Teams, Name + Farbe), **FRAGENSET** (Editor für JSON-Fragensets), **DESIGN** (Farb-Theme auswählen) und **START** (Spiel starten).
+
+### Intro-Sequenz
+
+| Taste | Funktion |
+|---|---|
+| `Enter` | Intro überspringen, direkt zum Spiel |
+| `Esc` | Intro überspringen |
+
+### Spiel (Jeopardy-Board)
+
+**Maus:**
+
+| Aktion | Funktion |
+|---|---|
+| Klick auf Wert-Feld | Frage aufdecken (Flip-Animation) |
+
+**Tastatur — nur während eine Frage offen ist:**
+
+| Taste | Funktion |
+|---|---|
+| `Space` | 30-Sekunden-Timer-Audio stoppen — Frage bleibt offen und wartet auf eine Antwort |
+| `1` … `N` | Team `1` bis `N` hat korrekt geantwortet → bekommt die Punkte der Frage |
+| `N+1` | Niemand hat geantwortet → keine Punktevergabe (es werden **keine** Punkte abgezogen) |
+
+Dabei ist `N` die Anzahl der konfigurierten Teams. Beispiel bei 3 Teams: `1`, `2`, `3` = Teams, `4` = Niemand.
+
+### Scoreboard
+
+| Taste | Funktion |
+|---|---|
+| `Enter` | Scoreboard schließen |
+| `Esc` | Scoreboard schließen |
