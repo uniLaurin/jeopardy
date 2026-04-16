@@ -1258,11 +1258,11 @@
 		</data>
 		<key>Resources/base_library.zip</key>
 		<data>
-		8Ul32/YoOrTYZweAsNS2yaROI0A=
+		aQxJah+/6ZAONXU+xCJNIKhyyec=
 		</data>
-		<key>Resources/icon-windowed.icns</key>
+		<key>Resources/icon.icns</key>
 		<data>
-		eEHOuYpZLB0vKGVIWGZOh5rH8+o=
+		5YCcrYVBL5nKeGpprgcYVpGceLg=
 		</data>
 		<key>Resources/pygame/freesansbold.ttf</key>
 		<data>
@@ -4913,14 +4913,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			HqAjXoALO8WIPfIMNTxbL27I9aA0bINwb2goQxpG04c=
+			/PqWCiJEmN02LTwMtjRG1sUS4wikqZc0OxWlWCPOBxM=
 			</data>
 		</dict>
-		<key>Resources/icon-windowed.icns</key>
+		<key>Resources/icon.icns</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			uQo7VuWRab4Phv4EEGmfQsyqFqDIXZgO8OtgaAMvCzY=
+			ipFZYhM1jQXF9NLddROlp0d43pfhncbtWAzDzOIPUIU=
 			</data>
 		</dict>
 		<key>Resources/libFLAC.8.dylib</key>

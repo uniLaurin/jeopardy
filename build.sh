@@ -90,6 +90,13 @@ if [ ! -f "audio/Jeopardy intro with host introduction.mp3" ]; then
   echo -e "${YELLOW}⚠ Intro-Audio fehlt: audio/Jeopardy intro with host introduction.mp3${NC}"
   echo -e "${YELLOW}  Build läuft trotzdem, aber das Intro wird ohne Ton abgespielt.${NC}"
 fi
+# App-Icon (optional, Build läuft auch ohne)
+if [ "$(uname)" = "Darwin" ] && [ ! -f "assets/icon.icns" ]; then
+  echo -e "${YELLOW}⚠ assets/icon.icns fehlt — macOS-App bekommt Default-Icon${NC}"
+fi
+if [ ! -f "assets/icon.ico" ]; then
+  echo -e "${YELLOW}⚠ assets/icon.ico fehlt — Windows-Exe bekommt Default-Icon${NC}"
+fi
 if [ $MISSING -eq 1 ]; then
   echo ""
   echo "Bitte build.sh im Projektordner ausführen."

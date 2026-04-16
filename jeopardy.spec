@@ -1,5 +1,12 @@
 # -*- mode: python ; coding: utf-8 -*-
+import os
 import sys
+
+# Plattform-abhängiges App-Icon — fehlt eins, läuft der Build ohne Icon weiter
+_ico = os.path.join(os.path.dirname(os.path.abspath(SPEC)), 'assets', 'icon.ico')
+_icns = os.path.join(os.path.dirname(os.path.abspath(SPEC)), 'assets', 'icon.icns')
+win_icon = _ico if os.path.exists(_ico) else None
+mac_icon = _icns if os.path.exists(_icns) else None
 
 # pygame braucht seine SDL-Libs im Bundle — collect_* holt Binaries + Daten
 try:
@@ -44,6 +51,7 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
+    icon=win_icon,
 )
 
 coll = COLLECT(
@@ -61,6 +69,6 @@ if sys.platform == 'darwin':
     app = BUNDLE(
         coll,
         name='Jeopardy.app',
-        icon=None,
+        icon=mac_icon,
         bundle_identifier='com.jeopardy.game',
     )
