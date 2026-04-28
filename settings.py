@@ -131,6 +131,9 @@ class SettingsScreen:
         self.game_started = False
         self.theme_changed = False
 
+        # Tk-Variable für den "Antworten anzeigen"-Toggle pro Set
+        self.show_answers_var = tk.BooleanVar(value=False)
+
         # Tab-State
         self.current_tab = "teams"
         self.tab_buttons = {}   # name → Button
@@ -491,6 +494,18 @@ class SettingsScreen:
         self.set_name_entry.place(x=ed_x + 80, y=ed_y - 4, width=ed_w - 100, height=36)
         _bind_focus_border(self.set_name_entry)
 
+        # Antworten-Toggle (Checkbutton) — eigene Zeile unter "Name"
+        ed_y += 40
+        chk = tk.Checkbutton(
+            tab, text="Antworten nach Beantwortung anzeigen",
+            variable=self.show_answers_var,
+            font=(r.FONT, r.FONT_SMALL),
+            fg=LABEL_GRAY, bg=CARD_BG,
+            activeforeground=GOLD, activebackground=CARD_BG,
+            selectcolor=DARK_BLUE,
+        )
+        chk.place(x=ed_x, y=ed_y - 4)
+
         ed_y += 50
         tk.Label(
             tab, text="Werte:", font=(r.FONT, r.FONT_BUTTON),
@@ -589,6 +604,16 @@ class SettingsScreen:
             self._set_status("Fehler beim Laden!")
             return
 
+        # Migriere String-Fragen → Dict {"q":..., "a":""} im Editor-State
+        for cat in self.editor_data.get("categories", []):
+            migrated = []
+            for raw in cat.get("questions", []):
+                q_text, a_text = r._normalize_question(raw)
+                migrated.append({"q": q_text, "a": a_text})
+            cat["questions"] = migrated
+        # show_answers default = False
+        self.editor_data.setdefault("show_answers", False)
+
         self.editor_filename = filename
         self.current_cat_index = -1
 
@@ -604,6 +629,7 @@ class SettingsScreen:
             self.cat_listbox.selection_set(0)
             self._show_category(0)
 
+        self.show_answers_var.set(bool(self.editor_data.get("show_answers", False)))
         self._set_status("")
 
     def _refresh_cat_listbox(self):
@@ -647,21 +673,37 @@ class SettingsScreen:
 
         for i in range(len(vals)):
             val_text = str(vals[i]) if i < len(vals) else "?"
+            row_y = i * 80  # mehr vertikaler Platz für Q + A pro Reihe
             tk.Label(
                 self.q_frame, text=f"{val_text}:", font=(r.FONT, r.FONT_BODY, "bold"),
                 fg=GOLD, bg=CARD_BG, width=6, anchor="e"
-            ).place(x=0, y=i * 48, height=36)
+            ).place(x=0, y=row_y, height=36)
 
-            entry = tk.Entry(
+            # Frage-Feld
+            q_entry = tk.Entry(
                 self.q_frame, font=(r.FONT, 11),
                 bg=DARK_BLUE, fg=GOLD, insertbackground=GOLD, relief="flat"
             )
-            entry.place(x=75, y=i * 48, width=frame_w - 85, height=36)
-            _bind_focus_border(entry)
+            q_entry.place(x=75, y=row_y, width=frame_w - 85, height=32)
+            _bind_focus_border(q_entry)
 
-            q_text = questions[i] if i < len(questions) else ""
-            entry.insert(0, q_text)
-            self.question_entries.append(entry)
+            # Antwort-Feld direkt darunter
+            a_entry = tk.Entry(
+                self.q_frame, font=(r.FONT, 11),
+                bg=DARK_BLUE, fg=LABEL_GRAY, insertbackground=GOLD, relief="flat"
+            )
+            a_entry.place(x=75, y=row_y + 36, width=frame_w - 85, height=32)
+            _bind_focus_border(a_entry)
+
+            # Aktuellen Wert einsetzen — questions[i] ist jetzt Dict (nach Migration in _load_set_into_editor)
+            q_dict = questions[i] if i < len(questions) else {"q": "", "a": ""}
+            if isinstance(q_dict, dict):
+                q_entry.insert(0, q_dict.get("q", ""))
+                a_entry.insert(0, q_dict.get("a", ""))
+            else:
+                q_entry.insert(0, str(q_dict))
+
+            self.question_entries.append((q_entry, a_entry))
 
     def _save_current_questions(self):
         if not self.editor_data or self.current_cat_index < 0:
@@ -671,11 +713,13 @@ class SettingsScreen:
             return
 
         questions = []
-        for entry in self.question_entries:
+        for q_entry, a_entry in self.question_entries:
             try:
-                questions.append(entry.get())
+                q_text = q_entry.get()
+                a_text = a_entry.get()
             except tk.TclError:
                 return
+            questions.append({"q": q_text, "a": a_text})
         cats[self.current_cat_index]["questions"] = questions
 
         try:
@@ -703,7 +747,8 @@ class SettingsScreen:
             return
         self._save_current_questions()
         vals = self._parse_values()
-        new_cat = {"name": "Neue Kategorie", "questions": [""] * len(vals)}
+        new_cat = {"name": "Neue Kategorie",
+                   "questions": [{"q": "", "a": ""} for _ in range(len(vals))]}
         self.editor_data["categories"].append(new_cat)
         self._refresh_cat_listbox()
         idx = len(self.editor_data["categories"]) - 1
@@ -753,13 +798,16 @@ class SettingsScreen:
         for cat in self.editor_data["categories"]:
             qs = cat.get("questions", [])
             while len(qs) < len(vals):
-                qs.append("")
+                qs.append({"q": "", "a": ""})
             cat["questions"] = qs[:len(vals)]
 
         r.save_question_set(
             self.editor_filename, name, vals,
-            self.editor_data["categories"]
+            self.editor_data["categories"],
+            show_answers=self.show_answers_var.get(),
         )
+        # State im Editor-Dict aktualisieren, damit beim nächsten Tab-Wechsel kein Drift
+        self.editor_data["show_answers"] = self.show_answers_var.get()
         self.status_label.config(text="Gespeichert!", fg=r.SUCCESS_GREEN)
         self.root.after(3000, lambda: self.status_label.config(text=""))
         self._refresh_set_listbox()
@@ -1060,11 +1108,12 @@ class SettingsScreen:
                 for cat in self.editor_data["categories"]:
                     qs = cat.get("questions", [])
                     while len(qs) < len(vals):
-                        qs.append("")
+                        qs.append({"q": "", "a": ""})
                     cat["questions"] = qs[:len(vals)]
                 r.save_question_set(
                     self.editor_filename, name, vals,
-                    self.editor_data["categories"]
+                    self.editor_data["categories"],
+                    show_answers=self.show_answers_var.get(),
                 )
 
             r.load_question_set(self.editor_filename)
