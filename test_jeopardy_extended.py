@@ -859,5 +859,29 @@ class TestFullStateCycle(unittest.TestCase):
         self.assertEqual(r.to_be_switched_int, 7 * 5)
 
 
+class TestQuestionNormalization(unittest.TestCase):
+    """Tests für die _normalize_question Hilfsfunktion."""
+
+    def test_string_input_returns_q_and_empty_a(self):
+        q, a = r._normalize_question("Was ist 2+2?")
+        self.assertEqual(q, "Was ist 2+2?")
+        self.assertEqual(a, "")
+
+    def test_dict_with_q_and_a_returns_both(self):
+        q, a = r._normalize_question({"q": "Hauptstadt?", "a": "Berlin"})
+        self.assertEqual(q, "Hauptstadt?")
+        self.assertEqual(a, "Berlin")
+
+    def test_dict_without_a_returns_empty_a(self):
+        q, a = r._normalize_question({"q": "Hauptstadt?"})
+        self.assertEqual(q, "Hauptstadt?")
+        self.assertEqual(a, "")
+
+    def test_empty_string_returns_empty_q(self):
+        q, a = r._normalize_question("")
+        self.assertEqual(q, "")
+        self.assertEqual(a, "")
+
+
 if __name__ == "__main__":
     unittest.main()

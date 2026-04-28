@@ -388,6 +388,22 @@ questions = [
 # Fragenset-Verwaltung (CRUD auf JSON-Dateien in questionsets/)
 # ---------------------------------------------------------------------------
 
+def _normalize_question(q):
+    """Normalisiert eine Frage zu einem (q_text, a_text) Tupel.
+
+    Akzeptiert sowohl alte String-Formate als auch neue Dict-Formate
+    {"q": str, "a": str}. Fehlende Felder werden zu "".
+    """
+    if isinstance(q, dict):
+        return q.get("q", ""), q.get("a", "")
+    return str(q), ""
+
+
+def _serialize_question(q_text, a_text):
+    """Konvertiert (Frage, Antwort) zu Dict-Form für JSON-Speicherung."""
+    return {"q": q_text, "a": a_text}
+
+
 def get_questionsets_dir():
     """Gibt den Pfad zum questionsets/ Verzeichnis zurück und erstellt es falls nötig."""
     d = data_path("questionsets")
