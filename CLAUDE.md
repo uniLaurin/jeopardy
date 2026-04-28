@@ -98,6 +98,33 @@ Das ist wichtig, weil GUI-Module beim Import ihre lokalen Farb-Aliase (`BLUE = r
 - **Niemand-Taste `N+1`** → Audio stoppt + keine Punkte
 - Safety: `audio.stop_music()` auch nach `root.mainloop()` in `game.run()`, falls Fenster mit offener Frage geschlossen wird
 
+### Antworten-Feature
+
+Optionales Anzeigen der Antwort nach Beantwortung einer Frage. Aktiv nur
+wenn `show_answers=true` im Set UND die Frage ein nicht-leeres `a`-Feld hat.
+
+**State-Maschine pro `LButton`:**
+| State | Beschreibung |
+|---|---|
+| `question` | Frage sichtbar (Standard) |
+| `answer_manual` | Spielleiter hat `A` gedrückt — Antwort sichtbar, Punkte noch offen |
+| `answer_post_score` | Punkte vergeben, Antwort wird gezeigt bis beliebige Taste die Karte schließt |
+
+**Tasten:**
+- `A` (in `question`): Audio stop, Flip zur Gold-Antwort-Seite
+- `1`-`N` / `N+1` (in `question`): Punkte vergeben → bei aktivem Toggle Auto-Flip zu `answer_post_score`, sonst direkt zu Board
+- `1`-`N` / `N+1` (in `answer_manual`): Punkte vergeben → State `answer_post_score`
+- Sonstige Taste (in `answer_manual`): zurück zur Frage
+- Beliebige Taste (in `answer_post_score`): Karte zum Board
+
+**Antwort-Seite Visuals:** `r.GOLD` als Background, `r.DARK_BLUE` als Foreground.
+Header `ANTWORT`, darunter Antwort-Text. In `answer_manual` zusätzlicher Footer
+`Beliebige Taste: zurück`.
+
+**Datenmodell:** `r.questions[i][j]` ist String (Frage), `r.answers[i][j]` ist String
+(Antwort, ggf. leer). `r.show_answers` ist bool. Beim Laden eines Sets wird ein
+String-Format (`"Frage"`) zu `{"q": "Frage", "a": ""}` normalisiert.
+
 ### Intro-Sequenz
 
 **Timeline (`intro.py`):**
@@ -129,8 +156,25 @@ Das ist wichtig, weil GUI-Module beim Import ihre lokalen Farb-Aliase (`BLUE = r
 
 **Fragensets:** JSON-Dateien in `questionsets/`. Format:
 ```json
-{"name": "...", "values": [100,200,...], "categories": [{"name": "...", "questions": ["...", ...]}]}
+{
+  "name": "...",
+  "values": [100,200,...],
+  "show_answers": false,
+  "categories": [
+    {
+      "name": "...",
+      "questions": [
+        {"q": "Frage?", "a": "Antwort"},
+        {"q": "Frage ohne Antwort?", "a": ""},
+        "Legacy-String wird beim ersten Speichern migriert"
+      ]
+    }
+  ]
+}
 ```
+
+`show_answers` (optional, Default `false`) steuert, ob im Spiel die Antwort
+nach Beantwortung gezeigt wird. Antworten sind pro Frage optional.
 
 ## Build
 
@@ -192,6 +236,7 @@ PyInstaller kann NICHT cross-compilen. Mac-Build auf Mac, Windows-Build auf Wind
 6. **Keine UI-Lautstärke-Steuerung** — System-Lautstärke wird vertraut (bewusste Design-Entscheidung)
 7. **Audio-Drift** — Intro-Audio (pygame) und Canvas-Animation (tkinter `after()`) laufen auf getrennten Pfaden — bei 30 s Clip nicht hörbar, aber kein garantierter Sync
 8. **`tkinter -alpha` + Fullscreen** — auf Linux-WMs ggf. ignoriert; `intro.py` fängt `TclError` ab und zeigt das Fenster dann einfach voll opak
+9. **FRAGENSET-Editor wird durch Antwort-Felder doppelt so hoch** — pro Frage gibt es jetzt 2 Eingabefelder (Frage + Antwort) übereinander. Bei vielen Fragen pro Kategorie könnte das Layout unhandlich werden. Mögliche Lösung: Antwort-Feld collapsible (per `+`-Button) oder nur sichtbar wenn der Set-Toggle aktiv ist. Aktuell YAGNI bis es konkret stört.
 
 ## Konventionen
 
@@ -199,7 +244,7 @@ PyInstaller kann NICHT cross-compilen. Mac-Build auf Mac, Windows-Build auf Wind
 - Font immer über `r.FONT` referenzieren (nie hardcoded)
 - **Farben immer über `resources.py`-Konstanten** (`r.BLUE`, `r.GOLD`, etc.) — nie `"blue"` oder hardcoded Hex. Ausnahmen: pure Grautöne (`#404040` für Borders), die theme-neutral sind.
 - Layout: `.place()` Geometry Manager durchgehend
-- Tastenbelegung: `1`-`N` für Teams, `N+1` für Niemand (dynamisch), `Space` stoppt Frage-Timer-Audio
+- Tastenbelegung: `1`-`N` für Teams, `N+1` für Niemand (dynamisch), `Space` stoppt Frage-Timer-Audio, `A` deckt Antwort auf (wenn `show_answers=true` und Antwort hinterlegt)
 - **Buttons:** Primär = Gold-Hintergrund, Sekundär = Grau mit Gold-Hover (via `_make_secondary_btn` / `_bind_hover`)
 - **Eingabefelder:** Gold Focus-Border via `_bind_focus_border`
 - **Card-Layout** in Settings: `CardFrame`-Klasse für visuelle Sektions-Trennung
