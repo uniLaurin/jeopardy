@@ -73,6 +73,15 @@ class LButton(tk.Label):
         self.wertigkeit = 0       # Punktwert dieses Buttons (100, 200, ...)
         self.gedreht = False      # Wurde der Button bereits aktiviert?
         self._answered = False    # Wurde die Frage bereits beantwortet? (Race-Condition Fix)
+        # Antwort-Feature State:
+        # "question" = Frage sichtbar
+        # "answer_manual" = Antwort-Side via A-Taste (Punkte noch nicht vergeben)
+        # "answer_post_score" = Antwort-Side nach Punktevergabe
+        self._answer_state = "question"
+        self._answer_text = ""  # wird in create_grid gesetzt
+        self._cat_idx = 0       # für Lookup in r.answers
+        self._row_idx = 0
+        self._answered_post_close = False  # Re-entry-Schutz für State-3 Close
         super().__init__(master, **kwargs)
         self.place(width=p_width, height=p_height)
 
@@ -123,52 +132,108 @@ class LButton(tk.Label):
                 self.master.after(1000, self.master.destroy)
 
     def keyboard_input(self, event, org, schnelligkeit):
-        """Verarbeitet den Tastendruck nach dem Aufklappen einer Frage.
+        """Verarbeitet Tastendrücke gemäß aktuellem _answer_state.
 
-        Tasten:
-            LEERTASTE:                Timer-Audio stoppen (Frage bleibt offen)
-            '1' bis str(num_teams):   Punkte an entsprechendes Team + Audio stoppen
-            str(num_teams + 1):       "Niemand" — keine Punkte + Audio stoppen
+        State "question":
+            SPACE       → Audio stop (Frage bleibt)
+            'a'/'A'     → Wenn Antwort verfügbar + show_answers: Flip zur Antwort
+            '1'..'N'    → Punkte + Audio stop. Wenn Antwort verfügbar +
+                           show_answers: Flip zu State 3 statt direkt zu Board.
+            'N+1'       → Niemand. Genauso State 3 wenn Antwort verfügbar.
 
-        Bug-Fix: `_answered` Flag wird SOFORT gesetzt und unbind SOFORT
-        ausgeführt. Früher passierte unbind via `after(10, ...)`, sodass
-        in diesen 10ms weitere Key-Events durchkommen konnten.
+        State "answer_manual":
+            '1'..'N'    → Punkte. Karte bleibt auf Antwort-Seite (State 3),
+                           jede weitere Taste schließt zum Board.
+            'N+1'       → Niemand → State 3.
+            sonstige    → Zurück zur Frage (State 1).
+
+        State "answer_post_score":
+            beliebige Taste → close_to_board.
         """
         global _flip_in_progress
-        if self._answered:
-            return  # Bereits verarbeitet — Mehrfach-Key-Events ignorieren
 
-        # Leertaste: Nur den Timer stoppen — Frage bleibt offen, wartet auf Antwort
+        num_teams = len(r.teams)
+        team_keys = {str(i + 1) for i in range(num_teams)}
+        nobody_key = str(num_teams + 1)
+        has_answer = bool(self._answer_text) and bool(getattr(r, "show_answers", False))
+
+        # --- State: answer_post_score ---
+        if self._answer_state == "answer_post_score":
+            if self._answered_post_close:
+                return
+            self._answered_post_close = True
+            self.close_to_board(org, schnelligkeit)
+            _update_team_scores()
+            return
+
+        # --- State: answer_manual ---
+        if self._answer_state == "answer_manual":
+            # Punkte-Tasten: Punkte vergeben + State 3
+            if event.char in team_keys:
+                idx = int(event.char) - 1
+                self._answered = True
+                r.team_points[idx] += self.wertigkeit
+                self.config(foreground=r.teams[idx]["color"])
+                # Bleibt auf Antwort-Seite, aber Footer-Hinweis weg
+                self._answer_state = "answer_post_score"
+                self.config(text=self._answer_text_display())
+                _update_team_scores()
+                return
+            if event.char == nobody_key:
+                self._answered = True
+                self._answer_state = "answer_post_score"
+                self.config(text=self._answer_text_display())
+                return
+            # Sonst: zurück zur Frage
+            self.flip_back_to_question()
+            return
+
+        # --- State: question (default) ---
+        if self._answered:
+            return
+
         if event.keysym == "space":
             audio.stop_music()
             return
 
-        num_teams = len(r.teams)
+        # 'A' = Antwort manuell aufdecken
+        if event.keysym in ("a", "A") and has_answer:
+            self.flip_to_answer_side(post_score=False)
+            return
 
-        # Team-Tasten: 1 bis num_teams
-        for i in range(num_teams):
-            if event.char == str(i + 1):
-                self._answered = True
-                audio.stop_music()  # Timer stoppen — Antwort gegeben
+        # Team-Tasten
+        if event.char in team_keys:
+            idx = int(event.char) - 1
+            self._answered = True
+            audio.stop_music()
+            self.config(foreground=r.teams[idx]["color"])
+            self.update()
+            r.team_points[idx] += self.wertigkeit
+
+            if has_answer:
+                # State 3: Antwort zeigen, beliebige Taste schließt zum Board
+                self.flip_to_answer_side(post_score=True)
+                _update_team_scores()
+            else:
                 self.master.unbind("<KeyPress>")
-                # Button in der Team-Farbe einfärben (visuelles Feedback für den Moderator)
-                self.config(foreground=r.teams[i]["color"])
-                self.update()
-                r.team_points[i] += self.wertigkeit
                 self.set_org(org, True, schnelligkeit)
                 _flip_in_progress = False
-                _update_team_scores()  # Team-Score-Bar unten aktualisieren
-                return
+                _update_team_scores()
+            return
 
-        # Niemand-Taste: num_teams + 1 (z.B. '4' bei 3 Teams)
-        if event.char == str(num_teams + 1):
+        # Niemand-Taste
+        if event.char == nobody_key:
             self._answered = True
-            audio.stop_music()  # Timer stoppen — Antwort (Niemand)
-            self.master.unbind("<KeyPress>")
+            audio.stop_music()
             self.config(foreground="black")
             self.update()
-            self.set_org(org, True, schnelligkeit)
-            _flip_in_progress = False
+            if has_answer:
+                self.flip_to_answer_side(post_score=True)
+            else:
+                self.master.unbind("<KeyPress>")
+                self.set_org(org, True, schnelligkeit)
+                _flip_in_progress = False
+            return
 
     def set_text(self, text):
         """Bricht den Fragentext auf Bildschirmbreite um und speichert ihn in `_text`.
@@ -263,6 +328,98 @@ class LButton(tk.Label):
                 # Fullscreen erreicht — jetzt erst das 30-Sekunden-Timer-Audio starten.
                 # (No-Op wenn pygame nicht verfügbar ist.)
                 audio.play_music(TIMER_AUDIO, loop=False)
+
+    def flip_to_answer_side(self, post_score):
+        """Flippt von der Frage- zur Antwort-Seite (Gold-BG, dunkler Text).
+
+        Animation: erst horizontal zur Mitte zusammendrücken (width → 0),
+        dann zur Antwort-Seite umbauen und wieder auf Vollbild expandieren.
+
+        post_score=True markiert, dass die Punktevergabe schon erfolgt ist
+        (State 3) — beliebige Taste schließt die Karte dann zum Board.
+        Sonst (State 2) führt eine beliebige andere Taste zurück zur Frage.
+        """
+        self._answer_state = "answer_post_score" if post_score else "answer_manual"
+        # Audio in jedem Fall stoppen
+        audio.stop_music()
+
+        sw = self.master.winfo_screenwidth()
+        sh = self.master.winfo_screenheight()
+        schnelligkeit = max(1, int(math.ceil(sw / 100)))
+
+        def shrink():
+            if self.winfo_width() > 3:
+                cur_x = self.winfo_x()
+                self.place(width=self.winfo_width() - schnelligkeit * 20,
+                           x=cur_x + schnelligkeit * 10)
+                self.master.after(10, shrink)
+            else:
+                # Antwort-Seite vorbereiten
+                self.config(background=GOLD, foreground=DARK_BLUE)
+                self.config(text=self._answer_text_display())
+                self.place(x=sw / 2, y=sh / 2, width=0, height=0)
+                self.master.after(10, expand)
+
+        def expand():
+            if self.winfo_width() < sw:
+                cur_x = self.winfo_x()
+                self.place(width=self.winfo_width() + schnelligkeit * 20,
+                           x=cur_x - schnelligkeit * 10)
+                if self.winfo_height() < sh:
+                    self.place(height=self.winfo_height() + schnelligkeit * 20,
+                               y=self.winfo_y() - schnelligkeit * 10)
+                self.master.after(10, expand)
+
+        shrink()
+
+    def _answer_text_display(self):
+        """Formatierter Antwort-Text mit Header und Footer-Hinweis."""
+        header = "ANTWORT\n\n"
+        footer = ""
+        if self._answer_state == "answer_manual":
+            footer = "\n\nBeliebige Taste: zurück"
+        return header + self._answer_text + footer
+
+    def close_to_board(self, org, schnelligkeit):
+        """Schrumpft die Antwort-Seite zurück zum Board (wie set_org)."""
+        self.master.unbind("<KeyPress>")
+        global _flip_in_progress
+        # Foreground/Background auf Original-Look zurücksetzen, damit der
+        # geschlossene Button als "answered" aussieht (Grau-Border bleibt).
+        self.config(background=self._default_bg, foreground=GOLD)
+        self.set_org(org, True, schnelligkeit)
+        _flip_in_progress = False
+
+    def flip_back_to_question(self):
+        """Flippt von der manuell aufgedeckten Antwort zurück zur Frage (State 2 → 1)."""
+        self._answer_state = "question"
+        sw = self.master.winfo_screenwidth()
+        sh = self.master.winfo_screenheight()
+        schnelligkeit = max(1, int(math.ceil(sw / 100)))
+
+        def shrink():
+            if self.winfo_width() > 3:
+                cur_x = self.winfo_x()
+                self.place(width=self.winfo_width() - schnelligkeit * 20,
+                           x=cur_x + schnelligkeit * 10)
+                self.master.after(10, shrink)
+            else:
+                self.config(background=DARK_BLUE, foreground=GOLD)
+                self.visible_text()  # ursprünglicher Frage-Text
+                self.place(x=sw / 2, y=sh / 2, width=0, height=0)
+                self.master.after(10, expand)
+
+        def expand():
+            if self.winfo_width() < sw:
+                cur_x = self.winfo_x()
+                self.place(width=self.winfo_width() + schnelligkeit * 20,
+                           x=cur_x - schnelligkeit * 10)
+                if self.winfo_height() < sh:
+                    self.place(height=self.winfo_height() + schnelligkeit * 20,
+                               y=self.winfo_y() - schnelligkeit * 10)
+                self.master.after(10, expand)
+
+        shrink()
 
     def start_flip(self):
         """Startet die Flip-Animation beim Klick auf den Button.
@@ -411,6 +568,13 @@ def create_grid(root):
                 # Vor dem Flip zeigt der Button nur den Punktwert
                 tmp_b.config(text=f"{r.values[j - 1]}")
                 tmp_b.wertigkeit = r.values[j - 1]
+                tmp_b._cat_idx = i
+                tmp_b._row_idx = j - 1
+                # Antwort aus r.answers (parallel zu r.questions)
+                if i < len(r.answers) and (j - 1) < len(r.answers[i]):
+                    tmp_b._answer_text = r.answers[i][j - 1]
+                else:
+                    tmp_b._answer_text = ""
                 grid[i].append(tmp_b)
 
     _create_team_bar(root, sw, sh)
