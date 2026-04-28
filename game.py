@@ -350,8 +350,10 @@ class LButton(tk.Label):
         def shrink():
             if self.winfo_width() > 3:
                 cur_x = self.winfo_x()
-                self.place(width=self.winfo_width() - schnelligkeit * 20,
-                           x=cur_x + schnelligkeit * 10)
+                # Tempo wie in flip() Phase 1: schnelligkeit * 2 für Breite,
+                # +schnelligkeit für x-Offset (langsames Zusammendrücken).
+                self.place(width=self.winfo_width() - schnelligkeit * 2,
+                           x=cur_x + schnelligkeit)
                 self.master.after(10, shrink)
             else:
                 # Antwort-Seite vorbereiten
@@ -400,8 +402,9 @@ class LButton(tk.Label):
         def shrink():
             if self.winfo_width() > 3:
                 cur_x = self.winfo_x()
-                self.place(width=self.winfo_width() - schnelligkeit * 20,
-                           x=cur_x + schnelligkeit * 10)
+                # Tempo wie flip() Phase 1: langsames Zusammendrücken
+                self.place(width=self.winfo_width() - schnelligkeit * 2,
+                           x=cur_x + schnelligkeit)
                 self.master.after(10, shrink)
             else:
                 self.config(background=DARK_BLUE, foreground=GOLD)
