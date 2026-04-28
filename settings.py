@@ -573,9 +573,12 @@ class SettingsScreen:
         # Breite auch als Attribut speichern, damit _show_category nicht auf
         # winfo_width() angewiesen ist (liefert vor dem ersten Mapping 1).
         self._q_frame_w = ed_w - cat_col_w - 30
+        # Höhe dynamisch: vom Tab-Boden minus 30px Margin. Pro Frage werden
+        # 80px gebraucht (Q + A übereinander), bei 5 Werten = 400px.
+        q_frame_h = self.content_h - ed_y - 30
         self.q_frame = tk.Frame(tab, bg=CARD_BG)
         self.q_frame.place(x=q_x, y=ed_y,
-                           width=self._q_frame_w, height=290)
+                           width=self._q_frame_w, height=q_frame_h)
 
     def _refresh_set_listbox(self):
         self.set_listbox.delete(0, tk.END)
