@@ -365,11 +365,12 @@ class LButton(tk.Label):
         def expand():
             if self.winfo_width() < sw:
                 cur_x = self.winfo_x()
-                self.place(width=self.winfo_width() + schnelligkeit * 20,
-                           x=cur_x - schnelligkeit * 10)
+                # Gleiches Tempo wie shrink — gleichmäßiger Flip
+                self.place(width=self.winfo_width() + schnelligkeit * 2,
+                           x=cur_x - schnelligkeit)
                 if self.winfo_height() < sh:
-                    self.place(height=self.winfo_height() + schnelligkeit * 20,
-                               y=self.winfo_y() - schnelligkeit * 10)
+                    self.place(height=self.winfo_height() + schnelligkeit * 2,
+                               y=self.winfo_y() - schnelligkeit)
                 self.master.after(10, expand)
 
         shrink()
@@ -415,11 +416,12 @@ class LButton(tk.Label):
         def expand():
             if self.winfo_width() < sw:
                 cur_x = self.winfo_x()
-                self.place(width=self.winfo_width() + schnelligkeit * 20,
-                           x=cur_x - schnelligkeit * 10)
+                # Gleiches Tempo wie shrink — gleichmäßiger Flip
+                self.place(width=self.winfo_width() + schnelligkeit * 2,
+                           x=cur_x - schnelligkeit)
                 if self.winfo_height() < sh:
-                    self.place(height=self.winfo_height() + schnelligkeit * 20,
-                               y=self.winfo_y() - schnelligkeit * 10)
+                    self.place(height=self.winfo_height() + schnelligkeit * 2,
+                               y=self.winfo_y() - schnelligkeit)
                 self.master.after(10, expand)
 
         shrink()
