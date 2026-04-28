@@ -58,7 +58,7 @@ Das Spiel läuft durch mehrere Screens — hier die Tastenbelegung pro Bildschir
 | `Esc` | Einstellungen schließen und App beenden |
 | `!` *(im Fragentext)* | Absatz-Trennzeichen — trennt z. B. deutsche und englische Version einer Frage mit einem doppelten Zeilenumbruch |
 
-Die Einstellungen haben vier Tabs: **TEAMS** (2–6 Teams, Name + Farbe), **FRAGENSET** (Editor für JSON-Fragensets), **DESIGN** (Farb-Theme auswählen) und **START** (Spiel starten).
+Die Einstellungen haben vier Tabs: **TEAMS** (2–6 Teams, Name + Farbe), **FRAGENSET** (Editor für JSON-Fragensets — pro Frage optional eine Antwort hinterlegbar, plus Toggle "Antworten nach Beantwortung anzeigen"), **DESIGN** (Farb-Theme auswählen) und **START** (Spiel starten).
 
 ### Intro-Sequenz
 
@@ -82,8 +82,11 @@ Die Einstellungen haben vier Tabs: **TEAMS** (2–6 Teams, Name + Farbe), **FRAG
 | `Space` | 30-Sekunden-Timer-Audio stoppen — Frage bleibt offen und wartet auf eine Antwort |
 | `1` … `N` | Team `1` bis `N` hat korrekt geantwortet → bekommt die Punkte der Frage |
 | `N+1` | Niemand hat geantwortet → keine Punktevergabe (es werden **keine** Punkte abgezogen) |
+| `A` | Antwort aufdecken (Karte flippt zur Gold-Antwort-Seite) — nur wenn der Toggle "Antworten anzeigen" aktiv ist und eine Antwort hinterlegt wurde |
 
 Dabei ist `N` die Anzahl der konfigurierten Teams. Beispiel bei 3 Teams: `1`, `2`, `3` = Teams, `4` = Niemand.
+
+**Antworten-Modus:** Ist im Fragenset der Toggle aktiv und für eine Frage eine Antwort hinterlegt, wird nach Punktevergabe automatisch die Antwort eingeblendet — beliebige Taste schließt die Karte zum Board zurück. Mit `A` lässt sie sich vorab manuell aufdecken (z. B. um die Auflösung zu zeigen, bevor entschieden wird wer Punkte bekommt).
 
 ### Scoreboard
 
