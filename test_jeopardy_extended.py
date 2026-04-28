@@ -950,5 +950,45 @@ class TestLoadQuestionSetWithAnswers(unittest.TestCase):
         self.assertEqual(r.answers, [["", "antwort"]])
 
 
+class TestSaveQuestionSetRoundtrip(unittest.TestCase):
+    """Save/Load Roundtrip: Antworten und show_answers bleiben erhalten."""
+
+    def setUp(self):
+        self.tmp = tempfile.mkdtemp()
+        self._orig_data_path = r.data_path
+        r.data_path = lambda relative_path="": (
+            os.path.join(self.tmp, relative_path) if relative_path else self.tmp
+        )
+
+    def tearDown(self):
+        r.data_path = self._orig_data_path
+        shutil.rmtree(self.tmp, ignore_errors=True)
+
+    def test_roundtrip_with_answers_and_toggle(self):
+        cats = [
+            {"name": "Geo", "questions": [
+                {"q": "Hauptstadt von Frankreich?", "a": "Paris"},
+                {"q": "Längster Fluss?", "a": ""},
+            ]}
+        ]
+        r.save_question_set("rt.json", "Roundtrip", [100, 200], cats,
+                            show_answers=True)
+        r.load_question_set("rt.json")
+        self.assertEqual(r.questions, [["Hauptstadt von Frankreich?",
+                                         "Längster Fluss?"]])
+        self.assertEqual(r.answers, [["Paris", ""]])
+        self.assertTrue(r.show_answers)
+
+    def test_roundtrip_legacy_strings_get_migrated_to_dicts(self):
+        cats = [{"name": "C", "questions": ["Alte Frage 1", "Alte Frage 2"]}]
+        r.save_question_set("legacy_rt.json", "Legacy", [100, 200], cats)
+        # Auf Disk müssen es Dicts sein
+        with open(os.path.join(r.get_questionsets_dir(), "legacy_rt.json")) as f:
+            data = json.load(f)
+        self.assertEqual(data["categories"][0]["questions"][0],
+                         {"q": "Alte Frage 1", "a": ""})
+        self.assertEqual(data.get("show_answers"), False)
+
+
 if __name__ == "__main__":
     unittest.main()

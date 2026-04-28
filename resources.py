@@ -467,13 +467,28 @@ def load_question_set(filename):
     to_be_switched_int = len(categories) * len(values)
 
 
-def save_question_set(filename, name, values_list, cats):
+def save_question_set(filename, name, values_list, cats, show_answers=False):
     """Speichert ein Fragenset als JSON-Datei.
 
-    cats: Liste von {"name": str, "questions": [str, ...]}
+    cats: Liste von {"name": str, "questions": [...]}.
+        Fragen können Strings (Legacy) oder Dicts {"q":..., "a":...} sein —
+        werden beim Speichern alle zu Dicts konvertiert.
+    show_answers: bool — wird auf Top-Level des JSON gespeichert.
     """
     path = os.path.join(get_questionsets_dir(), filename)
-    data = {"name": name, "values": values_list, "categories": cats}
+    serialized_cats = []
+    for cat in cats:
+        new_qs = []
+        for raw in cat.get("questions", []):
+            q_text, a_text = _normalize_question(raw)
+            new_qs.append(_serialize_question(q_text, a_text))
+        serialized_cats.append({"name": cat["name"], "questions": new_qs})
+    data = {
+        "name": name,
+        "values": values_list,
+        "show_answers": bool(show_answers),
+        "categories": serialized_cats,
+    }
     with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
 
