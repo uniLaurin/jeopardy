@@ -383,6 +383,14 @@ questions = [
      "Welches LF Standardprodukt verwenden wir für das Invita Garantie Produkt? ! Which LF standard product do we use for the Invita Garantie product?"]
 ]
 
+# Antworten parallel zu questions — gleiche Indizierung: answers[kat_idx][frage_idx]
+# Default leer; wird beim Laden eines Sets gefüllt.
+answers = [["" for _ in row] for row in questions]
+
+# Globaler Toggle: zeigt das Spiel nach Beantwortung die Antwort an?
+# Wird pro geladenem Set aus dem JSON-Feld "show_answers" gesetzt.
+show_answers = False
+
 
 # ---------------------------------------------------------------------------
 # Fragenset-Verwaltung (CRUD auf JSON-Dateien in questionsets/)
@@ -432,17 +440,30 @@ def list_question_sets():
 
 
 def load_question_set(filename):
-    """Lädt ein Fragenset aus JSON und befüllt den Modul-State (categories, values, questions).
+    """Lädt ein Fragenset aus JSON und befüllt den Modul-State.
 
-    Wird von settings.py vor dem Spielstart aufgerufen.
+    Akzeptiert sowohl alte (String-Fragen) als auch neue (Dict-Fragen)
+    JSON-Formate. Bei alten Sets bleibt `answers` leer und
+    `show_answers=False`.
     """
-    global categories, values, questions, to_be_switched_int
+    global categories, values, questions, answers, show_answers, to_be_switched_int
     path = os.path.join(get_questionsets_dir(), filename)
     with open(path, "r", encoding="utf-8") as f:
         data = json.load(f)
     values = data["values"]
     categories = [cat["name"] for cat in data["categories"]]
-    questions = [cat["questions"] for cat in data["categories"]]
+    questions = []
+    answers = []
+    for cat in data["categories"]:
+        q_list = []
+        a_list = []
+        for raw in cat.get("questions", []):
+            q_text, a_text = _normalize_question(raw)
+            q_list.append(q_text)
+            a_list.append(a_text)
+        questions.append(q_list)
+        answers.append(a_list)
+    show_answers = bool(data.get("show_answers", False))
     to_be_switched_int = len(categories) * len(values)
 
 

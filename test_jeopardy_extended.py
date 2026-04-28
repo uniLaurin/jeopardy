@@ -883,5 +883,72 @@ class TestQuestionNormalization(unittest.TestCase):
         self.assertEqual(a, "")
 
 
+class TestLoadQuestionSetWithAnswers(unittest.TestCase):
+    """Tests für load_question_set mit dem erweiterten Format."""
+
+    def setUp(self):
+        # Temporäres questionsets-Verzeichnis nutzen
+        self.tmp = tempfile.mkdtemp()
+        self._orig_data_path = r.data_path
+        r.data_path = lambda relative_path="": (
+            os.path.join(self.tmp, relative_path) if relative_path else self.tmp
+        )
+
+    def tearDown(self):
+        r.data_path = self._orig_data_path
+        shutil.rmtree(self.tmp, ignore_errors=True)
+
+    def _write_set(self, filename, payload):
+        d = r.get_questionsets_dir()
+        with open(os.path.join(d, filename), "w", encoding="utf-8") as f:
+            json.dump(payload, f)
+
+    def test_load_dict_questions_populates_answers(self):
+        self._write_set("t.json", {
+            "name": "T",
+            "values": [100, 200],
+            "show_answers": True,
+            "categories": [
+                {"name": "C1", "questions": [
+                    {"q": "Frage A?", "a": "Antwort A"},
+                    {"q": "Frage B?", "a": "Antwort B"},
+                ]}
+            ]
+        })
+        r.load_question_set("t.json")
+        self.assertEqual(r.questions, [["Frage A?", "Frage B?"]])
+        self.assertEqual(r.answers, [["Antwort A", "Antwort B"]])
+        self.assertTrue(r.show_answers)
+
+    def test_load_legacy_string_questions_works(self):
+        """Alte Sets mit String-Fragen müssen weiter funktionieren."""
+        self._write_set("legacy.json", {
+            "name": "Legacy",
+            "values": [100],
+            "categories": [
+                {"name": "C1", "questions": ["Alte Frage?"]}
+            ]
+        })
+        r.load_question_set("legacy.json")
+        self.assertEqual(r.questions, [["Alte Frage?"]])
+        self.assertEqual(r.answers, [[""]])
+        self.assertFalse(r.show_answers)
+
+    def test_load_mixed_questions_normalizes_all(self):
+        self._write_set("mix.json", {
+            "name": "Mix",
+            "values": [100, 200],
+            "categories": [
+                {"name": "C", "questions": [
+                    "Plain String",
+                    {"q": "Dict mit a", "a": "antwort"},
+                ]}
+            ]
+        })
+        r.load_question_set("mix.json")
+        self.assertEqual(r.questions, [["Plain String", "Dict mit a"]])
+        self.assertEqual(r.answers, [["", "antwort"]])
+
+
 if __name__ == "__main__":
     unittest.main()
