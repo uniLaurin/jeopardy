@@ -6,17 +6,8 @@ on:
       - 'v*'
 
 jobs:
-  build:
-    strategy:
-      matrix:
-        include:
-          - os: macos-latest
-            artifact_name: Jeopardy-macOS
-          - os: windows-latest
-            artifact_name: Jeopardy-Windows
-
-    runs-on: ${{ matrix.os }}
-
+  build-macos:
+    runs-on: macos-14
     steps:
       - uses: actions/checkout@v4
 
@@ -24,46 +15,77 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Install PyInstaller
-        run: pip install pyinstaller
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
 
-      - name: Build executable
+      - name: Build with PyInstaller
         run: pyinstaller jeopardy.spec --noconfirm
+
+      - name: Ad-hoc codesign
+        run: codesign --force --deep -s - dist/Jeopardy.app
+
+      - name: Zip with ditto
+        run: |
+          cd dist
+          ditto -c -k --sequesterRsrc --keepParent Jeopardy.app Jeopardy-macOS-arm64.zip
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.artifact_name }}
-          path: dist/
+          name: Jeopardy-macOS-arm64
+          path: dist/Jeopardy-macOS-arm64.zip
+
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Build with PyInstaller
+        run: pyinstaller jeopardy.spec --noconfirm
+
+      - name: Zip Windows build
+        shell: pwsh
+        run: Compress-Archive -Path dist/Jeopardy/* -DestinationPath dist/Jeopardy-Windows.zip
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Jeopardy-Windows
+          path: dist/Jeopardy-Windows.zip
 
   release:
-    needs: build
+    needs: [build-macos, build-windows]
     runs-on: ubuntu-latest
     permissions:
       contents: write
-
     steps:
       - name: Download macOS build
         uses: actions/download-artifact@v4
         with:
-          name: Jeopardy-macOS
-          path: macos-build/
+          name: Jeopardy-macOS-arm64
+          path: release/
 
       - name: Download Windows build
         uses: actions/download-artifact@v4
         with:
           name: Jeopardy-Windows
-          path: windows-build/
-
-      - name: Zip builds
-        run: |
-          cd macos-build && zip -r ../Jeopardy-macOS.zip . && cd ..
-          cd windows-build && zip -r ../Jeopardy-Windows.zip . && cd ..
+          path: release/
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            Jeopardy-macOS.zip
-            Jeopardy-Windows.zip
+            release/Jeopardy-macOS-arm64.zip
+            release/Jeopardy-Windows.zip
           generate_release_notes: true
