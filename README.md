@@ -4,7 +4,7 @@
 
 ### Ein elegantes Jeopardy-Quizspiel für Firmenevents & Team-Spieleabende
 
-*Gebaut in reinem Python & tkinter — cross-platform, ohne Dependencies, als Executable verteilbar.*
+*Gebaut in reinem Python & tkinter — Macos M-Series, ohne Dependencies, als Executable verteilbar.*
 
 [![Python](https://img.shields.io/badge/Python-3.10+-blue?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
 [![Platform](https://img.shields.io/badge/Platform-macOS%20%7C%20Windows-lightgrey?style=flat-square)](#build)
